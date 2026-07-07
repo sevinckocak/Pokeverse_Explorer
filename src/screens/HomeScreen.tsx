@@ -1,10 +1,16 @@
 import { useEffect } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import { fetchPokemonList } from '@/store/pokemon/pokemonSlice';
+import { fetchPokemonList } from '@/store';
+import type { RootStackParamList } from '@/navigation';
+
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
   const { pokemonList, loading, error } = useAppSelector((state) => state.pokemon);
 
   useEffect(() => {
@@ -33,9 +39,12 @@ export default function HomeScreen() {
         data={pokemonList}
         keyExtractor={(item) => item.name}
         renderItem={({ item }) => (
-          <View style={styles.item}>
+          <Pressable
+            style={styles.item}
+            onPress={() => navigation.navigate('PokemonDetail', { name: item.name })}
+          >
             <Text>{item.name}</Text>
-          </View>
+          </Pressable>
         )}
       />
     </View>

@@ -1,16 +1,5 @@
 import api from '@/api/axios';
-
-export interface PokemonListItem {
-  name: string;
-  url: string;
-}
-
-export interface PokemonListResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: PokemonListItem[];
-}
+import type { PokemonListResponse } from '@/types';
 
 export async function getPokemonList(
   limit = 20,

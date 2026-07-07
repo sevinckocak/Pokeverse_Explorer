@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  getPokemonList,
-  type PokemonListItem,
-} from '@/services/pokemon.service';
+import { getPokemonList } from '@/services';
+import type { PokemonListItem } from '@/types';
 
 export interface PokemonState {
   pokemonList: PokemonListItem[];
