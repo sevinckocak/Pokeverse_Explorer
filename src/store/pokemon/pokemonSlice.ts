@@ -1,7 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  getPokemonList,
+  type PokemonListItem,
+} from '@/services/pokemon.service';
 
 export interface PokemonState {
-  pokemonList: unknown[];
+  pokemonList: PokemonListItem[];
   loading: boolean;
   error: string | null;
 }
@@ -12,6 +16,15 @@ const initialState: PokemonState = {
   error: null,
 };
 
+export const fetchPokemonList = createAsyncThunk<
+  PokemonListItem[],
+  { limit?: number; offset?: number } | undefined
+>('pokemon/fetchPokemonList', async (params) => {
+  const { limit = 20, offset = 0 } = params ?? {};
+  const response = await getPokemonList(limit, offset);
+  return response.results;
+});
+
 const pokemonSlice = createSlice({
   name: 'pokemon',
   initialState,
@@ -21,6 +34,21 @@ const pokemonSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPokemonList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPokemonList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.pokemonList = action.payload;
+      })
+      .addCase(fetchPokemonList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? 'Failed to fetch Pokémon list';
+      });
   },
 });
 
