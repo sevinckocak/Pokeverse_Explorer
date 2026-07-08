@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getPokemonByNameOrId, getPokemonList } from '@/services';
-import type { PokemonDetail, PokemonListItem } from '@/types';
+import { getPokemonByNameOrId, getPokemonList, getPokemonSpecies } from '@/services';
+import type { PokemonDetail, PokemonListItem, PokemonSpecies } from '@/types';
 
 export interface PokemonState {
   pokemonList: PokemonListItem[];
@@ -9,6 +9,9 @@ export interface PokemonState {
   detail: PokemonDetail | null;
   loadingDetail: boolean;
   detailError: string | null;
+  species: PokemonSpecies | null;
+  loadingSpecies: boolean;
+  speciesError: string | null;
 }
 
 const initialState: PokemonState = {
@@ -18,6 +21,9 @@ const initialState: PokemonState = {
   detail: null,
   loadingDetail: false,
   detailError: null,
+  species: null,
+  loadingSpecies: false,
+  speciesError: null,
 };
 
 export const fetchPokemonList = createAsyncThunk<
@@ -36,6 +42,13 @@ export const fetchPokemonDetail = createAsyncThunk<PokemonDetail, string>(
   }
 );
 
+export const fetchPokemonSpecies = createAsyncThunk<PokemonSpecies, string>(
+  'pokemon/fetchPokemonSpecies',
+  async (name) => {
+    return getPokemonSpecies(name);
+  }
+);
+
 const pokemonSlice = createSlice({
   name: 'pokemon',
   initialState,
@@ -47,6 +60,9 @@ const pokemonSlice = createSlice({
       state.detail = null;
       state.loadingDetail = false;
       state.detailError = null;
+      state.species = null;
+      state.loadingSpecies = false;
+      state.speciesError = null;
     },
   },
   extraReducers: (builder) => {
@@ -75,6 +91,19 @@ const pokemonSlice = createSlice({
       .addCase(fetchPokemonDetail.rejected, (state, action) => {
         state.loadingDetail = false;
         state.detailError = action.error.message ?? 'Failed to fetch Pokémon detail';
+      })
+      .addCase(fetchPokemonSpecies.pending, (state) => {
+        state.loadingSpecies = true;
+        state.speciesError = null;
+        state.species = null;
+      })
+      .addCase(fetchPokemonSpecies.fulfilled, (state, action) => {
+        state.loadingSpecies = false;
+        state.species = action.payload;
+      })
+      .addCase(fetchPokemonSpecies.rejected, (state, action) => {
+        state.loadingSpecies = false;
+        state.speciesError = action.error.message ?? 'Failed to fetch Pokémon species';
       });
   },
 });
