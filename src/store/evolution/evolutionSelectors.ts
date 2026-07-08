@@ -1,5 +1,19 @@
+import { createSelector } from '@reduxjs/toolkit';
 import type { RootState } from '@/store/store';
 
-export const selectEvolutionChain = (state: RootState) => state.evolution.evolutionChain;
-export const selectEvolutionLoading = (state: RootState) => state.evolution.isLoading;
-export const selectEvolutionError = (state: RootState) => state.evolution.error;
+export const selectEvolutionState = (state: RootState) => state.evolution;
+
+export const selectEvolutionChain = createSelector(
+  selectEvolutionState,
+  (evolutionState) => evolutionState.evolutionChain
+);
+
+export const selectEvolutionLoading = createSelector(
+  selectEvolutionState,
+  (evolutionState) => evolutionState.isLoading
+);
+
+export const selectEvolutionError = createSelector(
+  selectEvolutionState,
+  (evolutionState) => evolutionState.error
+);
