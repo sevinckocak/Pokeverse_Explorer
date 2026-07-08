@@ -4,6 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { fetchPokemonList } from '@/store';
+import {
+  selectPokemonError,
+  selectPokemonList,
+  selectPokemonLoading,
+} from '@/store/pokemon/pokemonSelectors';
 import type { RootStackParamList } from '@/navigation';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
@@ -11,7 +16,9 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'H
 export default function HomeScreen() {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const { pokemonList, loading, error } = useAppSelector((state) => state.pokemon);
+  const pokemonList = useAppSelector(selectPokemonList);
+  const loading = useAppSelector(selectPokemonLoading);
+  const error = useAppSelector(selectPokemonError);
 
   useEffect(() => {
     dispatch(fetchPokemonList());

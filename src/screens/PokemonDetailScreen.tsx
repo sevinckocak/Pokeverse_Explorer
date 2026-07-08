@@ -5,6 +5,16 @@ import { useRoute } from "@react-navigation/native";
 import type { RootStackParamList } from "@/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { fetchPokemonDetailPage } from "@/store/pokemonDetail/fetchPokemonDetailPage";
+import {
+  selectPokemonDetail,
+  selectPokemonError,
+  selectPokemonLoading,
+} from "@/store/pokemon/pokemonSelectors";
+import {
+  selectPokemonSpecies,
+  selectSpeciesError,
+  selectSpeciesLoading,
+} from "@/store/species/speciesSelectors";
 import PokemonImage from "@/components/pokemon/PokemonImage";
 import PokemonHeader from "@/components/pokemon/PokemonHeader";
 import PokemonInfo from "@/components/pokemon/PokemonInfo";
@@ -17,12 +27,13 @@ export default function PokemonDetailScreen() {
   const { name } = route.params;
 
   const dispatch = useAppDispatch();
-  const { detail, loading: loadingDetail, error: detailError } = useAppSelector(
-    (state) => state.pokemon,
-  );
-  const { species, loading: loadingSpecies, error: speciesError } = useAppSelector(
-    (state) => state.species,
-  );
+  const detail = useAppSelector(selectPokemonDetail);
+  const loadingDetail = useAppSelector(selectPokemonLoading);
+  const detailError = useAppSelector(selectPokemonError);
+
+  const species = useAppSelector(selectPokemonSpecies);
+  const loadingSpecies = useAppSelector(selectSpeciesLoading);
+  const speciesError = useAppSelector(selectSpeciesError);
 
   useEffect(() => {
     dispatch(fetchPokemonDetailPage(name));
