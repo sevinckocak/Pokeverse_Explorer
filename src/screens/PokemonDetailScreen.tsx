@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import type { RouteProp } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import type { RootStackParamList } from "@/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { fetchPokemonDetail } from "@/store/pokemon/pokemonSlice";
+import PokemonImage from "@/components/pokemon/PokemonImage";
 
 type PokemonDetailRouteProp = RouteProp<RootStackParamList, "PokemonDetail">;
 
@@ -47,12 +48,7 @@ export default function PokemonDetailScreen() {
 
   return (
     <View style={styles.center}>
-      {detail.sprites.front_default !== null ? (
-        <Image
-          source={{ uri: detail.sprites.front_default }}
-          style={styles.sprite}
-        />
-      ) : null}
+      <PokemonImage imageUrl={detail.sprites.front_default} />
       <Text>{detail.name}</Text>
       <Text>{detail.id}</Text>
       <Text>{(detail.height / 10).toFixed(1)} m</Text>
@@ -66,9 +62,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  sprite: {
-    width: 150,
-    height: 150,
   },
 });
