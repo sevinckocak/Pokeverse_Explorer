@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import type { RouteProp } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import type { RootStackParamList } from "@/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { useThemeTokens } from "@/hooks/useThemeTokens";
 import { fetchPokemonDetailPage } from "@/store/pokemonDetail/fetchPokemonDetailPage";
 import {
   selectPokemonDetail,
@@ -15,11 +16,11 @@ import {
   selectSpeciesError,
   selectSpeciesLoading,
 } from "@/store/species/speciesSelectors";
-import PokemonImage from "@/components/pokemon/PokemonImage";
-import PokemonHeader from "@/components/pokemon/PokemonHeader";
+import PokemonHero from "@/components/pokemon/PokemonHero";
 import PokemonInfo from "@/components/pokemon/PokemonInfo";
 import PokemonSpecies from "@/components/pokemon/PokemonSpecies";
 import PokemonEvolution from "@/components/pokemon/PokemonEvolution";
+import { SPACING } from "@/constants/theme";
 
 type PokemonDetailRouteProp = RouteProp<RootStackParamList, "PokemonDetail">;
 
@@ -28,6 +29,8 @@ export default function PokemonDetailScreen() {
   const { name } = route.params;
 
   const dispatch = useAppDispatch();
+  const { colors } = useThemeTokens();
+
   const detail = useAppSelector(selectPokemonDetail);
   const loadingDetail = useAppSelector(selectPokemonLoading);
   const detailError = useAppSelector(selectPokemonError);
@@ -42,7 +45,7 @@ export default function PokemonDetailScreen() {
 
   if (loadingDetail) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.center, { backgroundColor: colors.background }]}>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -50,39 +53,51 @@ export default function PokemonDetailScreen() {
 
   if (detailError) {
     return (
-      <View style={styles.container}>
-        <Text>{detailError}</Text>
+      <View style={[styles.center, { backgroundColor: colors.background }]}>
+        <Text style={{ color: colors.textPrimary }}>{detailError}</Text>
       </View>
     );
   }
 
   if (detail === null) {
     return (
-      <View style={styles.container}>
-        <Text>No Pokémon data available.</Text>
+      <View style={[styles.center, { backgroundColor: colors.background }]}>
+        <Text style={{ color: colors.textPrimary }}>No Pokémon data available.</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <PokemonImage imageUrl={detail.sprites.front_default} />
-      <PokemonHeader name={detail.name} id={detail.id} />
-      <PokemonInfo height={detail.height} weight={detail.weight} />
-      <PokemonSpecies
-        species={species}
-        loading={loadingSpecies}
-        error={speciesError}
+    <ScrollView
+      style={{ backgroundColor: colors.background }}
+      contentContainerStyle={styles.content}
+    >
+      <PokemonHero
+        imageUrl={detail.sprites.front_default}
+        name={detail.name}
+        id={detail.id}
+        colorName={species?.color.name ?? null}
       />
-      <PokemonEvolution />
-    </View>
+      <View style={styles.body}>
+        <PokemonInfo height={detail.height} weight={detail.weight} />
+        <PokemonSpecies species={species} loading={loadingSpecies} error={speciesError} />
+        <PokemonEvolution />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  center: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  content: {
+    paddingBottom: SPACING.xxl,
+  },
+  body: {
+    paddingHorizontal: SPACING.lg,
+    marginTop: SPACING.lg,
   },
 });

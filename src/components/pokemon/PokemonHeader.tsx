@@ -1,33 +1,54 @@
+import { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { SPACING } from "@/constants/theme";
+import { capitalize } from "@/utils/string";
 
 interface PokemonHeaderProps {
   name: string;
   id: number;
 }
 
-export default function PokemonHeader({ name, id }: PokemonHeaderProps) {
-  const displayName = name.charAt(0).toUpperCase() + name.slice(1);
+function PokemonHeaderComponent({ name, id }: PokemonHeaderProps) {
+  const displayName = capitalize(name);
+  const displayId = `#${id.toString().padStart(3, "0")}`;
 
   return (
     <View style={styles.container}>
       <Text style={styles.name}>{displayName}</Text>
-      <Text style={styles.id}>{`#${id}`}</Text>
+      <View style={styles.idPill}>
+        <Text style={styles.id}>{displayId}</Text>
+      </View>
     </View>
   );
 }
 
+export default memo(PokemonHeaderComponent);
+
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    marginTop: 12,
-    marginBottom: 16,
+    marginTop: SPACING.md,
   },
   name: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 30,
+    fontWeight: "800",
+    color: "#FFFFFF",
+    letterSpacing: 0.4,
+    textShadowColor: "rgba(0, 0, 0, 0.18)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 6,
+  },
+  idPill: {
+    marginTop: SPACING.xs,
+    paddingVertical: SPACING.xs,
+    paddingHorizontal: SPACING.md,
+    borderRadius: 999,
+    backgroundColor: "rgba(255, 255, 255, 0.22)",
   },
   id: {
-    fontSize: 16,
-    color: "#666",
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#FFFFFF",
+    letterSpacing: 1,
   },
 });

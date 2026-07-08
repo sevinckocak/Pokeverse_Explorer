@@ -1,5 +1,7 @@
 import { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { useThemeTokens } from "@/hooks/useThemeTokens";
+import { RADIUS, SPACING } from "@/constants/theme";
 import { capitalize } from "@/utils/string";
 import type { EvolutionChainNode } from "@/types";
 
@@ -8,15 +10,34 @@ interface EvolutionNodeProps {
 }
 
 function EvolutionNodeComponent({ node }: EvolutionNodeProps) {
+  const { colors } = useThemeTokens();
+  const isBranching = node.evolves_to.length > 1;
+
   return (
-    <View style={styles.node}>
-      <Text style={styles.name}>{capitalize(node.species.name)}</Text>
-      {node.evolves_to.map((child) => (
-        <View key={child.species.name} style={styles.branch}>
-          <Text style={styles.arrow}>↓</Text>
-          <EvolutionNode node={child} />
+    <View>
+      <View style={styles.row}>
+        <View style={styles.timelineColumn}>
+          <View style={[styles.dot, { backgroundColor: colors.textPrimary }]} />
+          {node.evolves_to.length > 0 ? (
+            <View style={[styles.line, { backgroundColor: colors.divider }]} />
+          ) : null}
         </View>
-      ))}
+        <View
+          style={[
+            styles.chip,
+            { backgroundColor: colors.surface, borderColor: colors.surfaceBorder },
+          ]}
+        >
+          <Text style={[styles.name, { color: colors.textPrimary }]}>
+            {capitalize(node.species.name)}
+          </Text>
+        </View>
+      </View>
+      <View style={{ marginLeft: isBranching ? SPACING.lg : 0 }}>
+        {node.evolves_to.map((child) => (
+          <EvolutionNode key={child.species.name} node={child} />
+        ))}
+      </View>
     </View>
   );
 }
@@ -26,18 +47,36 @@ const EvolutionNode = memo(EvolutionNodeComponent);
 export default EvolutionNode;
 
 const styles = StyleSheet.create({
-  node: {
+  row: {
+    flexDirection: "row",
+    alignItems: "stretch",
+  },
+  timelineColumn: {
+    width: 16,
     alignItems: "center",
   },
-  branch: {
-    alignItems: "center",
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginTop: SPACING.md,
+  },
+  line: {
+    width: 2,
+    flex: 1,
+    minHeight: SPACING.lg,
+  },
+  chip: {
+    flex: 1,
+    marginLeft: SPACING.md,
+    marginVertical: SPACING.xs,
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+    borderRadius: RADIUS.md,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   name: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  arrow: {
-    fontSize: 16,
-    marginVertical: 4,
+    fontSize: 15,
+    fontWeight: "700",
   },
 });
