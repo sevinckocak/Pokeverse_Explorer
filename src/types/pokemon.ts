@@ -9,3 +9,21 @@ export interface PokemonListResponse {
   previous: string | null;
   results: PokemonListItem[];
 }
+
+export interface PokemonType {
+  slot: number;
+  type: {
+    name: string;
+  };
+}
+
+export interface PokemonDetail {
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
+  sprites: {
+    front_default: string | null;
+  };
+  types: PokemonType[];
+}

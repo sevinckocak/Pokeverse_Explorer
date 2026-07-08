@@ -1,5 +1,5 @@
 import api from '@/api/axios';
-import type { PokemonListResponse } from '@/types';
+import type { PokemonDetail, PokemonListResponse } from '@/types';
 
 export async function getPokemonList(
   limit = 20,
@@ -13,7 +13,7 @@ export async function getPokemonList(
 
 export async function getPokemonByNameOrId(
   nameOrId: string | number
-): Promise<unknown> {
-  const response = await api.get(`/pokemon/${nameOrId}`);
+): Promise<PokemonDetail> {
+  const response = await api.get<PokemonDetail>(`/pokemon/${nameOrId}`);
   return response.data;
 }
