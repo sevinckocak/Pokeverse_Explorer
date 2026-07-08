@@ -1,17 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getPokemonList } from '@/services';
-import type { PokemonListItem } from '@/types';
+import type { PokemonDetail, PokemonListItem } from '@/types';
 
 export interface PokemonState {
   pokemonList: PokemonListItem[];
   loading: boolean;
   error: string | null;
+  detail: PokemonDetail | null;
+  loadingDetail: boolean;
+  detailError: string | null;
 }
 
 const initialState: PokemonState = {
   pokemonList: [],
   loading: false,
   error: null,
+  detail: null,
+  loadingDetail: false,
+  detailError: null,
 };
 
 export const fetchPokemonList = createAsyncThunk<
