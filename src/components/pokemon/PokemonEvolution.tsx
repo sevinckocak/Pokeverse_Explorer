@@ -5,58 +5,23 @@ import {
   selectEvolutionError,
   selectEvolutionLoading,
 } from "@/store/evolution/evolutionSelectors";
-import type { EvolutionChainNode } from "@/types";
-
-function capitalize(value: string): string {
-  return value.charAt(0).toUpperCase() + value.slice(1);
-}
-
-interface EvolutionNodeProps {
-  node: EvolutionChainNode;
-}
-
-function EvolutionNode({ node }: EvolutionNodeProps) {
-  return (
-    <View style={styles.node}>
-      <Text style={styles.name}>{capitalize(node.species.name)}</Text>
-      {node.evolves_to.map((child) => (
-        <View key={child.species.name} style={styles.branch}>
-          <Text style={styles.arrow}>↓</Text>
-          <EvolutionNode node={child} />
-        </View>
-      ))}
-    </View>
-  );
-}
+import EvolutionNode from "@/components/pokemon/EvolutionNode";
 
 export default function PokemonEvolution() {
   const evolutionChain = useAppSelector(selectEvolutionChain);
   const loading = useAppSelector(selectEvolutionLoading);
   const error = useAppSelector(selectEvolutionError);
 
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <Text>Loading evolution chain...</Text>
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={styles.container}>
-        <Text>{error}</Text>
-      </View>
-    );
-  }
-
-  if (evolutionChain === null) {
+  if (evolutionChain === null && !loading && !error) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <EvolutionNode node={evolutionChain.chain} />
+      <Text style={styles.title}>Evolution Chain</Text>
+      {loading ? <Text>Loading evolution chain...</Text> : null}
+      {error ? <Text>{error}</Text> : null}
+      {evolutionChain ? <EvolutionNode node={evolutionChain.chain} /> : null}
     </View>
   );
 }
@@ -66,18 +31,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 16,
   },
-  node: {
-    alignItems: "center",
-  },
-  branch: {
-    alignItems: "center",
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  arrow: {
-    fontSize: 16,
-    marginVertical: 4,
+  title: {
+    fontSize: 18,
+    fontWeight: "700",
+    marginBottom: 8,
   },
 });
