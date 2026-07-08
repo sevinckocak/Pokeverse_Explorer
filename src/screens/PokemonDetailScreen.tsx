@@ -4,10 +4,11 @@ import type { RouteProp } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import type { RootStackParamList } from "@/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { fetchPokemonDetail } from "@/store/pokemon/pokemonSlice";
+import { fetchPokemonDetail, fetchPokemonSpecies } from "@/store/pokemon/pokemonSlice";
 import PokemonImage from "@/components/pokemon/PokemonImage";
 import PokemonHeader from "@/components/pokemon/PokemonHeader";
 import PokemonInfo from "@/components/pokemon/PokemonInfo";
+import PokemonSpecies from "@/components/pokemon/PokemonSpecies";
 
 type PokemonDetailRouteProp = RouteProp<RootStackParamList, "PokemonDetail">;
 
@@ -16,17 +17,17 @@ export default function PokemonDetailScreen() {
   const { name } = route.params;
 
   const dispatch = useAppDispatch();
-  const { detail, loadingDetail, detailError } = useAppSelector(
-    (state) => state.pokemon,
-  );
+  const { detail, loadingDetail, detailError, species, loadingSpecies, speciesError } =
+    useAppSelector((state) => state.pokemon);
 
   useEffect(() => {
     dispatch(fetchPokemonDetail(name));
+    dispatch(fetchPokemonSpecies(name));
   }, [dispatch, name]);
 
   if (loadingDetail) {
     return (
-      <View style={styles.center}>
+      <View style={styles.container}>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -34,7 +35,7 @@ export default function PokemonDetailScreen() {
 
   if (detailError) {
     return (
-      <View style={styles.center}>
+      <View style={styles.container}>
         <Text>{detailError}</Text>
       </View>
     );
@@ -42,23 +43,28 @@ export default function PokemonDetailScreen() {
 
   if (detail === null) {
     return (
-      <View style={styles.center}>
+      <View style={styles.container}>
         <Text>No Pokémon data available.</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.center}>
+    <View style={styles.container}>
       <PokemonImage imageUrl={detail.sprites.front_default} />
       <PokemonHeader name={detail.name} id={detail.id} />
       <PokemonInfo height={detail.height} weight={detail.weight} />
+      <PokemonSpecies
+        species={species}
+        loading={loadingSpecies}
+        error={speciesError}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  center: {
+  container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
