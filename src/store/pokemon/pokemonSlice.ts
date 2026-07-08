@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getPokemonList } from '@/services';
+import { getPokemonByNameOrId, getPokemonList } from '@/services';
 import type { PokemonDetail, PokemonListItem } from '@/types';
 
 export interface PokemonState {
@@ -29,6 +29,13 @@ export const fetchPokemonList = createAsyncThunk<
   return response.results;
 });
 
+export const fetchPokemonDetail = createAsyncThunk<PokemonDetail, string>(
+  'pokemon/fetchPokemonDetail',
+  async (name) => {
+    return getPokemonByNameOrId(name);
+  }
+);
+
 const pokemonSlice = createSlice({
   name: 'pokemon',
   initialState,
@@ -52,6 +59,18 @@ const pokemonSlice = createSlice({
       .addCase(fetchPokemonList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? 'Failed to fetch Pokémon list';
+      })
+      .addCase(fetchPokemonDetail.pending, (state) => {
+        state.loadingDetail = true;
+        state.detailError = null;
+      })
+      .addCase(fetchPokemonDetail.fulfilled, (state, action) => {
+        state.loadingDetail = false;
+        state.detail = action.payload;
+      })
+      .addCase(fetchPokemonDetail.rejected, (state, action) => {
+        state.loadingDetail = false;
+        state.detailError = action.error.message ?? 'Failed to fetch Pokémon detail';
       });
   },
 });
