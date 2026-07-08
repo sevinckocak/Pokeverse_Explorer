@@ -44,6 +44,9 @@ const pokemonSlice = createSlice({
       state.pokemonList = [];
       state.loading = false;
       state.error = null;
+      state.detail = null;
+      state.loadingDetail = false;
+      state.detailError = null;
     },
   },
   extraReducers: (builder) => {
@@ -63,6 +66,7 @@ const pokemonSlice = createSlice({
       .addCase(fetchPokemonDetail.pending, (state) => {
         state.loadingDetail = true;
         state.detailError = null;
+        state.detail = null;
       })
       .addCase(fetchPokemonDetail.fulfilled, (state, action) => {
         state.loadingDetail = false;
