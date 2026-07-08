@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getPokemonByNameOrId, getPokemonList, getPokemonSpecies } from '@/services';
-import type { PokemonDetail, PokemonListItem, PokemonSpecies } from '@/types';
+import {
+  getEvolutionChain,
+  getPokemonByNameOrId,
+  getPokemonList,
+  getPokemonSpecies,
+} from '@/services';
+import type { EvolutionChain, PokemonDetail, PokemonListItem, PokemonSpecies } from '@/types';
 
 export interface PokemonState {
   pokemonList: PokemonListItem[];
@@ -12,6 +17,9 @@ export interface PokemonState {
   species: PokemonSpecies | null;
   loadingSpecies: boolean;
   speciesError: string | null;
+  evolutionChain: EvolutionChain | null;
+  loadingEvolution: boolean;
+  evolutionError: string | null;
 }
 
 const initialState: PokemonState = {
@@ -24,7 +32,15 @@ const initialState: PokemonState = {
   species: null,
   loadingSpecies: false,
   speciesError: null,
+  evolutionChain: null,
+  loadingEvolution: false,
+  evolutionError: null,
 };
+
+function extractEvolutionChainId(chainUrl: string): number {
+  const segments = chainUrl.split('/').filter(Boolean);
+  return Number(segments[segments.length - 1]);
+}
 
 export const fetchPokemonList = createAsyncThunk<
   PokemonListItem[],
@@ -49,6 +65,14 @@ export const fetchPokemonSpecies = createAsyncThunk<PokemonSpecies, string>(
   }
 );
 
+export const fetchEvolutionChain = createAsyncThunk<EvolutionChain, string>(
+  'pokemon/fetchEvolutionChain',
+  async (chainUrl) => {
+    const chainId = extractEvolutionChainId(chainUrl);
+    return getEvolutionChain(chainId);
+  }
+);
+
 const pokemonSlice = createSlice({
   name: 'pokemon',
   initialState,
@@ -63,6 +87,9 @@ const pokemonSlice = createSlice({
       state.species = null;
       state.loadingSpecies = false;
       state.speciesError = null;
+      state.evolutionChain = null;
+      state.loadingEvolution = false;
+      state.evolutionError = null;
     },
   },
   extraReducers: (builder) => {
@@ -104,6 +131,19 @@ const pokemonSlice = createSlice({
       .addCase(fetchPokemonSpecies.rejected, (state, action) => {
         state.loadingSpecies = false;
         state.speciesError = action.error.message ?? 'Failed to fetch Pokémon species';
+      })
+      .addCase(fetchEvolutionChain.pending, (state) => {
+        state.loadingEvolution = true;
+        state.evolutionError = null;
+        state.evolutionChain = null;
+      })
+      .addCase(fetchEvolutionChain.fulfilled, (state, action) => {
+        state.loadingEvolution = false;
+        state.evolutionChain = action.payload;
+      })
+      .addCase(fetchEvolutionChain.rejected, (state, action) => {
+        state.loadingEvolution = false;
+        state.evolutionError = action.error.message ?? 'Failed to fetch evolution chain';
       });
   },
 });
