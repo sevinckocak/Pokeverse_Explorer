@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { fetchPokemonDetail } from "@/store/pokemon/pokemonSlice";
 import PokemonImage from "@/components/pokemon/PokemonImage";
 import PokemonHeader from "@/components/pokemon/PokemonHeader";
+import PokemonInfo from "@/components/pokemon/PokemonInfo";
 
 type PokemonDetailRouteProp = RouteProp<RootStackParamList, "PokemonDetail">;
 
@@ -51,8 +52,7 @@ export default function PokemonDetailScreen() {
     <View style={styles.center}>
       <PokemonImage imageUrl={detail.sprites.front_default} />
       <PokemonHeader name={detail.name} id={detail.id} />
-      <Text>{(detail.height / 10).toFixed(1)} m</Text>
-      <Text>{(detail.weight / 10).toFixed(1)} kg</Text>
+      <PokemonInfo height={detail.height} weight={detail.weight} />
     </View>
   );
 }
