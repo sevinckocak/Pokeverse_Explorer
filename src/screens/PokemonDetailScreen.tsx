@@ -19,6 +19,7 @@ import PokemonImage from "@/components/pokemon/PokemonImage";
 import PokemonHeader from "@/components/pokemon/PokemonHeader";
 import PokemonInfo from "@/components/pokemon/PokemonInfo";
 import PokemonSpecies from "@/components/pokemon/PokemonSpecies";
+import PokemonEvolution from "@/components/pokemon/PokemonEvolution";
 
 type PokemonDetailRouteProp = RouteProp<RootStackParamList, "PokemonDetail">;
 
@@ -73,6 +74,7 @@ export default function PokemonDetailScreen() {
         loading={loadingSpecies}
         error={speciesError}
       />
+      <PokemonEvolution />
     </View>
   );
 }
