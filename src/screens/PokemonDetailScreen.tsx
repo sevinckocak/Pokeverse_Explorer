@@ -1,21 +1,9 @@
-import { useEffect } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import type { RouteProp } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import type { RootStackParamList } from "@/navigation";
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
-import { fetchPokemonDetailPage } from "@/store/pokemonDetail/fetchPokemonDetailPage";
-import {
-  selectPokemonDetail,
-  selectPokemonError,
-  selectPokemonLoading,
-} from "@/store/pokemon/pokemonSelectors";
-import {
-  selectPokemonSpecies,
-  selectSpeciesError,
-  selectSpeciesLoading,
-} from "@/store/species/speciesSelectors";
+import { usePokemonDetailData } from "@/hooks/usePokemonDetailData";
 import PokemonHero from "@/components/pokemon/PokemonHero";
 import PokemonInfo from "@/components/pokemon/PokemonInfo";
 import PokemonSpecies from "@/components/pokemon/PokemonSpecies";
@@ -28,20 +16,15 @@ export default function PokemonDetailScreen() {
   const route = useRoute<PokemonDetailRouteProp>();
   const { name } = route.params;
 
-  const dispatch = useAppDispatch();
   const { colors } = useThemeTokens();
-
-  const detail = useAppSelector(selectPokemonDetail);
-  const loadingDetail = useAppSelector(selectPokemonLoading);
-  const detailError = useAppSelector(selectPokemonError);
-
-  const species = useAppSelector(selectPokemonSpecies);
-  const loadingSpecies = useAppSelector(selectSpeciesLoading);
-  const speciesError = useAppSelector(selectSpeciesError);
-
-  useEffect(() => {
-    dispatch(fetchPokemonDetailPage(name));
-  }, [dispatch, name]);
+  const {
+    detail,
+    loadingDetail,
+    detailError,
+    species,
+    loadingSpecies,
+    speciesError,
+  } = usePokemonDetailData(name);
 
   if (loadingDetail) {
     return (

@@ -2,7 +2,7 @@ import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Badge } from "@/components/ui/Badge";
-import { ANIMATION, SPACING } from "@/constants/theme";
+import { POKEMON_DETAIL_SECTION_DELAY, SPACING } from "@/constants/theme";
 import { getPokemonGradient } from "@/constants/pokemonTheme";
 import { capitalize } from "@/utils/string";
 import type { PokemonSpecies } from "@/types";
@@ -21,7 +21,7 @@ function HabitatCardComponent({ species }: HabitatCardProps) {
   const [colorTint] = getPokemonGradient(species.color.name);
 
   return (
-    <GlassCard title="Habitat" delay={ANIMATION.staggerDelay * 2}>
+    <GlassCard title="Habitat" delay={POKEMON_DETAIL_SECTION_DELAY.habitat}>
       <View style={styles.row}>
         <Badge
           label={habitatLabel}

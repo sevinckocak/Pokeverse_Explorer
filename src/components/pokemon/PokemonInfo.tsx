@@ -2,7 +2,7 @@ import { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
-import { ANIMATION, SPACING } from "@/constants/theme";
+import { POKEMON_DETAIL_SECTION_DELAY, SPACING } from "@/constants/theme";
 
 interface PokemonInfoProps {
   height: number;
@@ -15,7 +15,7 @@ function PokemonInfoComponent({ height, weight }: PokemonInfoProps) {
   const displayWeight = `${(weight / 10).toFixed(1)} kg`;
 
   return (
-    <GlassCard title="Stats" delay={ANIMATION.staggerDelay}>
+    <GlassCard title="Stats" delay={POKEMON_DETAIL_SECTION_DELAY.stats}>
       <View style={styles.row}>
         <View style={styles.column}>
           <Text style={[styles.value, { color: colors.textPrimary }]}>{displayHeight}</Text>

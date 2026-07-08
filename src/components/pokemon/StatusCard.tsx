@@ -2,7 +2,7 @@ import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Badge } from "@/components/ui/Badge";
-import { ANIMATION, SPACING } from "@/constants/theme";
+import { POKEMON_DETAIL_SECTION_DELAY, SPACING } from "@/constants/theme";
 import type { PokemonSpecies } from "@/types";
 
 interface StatusCardProps {
@@ -18,7 +18,7 @@ function StatusCardComponent({ species }: StatusCardProps) {
   const mythicalStyle = species.is_mythical ? ACTIVE_MYTHICAL : INACTIVE_STATUS;
 
   return (
-    <GlassCard title="Status" delay={ANIMATION.staggerDelay * 4}>
+    <GlassCard title="Status" delay={POKEMON_DETAIL_SECTION_DELAY.status}>
       <View style={styles.row}>
         <Badge
           label="Legendary"

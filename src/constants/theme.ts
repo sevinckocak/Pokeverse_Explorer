@@ -57,3 +57,14 @@ export const DARK_THEME_COLORS: ThemeColors = {
   divider: 'rgba(255, 255, 255, 0.12)',
   trackBackground: 'rgba(255, 255, 255, 0.12)',
 };
+
+// Single source of truth for the Pokemon Detail screen's staggered entrance
+// order. Add a new key here (in visual order) when a new section is added,
+// instead of hand-deriving a multiplier inside that section's own file.
+export const POKEMON_DETAIL_SECTION_DELAY = {
+  stats: ANIMATION.staggerDelay,
+  habitat: ANIMATION.staggerDelay * 2,
+  capture: ANIMATION.staggerDelay * 3,
+  status: ANIMATION.staggerDelay * 4,
+  evolution: ANIMATION.staggerDelay * 5,
+} as const;

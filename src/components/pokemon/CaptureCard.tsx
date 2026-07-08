@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ProgressStat } from "@/components/ui/ProgressStat";
-import { ANIMATION } from "@/constants/theme";
+import { POKEMON_DETAIL_SECTION_DELAY } from "@/constants/theme";
 import { STAT_MAX_VALUE } from "@/constants/pokemonTheme";
 import type { PokemonSpecies } from "@/types";
 
@@ -14,7 +14,7 @@ const BASE_HAPPINESS_COLOR = "#F2A93B";
 
 function CaptureCardComponent({ species }: CaptureCardProps) {
   return (
-    <GlassCard title="Capture" delay={ANIMATION.staggerDelay * 3}>
+    <GlassCard title="Capture" delay={POKEMON_DETAIL_SECTION_DELAY.capture}>
       <ProgressStat
         label="Capture Rate"
         value={species.capture_rate}
