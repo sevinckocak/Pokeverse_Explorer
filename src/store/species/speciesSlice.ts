@@ -4,13 +4,13 @@ import { fetchPokemonSpecies } from '@/store/species/speciesThunks';
 
 export interface SpeciesState {
   species: PokemonSpecies | null;
-  loading: boolean;
+  isLoading: boolean;
   error: string | null;
 }
 
 const initialState: SpeciesState = {
   species: null,
-  loading: false,
+  isLoading: false,
   error: null,
 };
 
@@ -21,16 +21,16 @@ const speciesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPokemonSpecies.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
         state.species = null;
       })
       .addCase(fetchPokemonSpecies.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.species = action.payload;
       })
       .addCase(fetchPokemonSpecies.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = action.error.message ?? 'Failed to fetch Pokémon species';
       });
   },

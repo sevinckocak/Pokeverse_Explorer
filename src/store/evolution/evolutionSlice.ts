@@ -4,13 +4,13 @@ import { fetchEvolutionChain } from '@/store/evolution/evolutionThunks';
 
 export interface EvolutionState {
   evolutionChain: EvolutionChain | null;
-  loading: boolean;
+  isLoading: boolean;
   error: string | null;
 }
 
 const initialState: EvolutionState = {
   evolutionChain: null,
-  loading: false,
+  isLoading: false,
   error: null,
 };
 
@@ -21,16 +21,16 @@ const evolutionSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchEvolutionChain.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
         state.evolutionChain = null;
       })
       .addCase(fetchEvolutionChain.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.evolutionChain = action.payload;
       })
       .addCase(fetchEvolutionChain.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = action.error.message ?? 'Failed to fetch evolution chain';
       });
   },
