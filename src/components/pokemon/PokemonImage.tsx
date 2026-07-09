@@ -3,12 +3,13 @@ import { Image, StyleSheet, View, useWindowDimensions } from "react-native";
 
 interface PokemonImageProps {
   imageUrl: string | null;
+  glowColor: string;
 }
 
 const IMAGE_WIDTH_RATIO = 0.55;
 const GLOW_SCALE = 1.15;
 
-function PokemonImageComponent({ imageUrl }: PokemonImageProps) {
+function PokemonImageComponent({ imageUrl, glowColor }: PokemonImageProps) {
   const { width } = useWindowDimensions();
 
   if (imageUrl === null) {
@@ -29,6 +30,7 @@ function PokemonImageComponent({ imageUrl }: PokemonImageProps) {
             borderRadius: glowSize / 2,
             top: (size - glowSize) / 2,
             left: (size - glowSize) / 2,
+            backgroundColor: glowColor,
           },
         ]}
       />
@@ -46,7 +48,6 @@ const styles = StyleSheet.create({
   },
   glow: {
     position: "absolute",
-    backgroundColor: "rgba(255, 255, 255, 0.28)",
   },
   image: {
     width: "100%",

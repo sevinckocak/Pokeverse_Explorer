@@ -1,32 +1,31 @@
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { RADIUS } from "@/constants/theme";
-import { getPokemonGradient } from "@/constants/pokemonTheme";
 import { PokeballWatermark } from "@/components/pokemon/PokeballWatermark";
 import PokemonImage from "@/components/pokemon/PokemonImage";
 import PokemonHeader from "@/components/pokemon/PokemonHeader";
+import type { PokemonTypeTheme } from "@/constants/pokemonTheme";
 
 interface PokemonHeroProps {
   imageUrl: string | null;
   name: string;
   id: number;
-  colorName: string | null;
+  theme: PokemonTypeTheme;
 }
 
 const WATERMARK_WIDTH_RATIO = 1.1;
 const WATERMARK_TOP_OFFSET_RATIO = 0.32;
 
-function PokemonHeroComponent({ imageUrl, name, id, colorName }: PokemonHeroProps) {
+function PokemonHeroComponent({ imageUrl, name, id, theme }: PokemonHeroProps) {
   const { width } = useWindowDimensions();
-  const gradientColors = useMemo(() => getPokemonGradient(colorName), [colorName]);
   const watermarkSize = width * WATERMARK_WIDTH_RATIO;
 
   return (
     <Animated.View entering={FadeIn.duration(500)} style={styles.wrapper}>
       <LinearGradient
-        colors={gradientColors}
+        colors={theme.backgroundGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
@@ -37,7 +36,7 @@ function PokemonHeroComponent({ imageUrl, name, id, colorName }: PokemonHeroProp
         >
           <PokeballWatermark size={watermarkSize} />
         </View>
-        <PokemonImage imageUrl={imageUrl} />
+        <PokemonImage imageUrl={imageUrl} glowColor={theme.glowColor} />
         <PokemonHeader name={name} id={id} />
       </LinearGradient>
     </Animated.View>

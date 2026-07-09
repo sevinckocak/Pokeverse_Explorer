@@ -7,9 +7,10 @@ import type { EvolutionChainNode } from "@/types";
 
 interface EvolutionNodeProps {
   node: EvolutionChainNode;
+  accentColor: string;
 }
 
-function EvolutionNodeComponent({ node }: EvolutionNodeProps) {
+function EvolutionNodeComponent({ node, accentColor }: EvolutionNodeProps) {
   const { colors } = useThemeTokens();
   const isBranching = node.evolves_to.length > 1;
 
@@ -17,7 +18,7 @@ function EvolutionNodeComponent({ node }: EvolutionNodeProps) {
     <View>
       <View style={styles.row}>
         <View style={styles.timelineColumn}>
-          <View style={[styles.dot, { backgroundColor: colors.textPrimary }]} />
+          <View style={[styles.dot, { backgroundColor: accentColor }]} />
           {node.evolves_to.length > 0 ? (
             <View style={[styles.line, { backgroundColor: colors.divider }]} />
           ) : null}
@@ -25,7 +26,7 @@ function EvolutionNodeComponent({ node }: EvolutionNodeProps) {
         <View
           style={[
             styles.chip,
-            { backgroundColor: colors.surface, borderColor: colors.surfaceBorder },
+            { backgroundColor: colors.surface, borderColor: accentColor },
           ]}
         >
           <Text style={[styles.name, { color: colors.textPrimary }]}>
@@ -35,7 +36,7 @@ function EvolutionNodeComponent({ node }: EvolutionNodeProps) {
       </View>
       <View style={{ marginLeft: isBranching ? SPACING.lg : 0 }}>
         {node.evolves_to.map((child) => (
-          <EvolutionNode key={child.species.name} node={child} />
+          <EvolutionNode key={child.species.name} node={child} accentColor={accentColor} />
         ))}
       </View>
     </View>

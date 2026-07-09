@@ -1,9 +1,11 @@
+import { useMemo } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import type { RouteProp } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import type { RootStackParamList } from "@/navigation";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
 import { usePokemonDetailData } from "@/hooks/usePokemonDetailData";
+import { getPokemonTheme } from "@/constants/pokemonTheme";
 import PokemonHero from "@/components/pokemon/PokemonHero";
 import PokemonInfo from "@/components/pokemon/PokemonInfo";
 import PokemonSpecies from "@/components/pokemon/PokemonSpecies";
@@ -25,6 +27,9 @@ export default function PokemonDetailScreen() {
     loadingSpecies,
     speciesError,
   } = usePokemonDetailData(name);
+
+  const primaryType = detail?.types[0]?.type.name ?? null;
+  const theme = useMemo(() => getPokemonTheme(primaryType), [primaryType]);
 
   if (loadingDetail) {
     return (
@@ -59,12 +64,17 @@ export default function PokemonDetailScreen() {
         imageUrl={detail.sprites.front_default}
         name={detail.name}
         id={detail.id}
-        colorName={species?.color.name ?? null}
+        theme={theme}
       />
       <View style={styles.body}>
-        <PokemonInfo height={detail.height} weight={detail.weight} />
-        <PokemonSpecies species={species} loading={loadingSpecies} error={speciesError} />
-        <PokemonEvolution />
+        <PokemonInfo height={detail.height} weight={detail.weight} theme={theme} />
+        <PokemonSpecies
+          species={species}
+          loading={loadingSpecies}
+          error={speciesError}
+          theme={theme}
+        />
+        <PokemonEvolution theme={theme} />
       </View>
     </ScrollView>
   );

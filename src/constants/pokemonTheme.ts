@@ -221,7 +221,11 @@ export function isPokemonTypeName(value: string): value is PokemonTypeName {
   return (POKEMON_TYPE_NAMES as readonly string[]).includes(value);
 }
 
-export function getPokemonTheme(typeName: string): PokemonTypeTheme {
+export function getPokemonTheme(typeName: string | null): PokemonTypeTheme {
+  if (typeName === null) {
+    return DEFAULT_TYPE_THEME;
+  }
+
   if (isPokemonTypeName(typeName)) {
     return POKEMON_TYPE_THEMES[typeName];
   }

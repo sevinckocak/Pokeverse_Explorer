@@ -5,14 +5,16 @@ import type { StyleProp, ViewStyle } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { ANIMATION, CARD_SHADOW, RADIUS, SPACING } from '@/constants/theme';
+import type { PokemonTypeTheme } from '@/constants/pokemonTheme';
 
 interface GlassCardProps extends PropsWithChildren {
   title?: string;
   delay?: number;
+  theme: PokemonTypeTheme;
   style?: StyleProp<ViewStyle>;
 }
 
-function GlassCardComponent({ title, delay = 0, style, children }: GlassCardProps) {
+function GlassCardComponent({ title, delay = 0, theme, style, children }: GlassCardProps) {
   const { colors } = useThemeTokens();
 
   return (
@@ -20,12 +22,12 @@ function GlassCardComponent({ title, delay = 0, style, children }: GlassCardProp
       entering={FadeInDown.delay(delay).duration(ANIMATION.duration)}
       style={[
         styles.card,
-        { backgroundColor: colors.surface, borderColor: colors.surfaceBorder },
+        { backgroundColor: colors.surface, borderColor: theme.cardTint },
         style,
       ]}
     >
       {title ? (
-        <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
+        <Text style={[styles.title, { color: theme.accent }]}>{title}</Text>
       ) : null}
       {children}
     </Animated.View>
