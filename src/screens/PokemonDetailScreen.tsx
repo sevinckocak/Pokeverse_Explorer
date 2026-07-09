@@ -1,11 +1,14 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import type { RouteProp } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import type { RootStackParamList } from "@/navigation";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { usePokemonDetailData } from "@/hooks/usePokemonDetailData";
 import { getPokemonTheme } from "@/constants/pokemonTheme";
+import { fetchAbility } from "@/store/ability/abilityThunks";
+import { clearAbilities } from "@/store/ability/abilitySlice";
 import PokemonHero from "@/components/pokemon/PokemonHero";
 import PokemonInfo from "@/components/pokemon/PokemonInfo";
 import PokemonSpecies from "@/components/pokemon/PokemonSpecies";
@@ -19,6 +22,7 @@ export default function PokemonDetailScreen() {
   const { name } = route.params;
 
   const { colors } = useThemeTokens();
+  const dispatch = useAppDispatch();
   const {
     detail,
     loadingDetail,
@@ -28,8 +32,31 @@ export default function PokemonDetailScreen() {
     speciesError,
   } = usePokemonDetailData(name);
 
+  const abilities = useAppSelector((state) => state.ability.abilities);
+  const loadingAbilities = useAppSelector((state) => state.ability.isLoading);
+  const abilitiesError = useAppSelector((state) => state.ability.error);
+
   const primaryType = detail?.types[0]?.type.name ?? null;
   const theme = useMemo(() => getPokemonTheme(primaryType), [primaryType]);
+
+  useEffect(() => {
+    dispatch(clearAbilities());
+  }, [dispatch, name]);
+
+  useEffect(() => {
+    if (!detail) {
+      return;
+    }
+
+    detail.abilities.forEach((ability) => {
+      dispatch(
+        fetchAbility({
+          name: ability.ability.name,
+          isHidden: ability.is_hidden,
+        })
+      );
+    });
+  }, [dispatch, detail]);
 
   if (loadingDetail) {
     return (
@@ -75,6 +102,17 @@ export default function PokemonDetailScreen() {
           theme={theme}
         />
         <PokemonEvolution theme={theme} />
+
+        {/* Temporary: verifies the Ability data flow, not final UI. */}
+        <View>
+          {loadingAbilities ? <Text style={{ color: colors.textPrimary }}>Loading abilities...</Text> : null}
+          {abilitiesError ? <Text style={{ color: colors.textPrimary }}>{abilitiesError}</Text> : null}
+          {abilities.map((ability) => (
+            <Text key={ability.name} style={{ color: colors.textPrimary }}>
+              {`${ability.name}${ability.isHidden ? " (hidden)" : ""}: ${ability.shortEffect}`}
+            </Text>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );

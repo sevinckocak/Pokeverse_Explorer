@@ -6,13 +6,20 @@ export interface AbilityState {
   abilities: Ability[];
   isLoading: boolean;
   error: string | null;
+  requestCount: number;
 }
 
 const initialState: AbilityState = {
   abilities: [],
   isLoading: false,
   error: null,
+  requestCount: 0,
 };
+
+function decrementRequestCount(state: AbilityState): void {
+  state.requestCount = Math.max(0, state.requestCount - 1);
+  state.isLoading = state.requestCount > 0;
+}
 
 const abilitySlice = createSlice({
   name: 'ability',
@@ -21,16 +28,19 @@ const abilitySlice = createSlice({
     clearAbilities: (state) => {
       state.abilities = [];
       state.error = null;
+      state.requestCount = 0;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAbility.pending, (state) => {
-        state.isLoading = true;
+        state.requestCount += 1;
+        state.isLoading = state.requestCount > 0;
         state.error = null;
       })
       .addCase(fetchAbility.fulfilled, (state, action) => {
-        state.isLoading = false;
+        decrementRequestCount(state);
         state.error = null;
 
         const exists = state.abilities.some(
@@ -42,7 +52,7 @@ const abilitySlice = createSlice({
         }
       })
       .addCase(fetchAbility.rejected, (state, action) => {
-        state.isLoading = false;
+        decrementRequestCount(state);
         state.error =
           action.payload ?? action.error.message ?? 'Failed to fetch ability';
       });
