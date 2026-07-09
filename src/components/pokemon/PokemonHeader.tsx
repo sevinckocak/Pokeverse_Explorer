@@ -6,16 +6,17 @@ import { capitalize } from "@/utils/string";
 interface PokemonHeaderProps {
   name: string;
   id: number;
+  accentColor: string;
 }
 
-function PokemonHeaderComponent({ name, id }: PokemonHeaderProps) {
+function PokemonHeaderComponent({ name, id, accentColor }: PokemonHeaderProps) {
   const displayName = capitalize(name);
   const displayId = `#${id.toString().padStart(3, "0")}`;
 
   return (
     <View style={styles.container}>
       <Text style={styles.name}>{displayName}</Text>
-      <View style={styles.idPill}>
+      <View style={[styles.idPill, { borderColor: accentColor }]}>
         <Text style={styles.id}>{displayId}</Text>
       </View>
     </View>
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.xs,
     paddingHorizontal: SPACING.md,
     borderRadius: 999,
+    borderWidth: 1.5,
     backgroundColor: "rgba(255, 255, 255, 0.22)",
   },
   id: {

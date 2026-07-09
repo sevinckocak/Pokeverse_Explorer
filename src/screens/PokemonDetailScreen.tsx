@@ -64,7 +64,7 @@ export default function PokemonDetailScreen() {
         imageUrl={detail.sprites.front_default}
         name={detail.name}
         id={detail.id}
-        theme={theme}
+        primaryType={primaryType}
       />
       <View style={styles.body}>
         <PokemonInfo height={detail.height} weight={detail.weight} theme={theme} />
