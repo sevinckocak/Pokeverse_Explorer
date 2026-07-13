@@ -1,6 +1,6 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '@/screens/HomeScreen';
+import BottomTabNavigator from '@/navigation/BottomTabNavigator';
 import PokemonDetailScreen from '@/screens/PokemonDetailScreen';
 import OnboardingScreen from '@/screens/onboarding/OnboardingScreen';
 import { useOnboardingStatus } from '@/hooks/useOnboardingStatus';
@@ -27,7 +27,11 @@ export default function RootStack() {
         component={OnboardingScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="Home"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="PokemonDetail" component={PokemonDetailScreen} />
     </Stack.Navigator>
   );
