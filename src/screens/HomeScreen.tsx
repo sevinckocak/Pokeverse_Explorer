@@ -12,6 +12,7 @@ import {
 import type { RootStackParamList } from '@/navigation';
 import HomeHeader, { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
 import SearchBar from '@/components/common/SearchBar';
+import QuickActions from '@/components/home/QuickActions';
 import { SPACING } from '@/constants/theme';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
@@ -35,6 +36,8 @@ export default function HomeScreen() {
       <View style={styles.searchBarWrapper}>
         <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
       </View>
+
+      <QuickActions />
 
       {loading ? (
         <View style={styles.center}>
