@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
@@ -10,24 +10,45 @@ import {
   selectPokemonLoading,
 } from '@/store/pokemon/pokemonSelectors';
 import type { RootStackParamList } from '@/navigation';
+import type { PokemonListItem } from '@/types';
 import HomeHeader, { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
 import SearchBar from '@/components/common/SearchBar';
 import QuickActions from '@/components/home/QuickActions';
+import PokemonCard from '@/components/pokemon/PokemonCard';
 import { SPACING } from '@/constants/theme';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
+const GRID_COLUMNS = 2;
+
 export default function HomeScreen() {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const { width } = useWindowDimensions();
   const pokemonList = useAppSelector(selectPokemonList);
   const loading = useAppSelector(selectPokemonLoading);
   const error = useAppSelector(selectPokemonError);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const cardWidth = (width - SPACING.lg * 2 - SPACING.md * (GRID_COLUMNS - 1)) / GRID_COLUMNS;
+
   useEffect(() => {
     dispatch(fetchPokemonList());
   }, [dispatch]);
+
+  const handleCardPress = useCallback(
+    (name: string) => {
+      navigation.navigate('PokemonDetail', { name });
+    },
+    [navigation]
+  );
+
+  const renderItem = useCallback(
+    ({ item }: { item: PokemonListItem }) => (
+      <PokemonCard pokemon={item} width={cardWidth} onPress={handleCardPress} />
+    ),
+    [cardWidth, handleCardPress]
+  );
 
   return (
     <View style={styles.root}>
@@ -53,14 +74,10 @@ export default function HomeScreen() {
             style={styles.list}
             data={pokemonList}
             keyExtractor={(item) => item.name}
-            renderItem={({ item }) => (
-              <Pressable
-                style={styles.item}
-                onPress={() => navigation.navigate('PokemonDetail', { name: item.name })}
-              >
-                <Text style={styles.itemText}>{item.name}</Text>
-              </Pressable>
-            )}
+            numColumns={GRID_COLUMNS}
+            columnWrapperStyle={styles.row}
+            contentContainerStyle={styles.listContent}
+            renderItem={renderItem}
           />
         </View>
       )}
@@ -80,17 +97,19 @@ const styles = StyleSheet.create({
   list: {
     backgroundColor: HOME_HEADER_COLORS.background,
   },
+  listContent: {
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: SPACING.xl,
+    gap: SPACING.md,
+  },
+  row: {
+    gap: SPACING.md,
+  },
   center: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: HOME_HEADER_COLORS.background,
-  },
-  item: {
-    padding: 16,
-  },
-  itemText: {
-    color: HOME_HEADER_COLORS.title,
   },
   errorText: {
     color: HOME_HEADER_COLORS.title,
