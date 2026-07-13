@@ -10,6 +10,7 @@ import {
   selectPokemonLoading,
 } from '@/store/pokemon/pokemonSelectors';
 import type { RootStackParamList } from '@/navigation';
+import HomeHeader from '@/components/home/HomeHeader';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -24,41 +25,42 @@ export default function HomeScreen() {
     dispatch(fetchPokemonList());
   }, [dispatch]);
 
-  if (loading) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={styles.center}>
-        <Text>{error}</Text>
-      </View>
-    );
-  }
-
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={pokemonList}
-        keyExtractor={(item) => item.name}
-        renderItem={({ item }) => (
-          <Pressable
-            style={styles.item}
-            onPress={() => navigation.navigate('PokemonDetail', { name: item.name })}
-          >
-            <Text>{item.name}</Text>
-          </Pressable>
-        )}
-      />
+    <View style={styles.root}>
+      <HomeHeader />
+
+      {loading ? (
+        <View style={styles.center}>
+          <ActivityIndicator size="large" />
+        </View>
+      ) : error ? (
+        <View style={styles.center}>
+          <Text>{error}</Text>
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <FlatList
+            data={pokemonList}
+            keyExtractor={(item) => item.name}
+            renderItem={({ item }) => (
+              <Pressable
+                style={styles.item}
+                onPress={() => navigation.navigate('PokemonDetail', { name: item.name })}
+              >
+                <Text>{item.name}</Text>
+              </Pressable>
+            )}
+          />
+        </View>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
   container: {
     flex: 1,
   },
