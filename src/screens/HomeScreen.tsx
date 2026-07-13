@@ -1,40 +1,51 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { fetchPokemonList } from '@/store';
+import { DEFAULT_POKEMON_PAGE_SIZE } from '@/store/pokemon/pokemonThunks';
 import {
   selectPokemonError,
   selectPokemonList,
   selectPokemonLoading,
 } from '@/store/pokemon/pokemonSelectors';
 import type { RootStackParamList } from '@/navigation';
-import type { PokemonListItem } from '@/types';
 import HomeHeader, { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
 import SearchBar from '@/components/common/SearchBar';
 import QuickActions from '@/components/home/QuickActions';
-import PokemonCard from '@/components/pokemon/PokemonCard';
+import PokemonSection from '@/components/pokemon/PokemonSection';
 import { SPACING } from '@/constants/theme';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
-const GRID_COLUMNS = 2;
-
 export default function HomeScreen() {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const { width } = useWindowDimensions();
+  const tabBarHeight = useBottomTabBarHeight();
   const pokemonList = useAppSelector(selectPokemonList);
   const loading = useAppSelector(selectPokemonLoading);
   const error = useAppSelector(selectPokemonError);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const cardWidth = (width - SPACING.lg * 2 - SPACING.md * (GRID_COLUMNS - 1)) / GRID_COLUMNS;
+  // Home only ever features the first page. The underlying list is shared
+  // with AllPokemonScreen's pagination, so this only fetches when truly
+  // empty — otherwise re-mounting Home would reset progress made there.
+  const featuredPokemon = useMemo(
+    () => pokemonList.slice(0, DEFAULT_POKEMON_PAGE_SIZE),
+    [pokemonList]
+  );
 
   useEffect(() => {
-    dispatch(fetchPokemonList());
-  }, [dispatch]);
+    if (pokemonList.length === 0) {
+      dispatch(fetchPokemonList({ offset: 0 }));
+    }
+  }, [dispatch, pokemonList.length]);
+
+  const handleSeeAllPress = useCallback(() => {
+    navigation.navigate('AllPokemon');
+  }, [navigation]);
 
   const handleCardPress = useCallback(
     (name: string) => {
@@ -43,15 +54,11 @@ export default function HomeScreen() {
     [navigation]
   );
 
-  const renderItem = useCallback(
-    ({ item }: { item: PokemonListItem }) => (
-      <PokemonCard pokemon={item} width={cardWidth} onPress={handleCardPress} />
-    ),
-    [cardWidth, handleCardPress]
-  );
-
   return (
-    <View style={styles.root}>
+    <ScrollView
+      style={styles.root}
+      contentContainerStyle={[styles.content, { paddingBottom: tabBarHeight + SPACING.xl }]}
+    >
       <HomeHeader />
 
       <View style={styles.searchBarWrapper}>
@@ -60,28 +67,15 @@ export default function HomeScreen() {
 
       <QuickActions />
 
-      {loading ? (
-        <View style={styles.center}>
-          <ActivityIndicator size="large" />
-        </View>
-      ) : error ? (
-        <View style={styles.center}>
-          <Text style={styles.errorText}>{error}</Text>
-        </View>
-      ) : (
-        <View style={styles.container}>
-          <FlatList
-            style={styles.list}
-            data={pokemonList}
-            keyExtractor={(item) => item.name}
-            numColumns={GRID_COLUMNS}
-            columnWrapperStyle={styles.row}
-            contentContainerStyle={styles.listContent}
-            renderItem={renderItem}
-          />
-        </View>
-      )}
-    </View>
+      <PokemonSection
+        title="Pokemon"
+        data={featuredPokemon}
+        loading={loading}
+        error={error}
+        onSeeAllPress={handleSeeAllPress}
+        onCardPress={handleCardPress}
+      />
+    </ScrollView>
   );
 }
 
@@ -90,33 +84,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: HOME_HEADER_COLORS.background,
   },
-  container: {
-    flex: 1,
-    backgroundColor: HOME_HEADER_COLORS.background,
-  },
-  list: {
-    backgroundColor: HOME_HEADER_COLORS.background,
-  },
-  listContent: {
-    paddingHorizontal: SPACING.lg,
-    paddingBottom: SPACING.xl,
-    gap: SPACING.md,
-  },
-  row: {
-    gap: SPACING.md,
-  },
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: HOME_HEADER_COLORS.background,
-  },
-  errorText: {
-    color: HOME_HEADER_COLORS.title,
+  content: {
+    flexGrow: 1,
   },
   searchBarWrapper: {
     paddingHorizontal: SPACING.lg,
     paddingBottom: SPACING.md,
-    backgroundColor: HOME_HEADER_COLORS.background,
   },
 });

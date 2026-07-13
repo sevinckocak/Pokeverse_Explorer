@@ -18,6 +18,16 @@ export const selectPokemonLoading = createSelector(
   (pokemonState) => pokemonState.isLoading
 );
 
+export const selectPokemonLoadingMore = createSelector(
+  selectPokemonState,
+  (pokemonState) => pokemonState.isLoadingMore
+);
+
+export const selectPokemonHasMore = createSelector(
+  selectPokemonState,
+  (pokemonState) => pokemonState.hasMore
+);
+
 export const selectPokemonError = createSelector(
   selectPokemonState,
   (pokemonState) => pokemonState.error
