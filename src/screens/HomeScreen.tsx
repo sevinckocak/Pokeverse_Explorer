@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -11,6 +11,8 @@ import {
 } from '@/store/pokemon/pokemonSelectors';
 import type { RootStackParamList } from '@/navigation';
 import HomeHeader from '@/components/home/HomeHeader';
+import SearchBar from '@/components/common/SearchBar';
+import { SPACING } from '@/constants/theme';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -20,6 +22,7 @@ export default function HomeScreen() {
   const pokemonList = useAppSelector(selectPokemonList);
   const loading = useAppSelector(selectPokemonLoading);
   const error = useAppSelector(selectPokemonError);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     dispatch(fetchPokemonList());
@@ -28,6 +31,10 @@ export default function HomeScreen() {
   return (
     <View style={styles.root}>
       <HomeHeader />
+
+      <View style={styles.searchBarWrapper}>
+        <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
+      </View>
 
       {loading ? (
         <View style={styles.center}>
@@ -71,5 +78,9 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 16,
+  },
+  searchBarWrapper: {
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: SPACING.md,
   },
 });
