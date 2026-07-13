@@ -7,7 +7,7 @@ interface HomeHeaderProps {
   onNotificationPress?: () => void;
 }
 
-const HOME_HEADER_COLORS = {
+export const HOME_HEADER_COLORS = {
   background: "#141B2D",
   accent: "#5B7FFF",
   title: "#FFFFFF",

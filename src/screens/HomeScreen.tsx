@@ -10,7 +10,7 @@ import {
   selectPokemonLoading,
 } from '@/store/pokemon/pokemonSelectors';
 import type { RootStackParamList } from '@/navigation';
-import HomeHeader from '@/components/home/HomeHeader';
+import HomeHeader, { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
 import SearchBar from '@/components/common/SearchBar';
 import { SPACING } from '@/constants/theme';
 
@@ -42,11 +42,12 @@ export default function HomeScreen() {
         </View>
       ) : error ? (
         <View style={styles.center}>
-          <Text>{error}</Text>
+          <Text style={styles.errorText}>{error}</Text>
         </View>
       ) : (
         <View style={styles.container}>
           <FlatList
+            style={styles.list}
             data={pokemonList}
             keyExtractor={(item) => item.name}
             renderItem={({ item }) => (
@@ -54,7 +55,7 @@ export default function HomeScreen() {
                 style={styles.item}
                 onPress={() => navigation.navigate('PokemonDetail', { name: item.name })}
               >
-                <Text>{item.name}</Text>
+                <Text style={styles.itemText}>{item.name}</Text>
               </Pressable>
             )}
           />
@@ -67,20 +68,33 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: HOME_HEADER_COLORS.background,
   },
   container: {
     flex: 1,
+    backgroundColor: HOME_HEADER_COLORS.background,
+  },
+  list: {
+    backgroundColor: HOME_HEADER_COLORS.background,
   },
   center: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: HOME_HEADER_COLORS.background,
   },
   item: {
     padding: 16,
   },
+  itemText: {
+    color: HOME_HEADER_COLORS.title,
+  },
+  errorText: {
+    color: HOME_HEADER_COLORS.title,
+  },
   searchBarWrapper: {
     paddingHorizontal: SPACING.lg,
     paddingBottom: SPACING.md,
+    backgroundColor: HOME_HEADER_COLORS.background,
   },
 });
