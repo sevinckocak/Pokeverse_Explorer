@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
 import { FlatList, StyleSheet, useWindowDimensions } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native';
 import PokemonCard from '@/components/pokemon/PokemonCard';
 import { SPACING } from '@/constants/theme';
 import type { PokemonListItem } from '@/types';
@@ -8,13 +9,19 @@ interface PokemonGridProps {
   data: PokemonListItem[];
   onCardPress: (name: string) => void;
   scrollEnabled?: boolean;
+  contentContainerStyle?: StyleProp<ViewStyle>;
 }
 
 const GRID_COLUMNS = 2;
 const HORIZONTAL_PADDING = SPACING.lg;
 const COLUMN_GAP = SPACING.md;
 
-function PokemonGridComponent({ data, onCardPress, scrollEnabled = true }: PokemonGridProps) {
+function PokemonGridComponent({
+  data,
+  onCardPress,
+  scrollEnabled = true,
+  contentContainerStyle,
+}: PokemonGridProps) {
   const { width } = useWindowDimensions();
   const cardWidth =
     (width - HORIZONTAL_PADDING * 2 - COLUMN_GAP * (GRID_COLUMNS - 1)) / GRID_COLUMNS;
@@ -33,7 +40,7 @@ function PokemonGridComponent({ data, onCardPress, scrollEnabled = true }: Pokem
       renderItem={renderItem}
       numColumns={GRID_COLUMNS}
       columnWrapperStyle={styles.row}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[styles.content, contentContainerStyle]}
       scrollEnabled={scrollEnabled}
     />
   );
