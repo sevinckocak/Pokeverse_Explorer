@@ -1,89 +1,49 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { fetchPokemonList } from "@/store";
-import { DEFAULT_POKEMON_PAGE_SIZE } from "@/store/pokemon/pokemonThunks";
+import { useCallback, useEffect, useMemo } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { usePokemonSearch } from '@/hooks/usePokemonSearch';
+import { fetchPokemonList } from '@/store';
+import { DEFAULT_POKEMON_PAGE_SIZE } from '@/store/pokemon/pokemonThunks';
 import {
   selectPokemonError,
   selectPokemonList,
   selectPokemonLoading,
-} from "@/store/pokemon/pokemonSelectors";
-import type { RootStackParamList } from "@/navigation";
-import type { PokemonListItem } from "@/types";
-import HomeHeader, { HOME_HEADER_COLORS } from "@/components/home/HomeHeader";
-import SearchBar from "@/components/common/SearchBar";
-import QuickActions from "@/components/home/QuickActions";
-import PokemonSection from "@/components/pokemon/PokemonSection";
-import PokemonCard from "@/components/pokemon/PokemonCard";
-import { SPACING } from "@/constants/theme";
+} from '@/store/pokemon/pokemonSelectors';
+import type { RootStackParamList } from '@/navigation';
+import HomeHeader, { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import SearchBar from '@/components/common/SearchBar';
+import EmptyState from '@/components/common/EmptyState';
+import QuickActions from '@/components/home/QuickActions';
+import PokemonSection from '@/components/pokemon/PokemonSection';
+import PokemonGrid from '@/components/pokemon/PokemonGrid';
+import { SPACING } from '@/constants/theme';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Home"
->;
-
-const GRID_COLUMNS = 2;
-const HORIZONTAL_PADDING = SPACING.lg;
-const COLUMN_GAP = SPACING.md;
-const EMPTY_STATE_ICON_SIZE = 48;
-
-function SearchEmptyState() {
-  return (
-    <View style={styles.emptyState}>
-      <Ionicons
-        name="search-outline"
-        size={EMPTY_STATE_ICON_SIZE}
-        color={HOME_HEADER_COLORS.subtitle}
-      />
-      <Text style={styles.emptyTitle}>No Pokémon found</Text>
-      <Text style={styles.emptySubtitle}>Try another keyword</Text>
-    </View>
-  );
-}
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const tabBarHeight = useBottomTabBarHeight();
-  const { width } = useWindowDimensions();
   const pokemonList = useAppSelector(selectPokemonList);
   const loading = useAppSelector(selectPokemonLoading);
   const error = useAppSelector(selectPokemonError);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const normalizedQuery = searchQuery.trim().toLowerCase();
-  const isSearching = normalizedQuery.length > 0;
-
-  const cardWidth =
-    (width - HORIZONTAL_PADDING * 2 - COLUMN_GAP * (GRID_COLUMNS - 1)) /
-    GRID_COLUMNS;
+  const {
+    searchQuery,
+    setSearchQuery,
+    isSearching,
+    isLoading: isSearchLoading,
+    filteredPokemon,
+  } = usePokemonSearch(pokemonList);
 
   // Home only ever features the first page. The underlying list is shared
   // with AllPokemonScreen's pagination, so this only fetches when truly
   // empty — otherwise re-mounting Home would reset progress made there.
   const featuredPokemon = useMemo(
     () => pokemonList.slice(0, DEFAULT_POKEMON_PAGE_SIZE),
-    [pokemonList],
-  );
-
-  const filteredPokemon = useMemo(
-    () =>
-      pokemonList.filter((item) =>
-        item.name.toLowerCase().includes(normalizedQuery),
-      ),
-    [pokemonList, normalizedQuery],
+    [pokemonList]
   );
 
   useEffect(() => {
@@ -93,30 +53,20 @@ export default function HomeScreen() {
   }, [dispatch, pokemonList.length]);
 
   const handleSeeAllPress = useCallback(() => {
-    navigation.navigate("AllPokemon");
+    navigation.navigate('AllPokemon');
   }, [navigation]);
 
   const handleCardPress = useCallback(
     (name: string) => {
-      navigation.navigate("PokemonDetail", { name });
+      navigation.navigate('PokemonDetail', { name });
     },
-    [navigation],
-  );
-
-  const renderSearchResult = useCallback(
-    ({ item }: { item: PokemonListItem }) => (
-      <PokemonCard pokemon={item} width={cardWidth} onPress={handleCardPress} />
-    ),
-    [cardWidth, handleCardPress],
+    [navigation]
   );
 
   return (
     <ScrollView
       style={styles.root}
-      contentContainerStyle={[
-        styles.content,
-        { paddingBottom: tabBarHeight + SPACING.xl },
-      ]}
+      contentContainerStyle={[styles.content, { paddingBottom: tabBarHeight + SPACING.xl }]}
     >
       <HomeHeader />
 
@@ -127,22 +77,14 @@ export default function HomeScreen() {
       <QuickActions />
 
       {isSearching ? (
-        loading ? (
+        loading || isSearchLoading ? (
           <View style={styles.state}>
             <ActivityIndicator size="large" color={HOME_HEADER_COLORS.accent} />
           </View>
         ) : filteredPokemon.length === 0 ? (
-          <SearchEmptyState />
+          <EmptyState icon="search-outline" title="No Pokémon found" subtitle="Try another keyword" />
         ) : (
-          <FlatList
-            data={filteredPokemon}
-            keyExtractor={(item) => item.name}
-            renderItem={renderSearchResult}
-            numColumns={GRID_COLUMNS}
-            columnWrapperStyle={styles.row}
-            contentContainerStyle={styles.searchListContent}
-            scrollEnabled={false}
-          />
+          <PokemonGrid data={filteredPokemon} onCardPress={handleCardPress} scrollEnabled={false} />
         )
       ) : (
         <PokemonSection
@@ -170,33 +112,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.lg,
     paddingBottom: SPACING.md,
   },
-  searchListContent: {
-    paddingHorizontal: HORIZONTAL_PADDING,
-    gap: SPACING.md,
-  },
-  row: {
-    gap: SPACING.md,
-  },
   state: {
     height: 220,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  emptyState: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: SPACING.xxl,
-    paddingHorizontal: SPACING.lg,
-  },
-  emptyTitle: {
-    marginTop: SPACING.md,
-    fontSize: 16,
-    fontWeight: "700",
-    color: HOME_HEADER_COLORS.title,
-  },
-  emptySubtitle: {
-    marginTop: SPACING.xs,
-    fontSize: 13,
-    color: HOME_HEADER_COLORS.subtitle,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

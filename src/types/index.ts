@@ -3,3 +3,4 @@ export * from '@/types/pokemon-species';
 export * from '@/types/evolution-chain';
 export * from '@/types/ability';
 export * from '@/types/onboarding';
+export * from '@/types/pokemon-type';
