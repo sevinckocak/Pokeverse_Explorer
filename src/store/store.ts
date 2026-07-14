@@ -3,6 +3,7 @@ import pokemonReducer from '@/store/pokemon/pokemonSlice';
 import speciesReducer from '@/store/species/speciesSlice';
 import evolutionReducer from '@/store/evolution/evolutionSlice';
 import abilityReducer from '@/store/ability/abilitySlice';
+import favoritesReducer from '@/store/favorites/favoritesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     species: speciesReducer,
     evolution: evolutionReducer,
     ability: abilityReducer,
+    favorites: favoritesReducer,
   },
 });
 
