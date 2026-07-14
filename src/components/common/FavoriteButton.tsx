@@ -16,12 +16,13 @@ const MIN_TOUCH_TARGET = 44;
 const ICON_SIZE_RATIO = 0.5;
 const ACTIVE_OPACITY = 0.7;
 
-// "solid" uses a dark scrim rather than a flat color so the button stays
-// readable sitting on top of any of PokemonCard's per-type gradients.
+// "solid" uses a dark scrim (not a flat color) so the button reads clearly
+// on top of any of PokemonCard's per-type gradients, light or dark alike.
 const FAVORITE_BUTTON_COLORS = {
   glassBackground: 'rgba(255, 255, 255, 0.1)',
   glassBorder: 'rgba(255, 255, 255, 0.18)',
-  solidBackground: 'rgba(0, 0, 0, 0.35)',
+  solidBackground: 'rgba(0, 0, 0, 0.45)',
+  solidBorder: 'rgba(255, 255, 255, 0.3)',
   iconInactive: '#FFFFFF',
   iconActive: HOME_HEADER_COLORS.accent,
 } as const;
@@ -62,8 +63,10 @@ function FavoriteButtonComponent({
           backgroundColor: isGlass
             ? FAVORITE_BUTTON_COLORS.glassBackground
             : FAVORITE_BUTTON_COLORS.solidBackground,
-          borderWidth: isGlass ? 1 : 0,
-          borderColor: FAVORITE_BUTTON_COLORS.glassBorder,
+          borderWidth: 1,
+          borderColor: isGlass
+            ? FAVORITE_BUTTON_COLORS.glassBorder
+            : FAVORITE_BUTTON_COLORS.solidBorder,
         },
       ]}
     >
@@ -82,5 +85,10 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 3,
   },
 });
