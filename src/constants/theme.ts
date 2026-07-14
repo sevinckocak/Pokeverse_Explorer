@@ -68,3 +68,19 @@ export const POKEMON_DETAIL_SECTION_DELAY = {
   status: ANIMATION.staggerDelay * 4,
   evolution: ANIMATION.staggerDelay * 5,
 } as const;
+
+// Fixed dark "app shell" palette (Home, Search, Favorites, tab bar, cards).
+// Deliberately separate from the light/dark-adaptive ThemeColors above —
+// this shell is always-dark by design, regardless of system color scheme.
+// Historically defined inside HomeHeader.tsx; still re-exported from there
+// for every existing call site, but this is now the source of truth so
+// other shared components (e.g. ScreenHeader) can use it without creating
+// a circular import with HomeHeader.
+export const HOME_HEADER_COLORS = {
+  background: '#141B2D',
+  accent: '#5B7FFF',
+  title: '#FFFFFF',
+  subtitle: 'rgba(255, 255, 255, 0.64)',
+  glass: 'rgba(255, 255, 255, 0.1)',
+  glassBorder: 'rgba(255, 255, 255, 0.18)',
+} as const;
