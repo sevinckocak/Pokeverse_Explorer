@@ -4,6 +4,7 @@ import speciesReducer from '@/store/species/speciesSlice';
 import evolutionReducer from '@/store/evolution/evolutionSlice';
 import abilityReducer from '@/store/ability/abilitySlice';
 import favoritesReducer from '@/store/favorites/favoritesSlice';
+import { favoritesPersistenceMiddleware } from '@/store/favorites/favoritesPersistenceMiddleware';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     ability: abilityReducer,
     favorites: favoritesReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(favoritesPersistenceMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

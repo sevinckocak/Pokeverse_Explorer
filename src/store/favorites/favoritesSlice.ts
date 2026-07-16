@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { hydrateFavorites } from '@/store/favorites/favoritesThunks';
 
 export interface FavoritesState {
   favoriteIds: string[];
@@ -33,6 +34,11 @@ const favoritesSlice = createSlice({
     clearFavorites: (state) => {
       state.favoriteIds = [];
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(hydrateFavorites.fulfilled, (state, action) => {
+      state.favoriteIds = action.payload;
+    });
   },
 });
 
