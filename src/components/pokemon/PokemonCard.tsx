@@ -1,15 +1,18 @@
-import { memo, useCallback, useMemo } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import { toggleFavorite } from '@/store/favorites/favoritesSlice';
-import { selectIsFavorite } from '@/store/favorites/favoritesSelectors';
-import { CARD_SHADOW, RADIUS, SPACING } from '@/constants/theme';
-import { getPokemonTheme } from '@/constants/pokemonTheme';
-import { capitalize } from '@/utils/string';
-import { extractPokemonIdFromUrl, getPokemonSpriteUrl } from '@/utils/pokemonAssets';
-import FavoriteButton from '@/components/common/FavoriteButton';
-import type { PokemonListItem } from '@/types';
+import { memo, useCallback, useMemo } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { toggleFavorite } from "@/store/favorites/favoritesSlice";
+import { selectIsFavorite } from "@/store/favorites/favoritesSelectors";
+import { CARD_SHADOW, RADIUS, SPACING } from "@/constants/theme";
+import { getPokemonTheme } from "@/constants/pokemonTheme";
+import { capitalize } from "@/utils/string";
+import {
+  extractPokemonIdFromUrl,
+  getPokemonSpriteUrl,
+} from "@/utils/pokemonAssets";
+import FavoriteButton from "@/components/common/FavoriteButton";
+import type { PokemonListItem } from "@/types";
 
 interface PokemonCardProps {
   pokemon: PokemonListItem;
@@ -18,14 +21,14 @@ interface PokemonCardProps {
 }
 
 const POKEMON_CARD_COLORS = {
-  idText: 'rgba(255, 255, 255, 0.85)',
-  name: '#FFFFFF',
+  idText: "rgba(255, 255, 255, 0.85)",
+  name: "#FFFFFF",
 } as const;
 
 const CARD_HEIGHT = 190;
 const IMAGE_SIZE_RATIO = 0.55;
 const FAVORITE_BUTTON_SIZE = 32;
-const ID_PLACEHOLDER = '#---';
+const ID_PLACEHOLDER = "#---";
 
 // List items only carry `{ name, url }` (see PokemonListItem) — no type
 // data until the detail endpoint is fetched. The card intentionally never
@@ -40,13 +43,23 @@ function PokemonCardComponent({ pokemon, width, onPress }: PokemonCardProps) {
   // `selectIsFavorite` is a selector factory: memoize the selector instance
   // itself per pokemon name so useAppSelector can actually benefit from
   // reselect's memoization instead of getting a fresh selector every render.
-  const isFavoriteSelector = useMemo(() => selectIsFavorite(pokemon.name), [pokemon.name]);
+  const isFavoriteSelector = useMemo(
+    () => selectIsFavorite(pokemon.name),
+    [pokemon.name],
+  );
   const isFavorite = useAppSelector(isFavoriteSelector);
 
   // `pokemon.url` is the detail endpoint, not an image URL — the id is
   // parsed from it locally so the sprite can be derived without a request.
-  const pokemonId = useMemo(() => extractPokemonIdFromUrl(pokemon.url), [pokemon.url]);
-  const displayId = pokemonId !== null ? `#${pokemonId.toString().padStart(3, '0')}` : ID_PLACEHOLDER;
+
+  const pokemonId = useMemo(
+    () => extractPokemonIdFromUrl(pokemon.url),
+    [pokemon.url],
+  );
+  const displayId =
+    pokemonId !== null
+      ? `#${pokemonId.toString().padStart(3, "0")}`
+      : ID_PLACEHOLDER;
   const imageUrl = pokemonId !== null ? getPokemonSpriteUrl(pokemonId) : null;
 
   const displayName = capitalize(pokemon.name);
@@ -57,8 +70,8 @@ function PokemonCardComponent({ pokemon, width, onPress }: PokemonCardProps) {
   }, [onPress, pokemon.name]);
 
   const handleFavoritePress = useCallback(() => {
-    dispatch(toggleFavorite(pokemon.name));
-  }, [dispatch, pokemon.name]);
+    dispatch(toggleFavorite(pokemon));
+  }, [dispatch, pokemon]);
 
   return (
     <Pressable onPress={handlePress} style={{ width }}>
@@ -74,7 +87,11 @@ function PokemonCardComponent({ pokemon, width, onPress }: PokemonCardProps) {
 
         <View style={[styles.imageWrapper, { height: imageSize }]}>
           {imageUrl ? (
-            <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="contain" />
+            <Image
+              source={{ uri: imageUrl }}
+              style={styles.image}
+              resizeMode="contain"
+            />
           ) : null}
         </View>
 
@@ -105,30 +122,30 @@ const styles = StyleSheet.create({
     ...CARD_SHADOW,
   },
   topRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   idText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: "700",
     color: POKEMON_CARD_COLORS.idText,
   },
   imageWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   name: {
     marginTop: SPACING.xs,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: "700",
     color: POKEMON_CARD_COLORS.name,
   },
   favoriteButtonWrapper: {
-    position: 'absolute',
+    position: "absolute",
     top: SPACING.sm,
     right: SPACING.sm,
   },

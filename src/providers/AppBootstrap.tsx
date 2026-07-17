@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useAppDispatch } from '@/hooks/useRedux';
-import { hydrateFavorites } from '@/store/favorites/favoritesThunks';
+import { useEffect } from "react";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { hydrateFavorites } from "@/store/favorites/favoritesThunks";
 
 // Renders nothing — runs one-time app startup initialization as a side
 // effect. Rendered inside AppProviders' <Provider>, so hooks like

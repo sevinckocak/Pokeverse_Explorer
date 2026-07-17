@@ -1,43 +1,48 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { hydrateFavorites } from '@/store/favorites/favoritesThunks';
+import type { PokemonListItem } from '@/types';
 
 export interface FavoritesState {
-  favoriteIds: string[];
+  favorites: PokemonListItem[];
 }
 
 const initialState: FavoritesState = {
-  favoriteIds: [],
+  favorites: [],
 };
 
 const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    addFavorite: (state, action: PayloadAction<string>) => {
-      if (!state.favoriteIds.includes(action.payload)) {
-        state.favoriteIds.push(action.payload);
+    addFavorite: (state, action: PayloadAction<PokemonListItem>) => {
+      const exists = state.favorites.some((item) => item.name === action.payload.name);
+
+      if (!exists) {
+        state.favorites.push(action.payload);
       }
     },
     removeFavorite: (state, action: PayloadAction<string>) => {
-      state.favoriteIds = state.favoriteIds.filter((id) => id !== action.payload);
+      state.favorites = state.favorites.filter((item) => item.name !== action.payload);
     },
-    toggleFavorite: (state, action: PayloadAction<string>) => {
-      const existingIndex = state.favoriteIds.indexOf(action.payload);
+    toggleFavorite: (state, action: PayloadAction<PokemonListItem>) => {
+      const existingIndex = state.favorites.findIndex(
+        (item) => item.name === action.payload.name
+      );
 
       if (existingIndex === -1) {
-        state.favoriteIds.push(action.payload);
+        state.favorites.push(action.payload);
       } else {
-        state.favoriteIds.splice(existingIndex, 1);
+        state.favorites.splice(existingIndex, 1);
       }
     },
     clearFavorites: (state) => {
-      state.favoriteIds = [];
+      state.favorites = [];
     },
   },
   extraReducers: (builder) => {
     builder.addCase(hydrateFavorites.fulfilled, (state, action) => {
-      state.favoriteIds = action.payload;
+      state.favorites = action.payload;
     });
   },
 });

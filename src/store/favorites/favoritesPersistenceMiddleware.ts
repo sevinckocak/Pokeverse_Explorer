@@ -28,8 +28,8 @@ export const favoritesPersistenceMiddleware: Middleware =
       if (actionType === clearFavoritesAction.type) {
         void clearFavoritesStorage();
       } else {
-        const { favorites } = store.getState() as StateWithFavorites;
-        void saveFavorites(favorites.favoriteIds);
+        const { favorites: favoritesState } = store.getState() as StateWithFavorites;
+        void saveFavorites(favoritesState.favorites);
       }
     }
 
