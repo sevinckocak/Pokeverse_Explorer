@@ -2,12 +2,12 @@ import { memo, useCallback, useMemo } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import { usePokemonCardData } from '@/hooks/usePokemonCardData';
 import { toggleFavorite } from '@/store/favorites/favoritesSlice';
 import { selectIsFavorite } from '@/store/favorites/favoritesSelectors';
 import { CARD_SHADOW, RADIUS, SPACING } from '@/constants/theme';
 import { getPokemonTheme } from '@/constants/pokemonTheme';
 import { capitalize } from '@/utils/string';
+import { extractPokemonIdFromUrl, getPokemonSpriteUrl } from '@/utils/pokemonAssets';
 import FavoriteButton from '@/components/common/FavoriteButton';
 import type { PokemonListItem } from '@/types';
 
@@ -27,11 +27,15 @@ const IMAGE_SIZE_RATIO = 0.55;
 const FAVORITE_BUTTON_SIZE = 32;
 const ID_PLACEHOLDER = '#---';
 
+// List items only carry `{ name, url }` (see PokemonListItem) — no type
+// data until the detail endpoint is fetched. The card intentionally never
+// fetches per-item detail (that would re-introduce the N+1 request problem
+// this component was refactored to avoid), so it always renders the
+// neutral default theme instead of a type-colored gradient.
+const CARD_THEME = getPokemonTheme(null);
+
 function PokemonCardComponent({ pokemon, width, onPress }: PokemonCardProps) {
   const dispatch = useAppDispatch();
-  const { data } = usePokemonCardData(pokemon.name);
-  const primaryType = data?.types[0] ?? null;
-  const theme = useMemo(() => getPokemonTheme(primaryType), [primaryType]);
 
   // `selectIsFavorite` is a selector factory: memoize the selector instance
   // itself per pokemon name so useAppSelector can actually benefit from
@@ -39,8 +43,13 @@ function PokemonCardComponent({ pokemon, width, onPress }: PokemonCardProps) {
   const isFavoriteSelector = useMemo(() => selectIsFavorite(pokemon.name), [pokemon.name]);
   const isFavorite = useAppSelector(isFavoriteSelector);
 
+  // `pokemon.url` is the detail endpoint, not an image URL — the id is
+  // parsed from it locally so the sprite can be derived without a request.
+  const pokemonId = useMemo(() => extractPokemonIdFromUrl(pokemon.url), [pokemon.url]);
+  const displayId = pokemonId !== null ? `#${pokemonId.toString().padStart(3, '0')}` : ID_PLACEHOLDER;
+  const imageUrl = pokemonId !== null ? getPokemonSpriteUrl(pokemonId) : null;
+
   const displayName = capitalize(pokemon.name);
-  const displayId = data ? `#${data.id.toString().padStart(3, '0')}` : ID_PLACEHOLDER;
   const imageSize = width * IMAGE_SIZE_RATIO;
 
   const handlePress = useCallback(() => {
@@ -54,7 +63,7 @@ function PokemonCardComponent({ pokemon, width, onPress }: PokemonCardProps) {
   return (
     <Pressable onPress={handlePress} style={{ width }}>
       <LinearGradient
-        colors={theme.backgroundGradient}
+        colors={CARD_THEME.backgroundGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.card}
@@ -64,8 +73,8 @@ function PokemonCardComponent({ pokemon, width, onPress }: PokemonCardProps) {
         </View>
 
         <View style={[styles.imageWrapper, { height: imageSize }]}>
-          {data?.imageUrl ? (
-            <Image source={{ uri: data.imageUrl }} style={styles.image} resizeMode="contain" />
+          {imageUrl ? (
+            <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="contain" />
           ) : null}
         </View>
 

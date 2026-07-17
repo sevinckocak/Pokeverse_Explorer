@@ -8,10 +8,10 @@ export interface UsePokemonTypeListResult {
 }
 
 // Fetches the authoritative full list of Pokémon for a type via PokeAPI's
-// /type/{name} endpoint. This is deliberately not routed through Redux, same
-// as usePokemonCardData: it's ephemeral, search-query-scoped data, not
-// shared app state, and calling the service directly here keeps the
-// pokemon slice free of a "search" concern it wasn't designed for.
+// /type/{name} endpoint. This is deliberately not routed through Redux: it's
+// ephemeral, search-query-scoped data, not shared app state, and calling the
+// service directly here keeps the pokemon slice free of a "search" concern
+// it wasn't designed for.
 export function usePokemonTypeList(typeName: string | null): UsePokemonTypeListResult {
   const [data, setData] = useState<PokemonListItem[] | null>(null);
   const [loading, setLoading] = useState(false);
