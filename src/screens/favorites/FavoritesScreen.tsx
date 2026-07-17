@@ -12,7 +12,7 @@ import PokemonGrid from '@/components/pokemon/PokemonGrid';
 import { SPACING } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation';
 
-type FavoritesScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+type FavoritesScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MainTabs'>;
 
 export default function FavoritesScreen() {
   const navigation = useNavigation<FavoritesScreenNavigationProp>();

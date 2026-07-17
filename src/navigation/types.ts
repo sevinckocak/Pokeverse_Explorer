@@ -1,6 +1,6 @@
 export type RootStackParamList = {
   Onboarding: undefined;
-  Home: undefined;
+  MainTabs: undefined;
   PokemonDetail: { name: string };
   AllPokemon: undefined;
 };

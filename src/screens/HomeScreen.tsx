@@ -21,7 +21,7 @@ import PokemonSection from '@/components/pokemon/PokemonSection';
 import PokemonGrid from '@/components/pokemon/PokemonGrid';
 import { SPACING } from '@/constants/theme';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MainTabs'>;
 
 export default function HomeScreen() {
   const dispatch = useAppDispatch();

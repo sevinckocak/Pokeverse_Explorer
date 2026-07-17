@@ -47,7 +47,7 @@ export default function OnboardingScreen() {
     completeOnboarding()
       .catch(() => undefined)
       .finally(() => {
-        navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+        navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
       });
   }, [completeOnboarding, navigation]);
 

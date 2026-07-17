@@ -23,14 +23,14 @@ export default function RootStack() {
   }
 
   return (
-    <Stack.Navigator initialRouteName={hasCompletedOnboarding ? 'Home' : 'Onboarding'}>
+    <Stack.Navigator initialRouteName={hasCompletedOnboarding ? 'MainTabs' : 'Onboarding'}>
       <Stack.Screen
         name="Onboarding"
         component={OnboardingScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Home"
+        name="MainTabs"
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />

@@ -19,7 +19,7 @@ import { SPACING } from '@/constants/theme';
 import type { PokemonTypeName } from '@/constants/pokemonTheme';
 import type { RootStackParamList } from '@/navigation';
 
-type SearchScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+type SearchScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MainTabs'>;
 
 export default function SearchScreen() {
   const dispatch = useAppDispatch();
