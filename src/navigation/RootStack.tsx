@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,6 +8,7 @@ import AllPokemonScreen from '@/screens/AllPokemonScreen';
 import OnboardingScreen from '@/screens/onboarding/OnboardingScreen';
 import { useOnboardingStatus } from '@/hooks/useOnboardingStatus';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
+import { createStackScreenOptions } from '@/navigation/screenOptions';
 import { ONBOARDING_COLORS } from '@/constants/onboarding';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -17,6 +19,11 @@ export default function RootStack() {
   const { isChecking, hasCompletedOnboarding } = useOnboardingStatus();
   const { colors } = useThemeTokens();
 
+  // Passed to the Navigator, not to individual screens, so PokemonDetail,
+  // AllPokemon, and any Stack.Screen added later all inherit themed header
+  // colors automatically — no screen needs to redeclare them.
+  const screenOptions = useMemo(() => createStackScreenOptions(colors), [colors]);
+
   if (isChecking) {
     return (
       <View style={styles.loading}>
@@ -26,7 +33,10 @@ export default function RootStack() {
   }
 
   return (
-    <Stack.Navigator initialRouteName={hasCompletedOnboarding ? 'MainTabs' : 'Onboarding'}>
+    <Stack.Navigator
+      initialRouteName={hasCompletedOnboarding ? 'MainTabs' : 'Onboarding'}
+      screenOptions={screenOptions}
+    >
       <Stack.Screen
         name="Onboarding"
         component={OnboardingScreen}
@@ -41,11 +51,7 @@ export default function RootStack() {
       <Stack.Screen
         name="AllPokemon"
         component={AllPokemonScreen}
-        options={{
-          title: t('pokemonDetail.allPokemonTitle'),
-          headerStyle: { backgroundColor: colors.background },
-          headerTintColor: colors.textPrimary,
-        }}
+        options={{ title: t('pokemonDetail.allPokemonTitle') }}
       />
     </Stack.Navigator>
   );
