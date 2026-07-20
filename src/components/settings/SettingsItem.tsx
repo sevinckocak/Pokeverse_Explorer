@@ -1,9 +1,9 @@
-import { memo } from "react";
-import { StyleSheet, Switch, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { HOME_HEADER_COLORS } from "@/components/home/HomeHeader";
-import { RADIUS, SPACING } from "@/constants/theme";
-import type { IoniconName } from "@/components/home/QuickActionCard";
+import { memo } from 'react';
+import { StyleSheet, Switch, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
+import { RADIUS, SPACING } from '@/constants/theme';
+import type { IoniconName } from '@/components/home/QuickActionCard';
 
 interface SettingsItemProps {
   icon: IoniconName;
@@ -12,6 +12,7 @@ interface SettingsItemProps {
   value?: string;
   showSwitch?: boolean;
   switchValue?: boolean;
+  onSwitchChange?: (value: boolean) => void;
   showChevron?: boolean;
   disabled?: boolean;
 }
@@ -20,14 +21,9 @@ const ICON_BADGE_SIZE = 36;
 const ICON_SIZE = 18;
 const CHEVRON_SIZE = 18;
 
-const SETTINGS_ITEM_COLORS = {
-  switchTrackOff: "rgba(255, 255, 255, 0.16)",
-  chevron: "rgba(255, 255, 255, 0.4)",
-} as const;
-
-// Pure display row, no press handling — every row on this screen is a
-// static placeholder for now. Future screens can wrap this in a Pressable
-// (or add an onPress prop) once a setting actually does something.
+// Pure display row by default — pass onSwitchChange once a setting is
+// actually wired up (see Dark Mode). Rows without it stay non-interactive,
+// same as before.
 function SettingsItemComponent({
   icon,
   title,
@@ -35,43 +31,45 @@ function SettingsItemComponent({
   value,
   showSwitch = false,
   switchValue = false,
+  onSwitchChange,
   showChevron = false,
   disabled = false,
 }: SettingsItemProps) {
+  const { colors } = useThemeTokens();
+
   return (
     <View style={[styles.row, disabled && styles.rowDisabled]}>
-      <View style={styles.iconBadge}>
-        <Ionicons
-          name={icon}
-          size={ICON_SIZE}
-          color={HOME_HEADER_COLORS.title}
-        />
+      <View
+        style={[
+          styles.iconBadge,
+          { backgroundColor: colors.surfaceSecondary, borderColor: colors.border },
+        ]}
+      >
+        <Ionicons name={icon} size={ICON_SIZE} color={colors.textPrimary} />
       </View>
 
       <View style={styles.textBlock}>
-        <Text style={styles.title}>{title}</Text>
-        {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
+        <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
+        {subtitle ? (
+          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{subtitle}</Text>
+        ) : null}
       </View>
 
       <View style={styles.trailing}>
-        {value ? <Text style={styles.value}>{value}</Text> : null}
+        {value ? (
+          <Text style={[styles.value, { color: colors.textSecondary }]}>{value}</Text>
+        ) : null}
         {showSwitch ? (
           <Switch
             value={switchValue}
+            onValueChange={onSwitchChange}
             disabled={disabled}
-            trackColor={{
-              false: SETTINGS_ITEM_COLORS.switchTrackOff,
-              true: HOME_HEADER_COLORS.accent,
-            }}
-            thumbColor={HOME_HEADER_COLORS.title}
+            trackColor={{ false: colors.surfaceSecondary, true: colors.accent }}
+            thumbColor={colors.textPrimary}
           />
         ) : null}
         {showChevron ? (
-          <Ionicons
-            name="chevron-forward"
-            size={CHEVRON_SIZE}
-            color={SETTINGS_ITEM_COLORS.chevron}
-          />
+          <Ionicons name="chevron-forward" size={CHEVRON_SIZE} color={colors.textSecondary} />
         ) : null}
       </View>
     </View>
@@ -82,8 +80,8 @@ export default memo(SettingsItemComponent);
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: SPACING.md,
     paddingHorizontal: SPACING.md,
     gap: SPACING.md,
@@ -95,32 +93,27 @@ const styles = StyleSheet.create({
     width: ICON_BADGE_SIZE,
     height: ICON_BADGE_SIZE,
     borderRadius: RADIUS.md,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: HOME_HEADER_COLORS.glass,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
-    borderColor: HOME_HEADER_COLORS.glassBorder,
   },
   textBlock: {
     flex: 1,
   },
   title: {
     fontSize: 15,
-    fontWeight: "600",
-    color: HOME_HEADER_COLORS.title,
+    fontWeight: '600',
   },
   subtitle: {
     marginTop: 2,
     fontSize: 12,
-    color: HOME_HEADER_COLORS.subtitle,
   },
   trailing: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: SPACING.sm,
   },
   value: {
     fontSize: 14,
-    color: HOME_HEADER_COLORS.subtitle,
   },
 });

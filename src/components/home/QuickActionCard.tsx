@@ -3,7 +3,7 @@ import type { ComponentProps } from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { RADIUS, SPACING } from '@/constants/theme';
 
 export type IoniconName = ComponentProps<typeof Ionicons>['name'];
@@ -20,6 +20,7 @@ const PRESS_SCALE = 0.96;
 const PRESS_DURATION = 120;
 
 function QuickActionCardComponent({ icon, label, onPress }: QuickActionCardProps) {
+  const { colors } = useThemeTokens();
   const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -37,15 +38,15 @@ function QuickActionCardComponent({ icon, label, onPress }: QuickActionCardProps
   return (
     <Animated.View style={animatedStyle}>
       <Pressable
-        style={styles.pill}
+        style={[styles.pill, { backgroundColor: colors.surface, borderColor: colors.border }]}
         onPress={onPress}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         accessibilityRole="button"
         accessibilityLabel={label}
       >
-        <Ionicons name={icon} size={ICON_SIZE} color={HOME_HEADER_COLORS.accent} />
-        <Text style={styles.label}>{label}</Text>
+        <Ionicons name={icon} size={ICON_SIZE} color={colors.accent} />
+        <Text style={[styles.label, { color: colors.textPrimary }]}>{label}</Text>
       </Pressable>
     </Animated.View>
   );
@@ -61,9 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.pill,
     paddingHorizontal: SPACING.lg,
     gap: SPACING.sm,
-    backgroundColor: HOME_HEADER_COLORS.glass,
     borderWidth: 1,
-    borderColor: HOME_HEADER_COLORS.glassBorder,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.12,
@@ -73,6 +72,5 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: HOME_HEADER_COLORS.title,
   },
 });

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { RADIUS } from '@/constants/theme';
 
 interface FavoriteButtonProps {
@@ -18,13 +18,17 @@ const ACTIVE_OPACITY = 0.7;
 
 // "solid" uses a dark scrim (not a flat color) so the button reads clearly
 // on top of any of PokemonCard's per-type gradients, light or dark alike.
+// These stay fixed regardless of app theme on purpose: this button sits on
+// top of colorful/dark card gradients and images, not the page background,
+// so its contrast needs are unrelated to light/dark mode. Only the active
+// (favorited) icon color comes from the theme, since that's a brand accent
+// rather than a contrast-calibrated overlay tone.
 const FAVORITE_BUTTON_COLORS = {
   glassBackground: 'rgba(255, 255, 255, 0.1)',
   glassBorder: 'rgba(255, 255, 255, 0.18)',
   solidBackground: 'rgba(0, 0, 0, 0.45)',
   solidBorder: 'rgba(255, 255, 255, 0.3)',
   iconInactive: '#FFFFFF',
-  iconActive: HOME_HEADER_COLORS.accent,
 } as const;
 
 // Fully props-driven and stateless on purpose: a future Reanimated press or
@@ -37,6 +41,7 @@ function FavoriteButtonComponent({
   size = DEFAULT_SIZE,
   variant = 'glass',
 }: FavoriteButtonProps) {
+  const { colors } = useThemeTokens();
   const isGlass = variant === 'glass';
   const iconSize = size * ICON_SIZE_RATIO;
   const hitSlopValue = Math.max(0, (MIN_TOUCH_TARGET - size) / 2);
@@ -73,7 +78,7 @@ function FavoriteButtonComponent({
       <Ionicons
         name={isFavorite ? 'heart' : 'heart-outline'}
         size={iconSize}
-        color={isFavorite ? FAVORITE_BUTTON_COLORS.iconActive : FAVORITE_BUTTON_COLORS.iconInactive}
+        color={isFavorite ? colors.accent : FAVORITE_BUTTON_COLORS.iconInactive}
       />
     </TouchableOpacity>
   );

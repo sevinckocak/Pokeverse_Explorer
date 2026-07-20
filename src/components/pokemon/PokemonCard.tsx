@@ -20,6 +20,10 @@ interface PokemonCardProps {
   onPress: (name: string) => void;
 }
 
+// Intentionally not theme-driven: this text renders on top of a colorful
+// per-Pokémon-type gradient (CARD_THEME below), not the app background, so
+// its contrast requirement is unrelated to light/dark mode — white stays
+// legible on every type gradient in both themes.
 const POKEMON_CARD_COLORS = {
   idText: "rgba(255, 255, 255, 0.85)",
   name: "#FFFFFF",

@@ -1,7 +1,5 @@
 import ScreenHeader from "@/components/common/ScreenHeader";
 
-export { HOME_HEADER_COLORS } from "@/constants/theme";
-
 interface HomeHeaderProps {
   onNotificationPress?: () => void;
 }

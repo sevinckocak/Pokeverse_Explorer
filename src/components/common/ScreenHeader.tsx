@@ -2,7 +2,8 @@ import { memo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { HOME_HEADER_COLORS, RADIUS, SPACING } from '@/constants/theme';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
+import { RADIUS, SPACING } from '@/constants/theme';
 import type { IoniconName } from '@/components/home/QuickActionCard';
 
 interface ScreenHeaderProps {
@@ -32,24 +33,36 @@ function ScreenHeaderComponent({
   showBadge = false,
   info,
 }: ScreenHeaderProps) {
+  const { colors } = useThemeTokens();
+
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
-      <View style={styles.container}>
+    <SafeAreaView edges={['top']} style={[styles.safeArea, { backgroundColor: colors.background }]}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.textBlock}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle}>{subtitle}</Text>
-          {info ? <Text style={styles.info}>{info}</Text> : null}
+          <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
+          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{subtitle}</Text>
+          {info ? <Text style={[styles.info, { color: colors.accent }]}>{info}</Text> : null}
         </View>
 
         <TouchableOpacity
-          style={styles.iconButton}
+          style={[
+            styles.iconButton,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+          ]}
           activeOpacity={0.7}
           onPress={onIconPress}
           accessibilityRole="button"
           accessibilityLabel={title}
         >
-          <Ionicons name={icon} size={ICON_SIZE} color={HOME_HEADER_COLORS.title} />
-          {showBadge ? <View style={styles.badge} /> : null}
+          <Ionicons name={icon} size={ICON_SIZE} color={colors.textPrimary} />
+          {showBadge ? (
+            <View
+              style={[
+                styles.badge,
+                { backgroundColor: colors.accent, borderColor: colors.background },
+              ]}
+            />
+          ) : null}
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -59,9 +72,7 @@ function ScreenHeaderComponent({
 export default memo(ScreenHeaderComponent);
 
 const styles = StyleSheet.create({
-  safeArea: {
-    backgroundColor: HOME_HEADER_COLORS.background,
-  },
+  safeArea: {},
   container: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -69,7 +80,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.lg,
     paddingTop: SPACING.lg,
     paddingBottom: SPACING.xl,
-    backgroundColor: HOME_HEADER_COLORS.background,
   },
   textBlock: {
     flex: 1,
@@ -78,20 +88,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '800',
-    color: HOME_HEADER_COLORS.title,
     letterSpacing: 0.2,
   },
   subtitle: {
     marginTop: SPACING.xs,
     fontSize: 14,
     lineHeight: 20,
-    color: HOME_HEADER_COLORS.subtitle,
   },
   info: {
     marginTop: SPACING.sm,
     fontSize: 13,
     fontWeight: '600',
-    color: HOME_HEADER_COLORS.accent,
   },
   iconButton: {
     width: ICON_BUTTON_SIZE,
@@ -99,9 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.pill,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: HOME_HEADER_COLORS.glass,
     borderWidth: 1,
-    borderColor: HOME_HEADER_COLORS.glassBorder,
   },
   badge: {
     position: 'absolute',
@@ -110,8 +115,6 @@ const styles = StyleSheet.create({
     width: BADGE_SIZE,
     height: BADGE_SIZE,
     borderRadius: RADIUS.pill,
-    backgroundColor: HOME_HEADER_COLORS.accent,
     borderWidth: 1.5,
-    borderColor: HOME_HEADER_COLORS.background,
   },
 });

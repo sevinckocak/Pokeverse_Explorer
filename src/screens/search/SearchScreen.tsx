@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { usePokemonSearch } from '@/hooks/usePokemonSearch';
 import { fetchPokemonList } from '@/store';
 import { selectPokemonList } from '@/store/pokemon/pokemonSelectors';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import SearchBar from '@/components/common/SearchBar';
 import EmptyState from '@/components/common/EmptyState';
 import PokemonGrid from '@/components/pokemon/PokemonGrid';
@@ -25,6 +25,7 @@ export default function SearchScreen() {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<SearchScreenNavigationProp>();
   const tabBarHeight = useBottomTabBarHeight();
+  const { colors } = useThemeTokens();
   const pokemonList = useAppSelector(selectPokemonList);
   const {
     searchQuery,
@@ -58,7 +59,7 @@ export default function SearchScreen() {
   }, []);
 
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
+    <SafeAreaView edges={['top']} style={[styles.safeArea, { backgroundColor: colors.background }]}>
       <ScrollView
         style={styles.root}
         contentContainerStyle={[styles.content, { paddingBottom: tabBarHeight + SPACING.xl }]}
@@ -70,7 +71,7 @@ export default function SearchScreen() {
         {isSearching ? (
           isSearchLoading ? (
             <View style={styles.state}>
-              <ActivityIndicator size="large" color={HOME_HEADER_COLORS.accent} />
+              <ActivityIndicator size="large" color={colors.accent} />
             </View>
           ) : filteredPokemon.length === 0 ? (
             <EmptyState
@@ -96,7 +97,6 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: HOME_HEADER_COLORS.background,
   },
   root: {
     flex: 1,

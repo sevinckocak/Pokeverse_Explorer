@@ -11,7 +11,7 @@ import {
   selectPokemonLoading,
   selectPokemonLoadingMore,
 } from '@/store/pokemon/pokemonSelectors';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import PokemonCard from '@/components/pokemon/PokemonCard';
 import { SPACING } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation';
@@ -30,6 +30,7 @@ const WINDOW_SIZE = 7;
 export default function AllPokemonScreen() {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<AllPokemonNavigationProp>();
+  const { colors } = useThemeTokens();
   const { width } = useWindowDimensions();
   const pokemonList = useAppSelector(selectPokemonList);
   const loading = useAppSelector(selectPokemonLoading);
@@ -70,22 +71,22 @@ export default function AllPokemonScreen() {
 
   if (loading) {
     return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color={HOME_HEADER_COLORS.accent} />
+      <View style={[styles.center, { backgroundColor: colors.background }]}>
+        <ActivityIndicator size="large" color={colors.accent} />
       </View>
     );
   }
 
   if (error) {
     return (
-      <View style={styles.center}>
-        <Text style={styles.errorText}>{error}</Text>
+      <View style={[styles.center, { backgroundColor: colors.background }]}>
+        <Text style={{ color: colors.textPrimary }}>{error}</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, { backgroundColor: colors.background }]}>
       <FlatList
         data={pokemonList}
         keyExtractor={(item) => item.name}
@@ -102,7 +103,7 @@ export default function AllPokemonScreen() {
         ListFooterComponent={
           loadingMore ? (
             <View style={styles.footer}>
-              <ActivityIndicator size="small" color={HOME_HEADER_COLORS.accent} />
+              <ActivityIndicator size="small" color={colors.accent} />
             </View>
           ) : null
         }
@@ -114,16 +115,11 @@ export default function AllPokemonScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: HOME_HEADER_COLORS.background,
   },
   center: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: HOME_HEADER_COLORS.background,
-  },
-  errorText: {
-    color: HOME_HEADER_COLORS.title,
   },
   listContent: {
     paddingHorizontal: HORIZONTAL_PADDING,

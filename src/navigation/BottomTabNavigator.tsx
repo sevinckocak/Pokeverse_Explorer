@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import HomeScreen from '@/screens/HomeScreen';
 import FavoritesScreen from '@/screens/favorites/FavoritesScreen';
 import SearchScreen from '@/screens/search/SearchScreen';
@@ -13,20 +14,19 @@ const TAB_BAR_HEIGHT = 72;
 const TAB_BAR_RADIUS = 30;
 const TAB_BAR_HORIZONTAL_MARGIN = 16;
 const TAB_BAR_BOTTOM_MARGIN = 16;
-const TAB_BAR_BACKGROUND = '#141B2D';
-const TAB_BAR_ACTIVE_COLOR = '#5B7FFF';
-const TAB_BAR_INACTIVE_COLOR = '#7B8194';
 const ICON_SIZE = 24;
 
 export default function BottomTabNavigator() {
+  const { colors } = useThemeTokens();
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: true,
-        tabBarActiveTintColor: TAB_BAR_ACTIVE_COLOR,
-        tabBarInactiveTintColor: TAB_BAR_INACTIVE_COLOR,
-        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: colors.accent,
+        tabBarInactiveTintColor: colors.textSecondary,
+        tabBarStyle: [styles.tabBar, { backgroundColor: colors.card }],
         tabBarLabelStyle: styles.tabBarLabel,
       }}
     >
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     bottom: TAB_BAR_BOTTOM_MARGIN,
     height: TAB_BAR_HEIGHT,
     borderRadius: TAB_BAR_RADIUS,
-    backgroundColor: TAB_BAR_BACKGROUND,
     borderTopWidth: 0,
     paddingTop: 12,
     paddingBottom: 12,

@@ -1,5 +1,6 @@
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { RADIUS, SPACING } from '@/constants/theme';
 
 interface SearchBarProps {
@@ -10,18 +11,6 @@ interface SearchBarProps {
   autoFocus?: boolean;
   editable?: boolean;
 }
-
-// Same dark-glass design language as HomeHeader, so this reads as one
-// consistent shell wherever it's reused (Home, Search, Favorites).
-const SEARCH_BAR_COLORS = {
-  background: 'rgba(255, 255, 255, 0.1)',
-  border: 'rgba(255, 255, 255, 0.18)',
-  divider: 'rgba(255, 255, 255, 0.18)',
-  icon: 'rgba(255, 255, 255, 0.64)',
-  text: '#FFFFFF',
-  placeholder: 'rgba(255, 255, 255, 0.45)',
-  shadow: '#000000',
-} as const;
 
 const SEARCH_BAR_HEIGHT = 56;
 const SEARCH_ICON_SIZE = 20;
@@ -36,22 +25,26 @@ export default function SearchBar({
   autoFocus = false,
   editable = true,
 }: SearchBarProps) {
+  const { colors } = useThemeTokens();
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.border }]}
+    >
       <Ionicons
         name="search"
         size={SEARCH_ICON_SIZE}
-        color={SEARCH_BAR_COLORS.icon}
+        color={colors.textSecondary}
         accessibilityElementsHidden
         importantForAccessibility="no"
       />
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: colors.textPrimary }]}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={SEARCH_BAR_COLORS.placeholder}
+        placeholderTextColor={colors.textSecondary}
         autoFocus={autoFocus}
         editable={editable}
         returnKeyType="search"
@@ -63,7 +56,7 @@ export default function SearchBar({
 
       {onFilterPress ? (
         <>
-          <View style={styles.divider} />
+          <View style={[styles.divider, { backgroundColor: colors.border }]} />
 
           <TouchableOpacity
             style={styles.filterButton}
@@ -72,11 +65,7 @@ export default function SearchBar({
             accessibilityRole="button"
             accessibilityLabel="Filter"
           >
-            <Ionicons
-              name="options-outline"
-              size={FILTER_ICON_SIZE}
-              color={SEARCH_BAR_COLORS.icon}
-            />
+            <Ionicons name="options-outline" size={FILTER_ICON_SIZE} color={colors.textSecondary} />
           </TouchableOpacity>
         </>
       ) : null}
@@ -91,10 +80,8 @@ const styles = StyleSheet.create({
     height: SEARCH_BAR_HEIGHT,
     borderRadius: RADIUS.lg,
     paddingHorizontal: SPACING.md,
-    backgroundColor: SEARCH_BAR_COLORS.background,
     borderWidth: 1,
-    borderColor: SEARCH_BAR_COLORS.border,
-    shadowColor: SEARCH_BAR_COLORS.shadow,
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
@@ -104,12 +91,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: SPACING.sm,
     fontSize: 15,
-    color: SEARCH_BAR_COLORS.text,
   },
   divider: {
     width: StyleSheet.hairlineWidth,
     height: '60%',
-    backgroundColor: SEARCH_BAR_COLORS.divider,
     marginRight: SPACING.sm,
   },
   filterButton: {

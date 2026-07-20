@@ -28,32 +28,61 @@ export const CARD_SHADOW = {
   elevation: 6,
 } as const;
 
+// Single palette shape for the whole app — screens/components read colors
+// from Redux (see store/settings + hooks/useThemeTokens) instead of picking
+// their own hardcoded values. `surfaceBorder`/`divider`/`trackBackground`
+// are older, more specific tokens the Pokemon Detail screen's components
+// (GlassCard, ProgressStat, EvolutionNode, ...) already depend on; kept
+// alongside the newer general-purpose `border` field rather than renamed,
+// so nothing there had to change.
 export interface ThemeColors {
   background: string;
   surface: string;
-  surfaceBorder: string;
+  surfaceSecondary: string;
+  card: string;
+  border: string;
   textPrimary: string;
   textSecondary: string;
+  accent: string;
+  danger: string;
+  success: string;
+  surfaceBorder: string;
   divider: string;
   trackBackground: string;
 }
 
-export const LIGHT_THEME_COLORS: ThemeColors = {
-  background: '#F4F5FA',
-  surface: 'rgba(255, 255, 255, 0.55)',
-  surfaceBorder: 'rgba(255, 255, 255, 0.4)',
-  textPrimary: '#1C1C28',
-  textSecondary: '#5B5B6B',
+// The brand accent stays the same blue in both modes — a stable identity
+// color rather than something that should flip with the theme.
+const ACCENT = '#5B7FFF';
+
+export const LIGHT_THEME: ThemeColors = {
+  background: '#FFFFFF',
+  surface: '#FAFAFC',
+  surfaceSecondary: '#F0F1F5',
+  card: '#F5F6FA',
+  border: 'rgba(0, 0, 0, 0.08)',
+  textPrimary: '#12131A',
+  textSecondary: '#5B5F6B',
+  accent: ACCENT,
+  danger: '#DC2626',
+  success: '#16A34A',
+  surfaceBorder: 'rgba(0, 0, 0, 0.08)',
   divider: 'rgba(0, 0, 0, 0.08)',
   trackBackground: 'rgba(0, 0, 0, 0.08)',
 };
 
-export const DARK_THEME_COLORS: ThemeColors = {
-  background: '#0E0E14',
-  surface: 'rgba(255, 255, 255, 0.08)',
-  surfaceBorder: 'rgba(255, 255, 255, 0.14)',
-  textPrimary: '#F5F5FA',
-  textSecondary: '#B5B5C6',
+export const DARK_THEME: ThemeColors = {
+  background: '#141B2D',
+  surface: 'rgba(255, 255, 255, 0.1)',
+  surfaceSecondary: 'rgba(255, 255, 255, 0.06)',
+  card: 'rgba(255, 255, 255, 0.1)',
+  border: 'rgba(255, 255, 255, 0.18)',
+  textPrimary: '#FFFFFF',
+  textSecondary: 'rgba(255, 255, 255, 0.64)',
+  accent: ACCENT,
+  danger: '#F87171',
+  success: '#4ADE80',
+  surfaceBorder: 'rgba(255, 255, 255, 0.18)',
   divider: 'rgba(255, 255, 255, 0.12)',
   trackBackground: 'rgba(255, 255, 255, 0.12)',
 };
@@ -67,20 +96,4 @@ export const POKEMON_DETAIL_SECTION_DELAY = {
   capture: ANIMATION.staggerDelay * 3,
   status: ANIMATION.staggerDelay * 4,
   evolution: ANIMATION.staggerDelay * 5,
-} as const;
-
-// Fixed dark "app shell" palette (Home, Search, Favorites, tab bar, cards).
-// Deliberately separate from the light/dark-adaptive ThemeColors above —
-// this shell is always-dark by design, regardless of system color scheme.
-// Historically defined inside HomeHeader.tsx; still re-exported from there
-// for every existing call site, but this is now the source of truth so
-// other shared components (e.g. ScreenHeader) can use it without creating
-// a circular import with HomeHeader.
-export const HOME_HEADER_COLORS = {
-  background: '#141B2D',
-  accent: '#5B7FFF',
-  title: '#FFFFFF',
-  subtitle: 'rgba(255, 255, 255, 0.64)',
-  glass: 'rgba(255, 255, 255, 0.1)',
-  glassBorder: 'rgba(255, 255, 255, 0.18)',
 } as const;

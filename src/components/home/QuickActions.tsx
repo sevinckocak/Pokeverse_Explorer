@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import QuickActionCard from '@/components/home/QuickActionCard';
 import type { IoniconName } from '@/components/home/QuickActionCard';
 import { SPACING } from '@/constants/theme';
@@ -24,9 +24,11 @@ const QUICK_ACTIONS: readonly QuickActionDefinition[] = [
 ];
 
 function QuickActionsComponent() {
+  const { colors } = useThemeTokens();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Quick Actions</Text>
+      <Text style={[styles.title, { color: colors.textPrimary }]}>Quick Actions</Text>
 
       <ScrollView
         horizontal
@@ -56,7 +58,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: HORIZONTAL_PADDING,
     fontSize: 18,
     fontWeight: '700',
-    color: HOME_HEADER_COLORS.title,
   },
   scrollContent: {
     flexDirection: 'row',

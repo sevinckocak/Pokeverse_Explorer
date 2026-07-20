@@ -13,7 +13,8 @@ import {
   selectPokemonLoading,
 } from '@/store/pokemon/pokemonSelectors';
 import type { RootStackParamList } from '@/navigation';
-import HomeHeader, { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
+import HomeHeader from '@/components/home/HomeHeader';
 import SearchBar from '@/components/common/SearchBar';
 import EmptyState from '@/components/common/EmptyState';
 import QuickActions from '@/components/home/QuickActions';
@@ -27,6 +28,7 @@ export default function HomeScreen() {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const tabBarHeight = useBottomTabBarHeight();
+  const { colors } = useThemeTokens();
   const pokemonList = useAppSelector(selectPokemonList);
   const loading = useAppSelector(selectPokemonLoading);
   const error = useAppSelector(selectPokemonError);
@@ -65,7 +67,7 @@ export default function HomeScreen() {
 
   return (
     <ScrollView
-      style={styles.root}
+      style={[styles.root, { backgroundColor: colors.background }]}
       contentContainerStyle={[styles.content, { paddingBottom: tabBarHeight + SPACING.xl }]}
     >
       <HomeHeader />
@@ -79,7 +81,7 @@ export default function HomeScreen() {
       {isSearching ? (
         loading || isSearchLoading ? (
           <View style={styles.state}>
-            <ActivityIndicator size="large" color={HOME_HEADER_COLORS.accent} />
+            <ActivityIndicator size="large" color={colors.accent} />
           </View>
         ) : filteredPokemon.length === 0 ? (
           <EmptyState icon="search-outline" title="No Pokémon found" subtitle="Try another keyword" />
@@ -103,7 +105,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: HOME_HEADER_COLORS.background,
   },
   content: {
     flexGrow: 1,

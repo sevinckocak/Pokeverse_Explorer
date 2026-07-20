@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { POKEMON_TYPE_NAMES, getPokemonTheme } from '@/constants/pokemonTheme';
 import type { PokemonTypeName } from '@/constants/pokemonTheme';
 import { RADIUS, SPACING } from '@/constants/theme';
@@ -11,9 +11,11 @@ interface BrowseByTypeProps {
 }
 
 function BrowseByTypeComponent({ onTypePress }: BrowseByTypeProps) {
+  const { colors } = useThemeTokens();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Browse by Type</Text>
+      <Text style={[styles.title, { color: colors.textPrimary }]}>Browse by Type</Text>
       <View style={styles.grid}>
         {POKEMON_TYPE_NAMES.map((type) => {
           const theme = getPokemonTheme(type);
@@ -44,7 +46,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: HOME_HEADER_COLORS.title,
     marginBottom: SPACING.md,
   },
   grid: {
@@ -57,6 +58,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.md,
     borderRadius: RADIUS.pill,
   },
+  // Always white regardless of app theme: chips use per-Pokémon-type
+  // background colors (theme.chipColor), which are already saturated
+  // enough that white text stays legible in both light and dark mode.
   chipLabel: {
     fontSize: 13,
     fontWeight: '700',

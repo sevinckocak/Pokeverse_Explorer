@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { useRecentSearches } from '@/hooks/useRecentSearches';
 import { RADIUS, SPACING } from '@/constants/theme';
 
@@ -9,6 +9,7 @@ interface RecentSearchesProps {
 }
 
 function RecentSearchesComponent({ onQueryPress }: RecentSearchesProps) {
+  const { colors } = useThemeTokens();
   const { recentSearches } = useRecentSearches();
 
   if (recentSearches.length === 0) {
@@ -17,17 +18,17 @@ function RecentSearchesComponent({ onQueryPress }: RecentSearchesProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recent Searches</Text>
+      <Text style={[styles.title, { color: colors.textPrimary }]}>Recent Searches</Text>
       <View style={styles.chipRow}>
         {recentSearches.map((query) => (
           <Pressable
             key={query}
-            style={styles.chip}
+            style={[styles.chip, { backgroundColor: colors.surface, borderColor: colors.border }]}
             onPress={() => onQueryPress(query)}
             accessibilityRole="button"
             accessibilityLabel={`Search ${query}`}
           >
-            <Text style={styles.chipLabel}>{query}</Text>
+            <Text style={[styles.chipLabel, { color: colors.textPrimary }]}>{query}</Text>
           </Pressable>
         ))}
       </View>
@@ -45,7 +46,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: HOME_HEADER_COLORS.title,
     marginBottom: SPACING.md,
   },
   chipRow: {
@@ -57,13 +57,10 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.sm,
     paddingHorizontal: SPACING.md,
     borderRadius: RADIUS.pill,
-    backgroundColor: HOME_HEADER_COLORS.glass,
     borderWidth: 1,
-    borderColor: HOME_HEADER_COLORS.glassBorder,
   },
   chipLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: HOME_HEADER_COLORS.title,
   },
 });

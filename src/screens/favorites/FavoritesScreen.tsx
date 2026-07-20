@@ -5,7 +5,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useAppSelector } from '@/hooks/useRedux';
 import { selectFavorites } from '@/store/favorites/favoritesSelectors';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import ScreenHeader from '@/components/common/ScreenHeader';
 import EmptyState from '@/components/common/EmptyState';
 import PokemonGrid from '@/components/pokemon/PokemonGrid';
@@ -17,6 +17,7 @@ type FavoritesScreenNavigationProp = NativeStackNavigationProp<RootStackParamLis
 export default function FavoritesScreen() {
   const navigation = useNavigation<FavoritesScreenNavigationProp>();
   const tabBarHeight = useBottomTabBarHeight();
+  const { colors } = useThemeTokens();
 
   // Favorites now stores full PokemonListItem objects, so the screen renders
   // directly from Redux instead of filtering the (paginated, first-page-only)
@@ -42,7 +43,7 @@ export default function FavoritesScreen() {
   );
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, { backgroundColor: colors.background }]}>
       <ScreenHeader
         title="Favorites"
         subtitle="Your saved Pokémon collection."
@@ -72,7 +73,6 @@ export default function FavoritesScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: HOME_HEADER_COLORS.background,
   },
   center: {
     flex: 1,

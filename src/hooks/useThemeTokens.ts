@@ -1,5 +1,5 @@
-import { useColorScheme } from 'react-native';
-import { DARK_THEME_COLORS, LIGHT_THEME_COLORS } from '@/constants/theme';
+import { useAppSelector } from '@/hooks/useRedux';
+import { selectIsDarkMode, selectThemeColors } from '@/store/settings/settingsSelectors';
 import type { ThemeColors } from '@/constants/theme';
 
 export interface ThemeTokens {
@@ -7,12 +7,13 @@ export interface ThemeTokens {
   isDark: boolean;
 }
 
+// Single theme-access point for the whole app (screens and shared
+// components alike) — backed by Redux settings state instead of the OS
+// color scheme, so toggling Dark Mode in Settings updates every consumer
+// immediately via normal Redux subscription, no reload required.
 export function useThemeTokens(): ThemeTokens {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
+  const isDark = useAppSelector(selectIsDarkMode);
+  const colors = useAppSelector(selectThemeColors);
 
-  return {
-    colors: isDark ? DARK_THEME_COLORS : LIGHT_THEME_COLORS,
-    isDark,
-  };
+  return { colors, isDark };
 }

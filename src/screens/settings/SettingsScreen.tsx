@@ -1,6 +1,8 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useAppDispatch } from '@/hooks/useRedux';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
+import { toggleTheme } from '@/store/settings/settingsSlice';
 import ScreenHeader from '@/components/common/ScreenHeader';
 import SettingsSection from '@/components/settings/SettingsSection';
 import SettingsItem from '@/components/settings/SettingsItem';
@@ -10,9 +12,15 @@ const APP_VERSION = '1.0.0';
 
 export default function SettingsScreen() {
   const tabBarHeight = useBottomTabBarHeight();
+  const dispatch = useAppDispatch();
+  const { colors, isDark } = useThemeTokens();
+
+  const handleToggleTheme = () => {
+    dispatch(toggleTheme());
+  };
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, { backgroundColor: colors.background }]}>
       <ScreenHeader
         title="Settings"
         subtitle="Customize your app experience."
@@ -27,10 +35,9 @@ export default function SettingsScreen() {
           <SettingsItem
             icon="moon-outline"
             title="Dark Mode"
-            subtitle="Coming soon"
             showSwitch
-            switchValue={false}
-            disabled
+            switchValue={isDark}
+            onSwitchChange={handleToggleTheme}
           />
         </SettingsSection>
 
@@ -78,8 +85,12 @@ export default function SettingsScreen() {
         </SettingsSection>
 
         <View style={styles.footer}>
-          <Text style={styles.footerTitle}>PokéVerse Explorer</Text>
-          <Text style={styles.footerVersion}>Version {APP_VERSION}</Text>
+          <Text style={[styles.footerTitle, { color: colors.textPrimary }]}>
+            PokéVerse Explorer
+          </Text>
+          <Text style={[styles.footerVersion, { color: colors.textSecondary }]}>
+            Version {APP_VERSION}
+          </Text>
         </View>
       </ScrollView>
     </View>
@@ -89,7 +100,6 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: HOME_HEADER_COLORS.background,
   },
   scroll: {
     flex: 1,
@@ -106,11 +116,9 @@ const styles = StyleSheet.create({
   footerTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: HOME_HEADER_COLORS.title,
   },
   footerVersion: {
     marginTop: 2,
     fontSize: 12,
-    color: HOME_HEADER_COLORS.subtitle,
   },
 });

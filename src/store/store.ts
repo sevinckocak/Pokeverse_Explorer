@@ -5,6 +5,7 @@ import evolutionReducer from '@/store/evolution/evolutionSlice';
 import abilityReducer from '@/store/ability/abilitySlice';
 import favoritesReducer from '@/store/favorites/favoritesSlice';
 import { favoritesPersistenceMiddleware } from '@/store/favorites/favoritesPersistenceMiddleware';
+import settingsReducer from '@/store/settings/settingsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     evolution: evolutionReducer,
     ability: abilityReducer,
     favorites: favoritesReducer,
+    settings: settingsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(favoritesPersistenceMiddleware),
 });

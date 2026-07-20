@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import { HOME_HEADER_COLORS } from '@/components/home/HomeHeader';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
 import PokemonCard from '@/components/pokemon/PokemonCard';
 import { SPACING } from '@/constants/theme';
 import { chunk } from '@/utils/array';
@@ -28,6 +28,7 @@ function PokemonSectionComponent({
   onSeeAllPress,
   onCardPress,
 }: PokemonSectionProps) {
+  const { colors } = useThemeTokens();
   const { width } = useWindowDimensions();
   const cardWidth =
     (width - HORIZONTAL_PADDING * 2 - COLUMN_GAP * (GRID_COLUMNS - 1)) / GRID_COLUMNS;
@@ -48,19 +49,19 @@ function PokemonSectionComponent({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
         <Pressable onPress={onSeeAllPress} accessibilityRole="button" accessibilityLabel="See all">
-          <Text style={styles.seeAll}>See All</Text>
+          <Text style={[styles.seeAll, { color: colors.accent }]}>See All</Text>
         </Pressable>
       </View>
 
       {loading ? (
         <View style={styles.state}>
-          <ActivityIndicator size="large" color={HOME_HEADER_COLORS.accent} />
+          <ActivityIndicator size="large" color={colors.accent} />
         </View>
       ) : error ? (
         <View style={styles.state}>
-          <Text style={styles.errorText}>{error}</Text>
+          <Text style={{ color: colors.textPrimary }}>{error}</Text>
         </View>
       ) : (
         <FlatList
@@ -92,12 +93,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: HOME_HEADER_COLORS.title,
   },
   seeAll: {
     fontSize: 14,
     fontWeight: '600',
-    color: HOME_HEADER_COLORS.accent,
   },
   listContent: {
     paddingHorizontal: HORIZONTAL_PADDING,
@@ -110,8 +109,5 @@ const styles = StyleSheet.create({
     height: 220,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  errorText: {
-    color: HOME_HEADER_COLORS.title,
   },
 });
