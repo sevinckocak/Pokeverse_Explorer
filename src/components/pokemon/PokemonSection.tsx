@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
 import PokemonCard from '@/components/pokemon/PokemonCard';
 import { SPACING } from '@/constants/theme';
@@ -28,6 +29,7 @@ function PokemonSectionComponent({
   onSeeAllPress,
   onCardPress,
 }: PokemonSectionProps) {
+  const { t } = useTranslation();
   const { colors } = useThemeTokens();
   const { width } = useWindowDimensions();
   const cardWidth =
@@ -50,8 +52,12 @@ function PokemonSectionComponent({
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
-        <Pressable onPress={onSeeAllPress} accessibilityRole="button" accessibilityLabel="See all">
-          <Text style={[styles.seeAll, { color: colors.accent }]}>See All</Text>
+        <Pressable
+          onPress={onSeeAllPress}
+          accessibilityRole="button"
+          accessibilityLabel={t('common.seeAll')}
+        >
+          <Text style={[styles.seeAll, { color: colors.accent }]}>{t('common.seeAll')}</Text>
         </Pressable>
       </View>
 

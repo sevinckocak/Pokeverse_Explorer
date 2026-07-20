@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Badge } from "@/components/ui/Badge";
 import { POKEMON_DETAIL_SECTION_DELAY, SPACING } from "@/constants/theme";
@@ -15,11 +16,14 @@ interface HabitatCardProps {
 const BADGE_TEXT_COLOR = "#FFFFFF";
 
 function HabitatCardComponent({ species, theme }: HabitatCardProps) {
-  const habitatLabel = species.habitat !== null ? capitalize(species.habitat.name) : "Unknown";
+  const { t } = useTranslation();
+  // habitat/color names come straight from PokeAPI — capitalized for
+  // display, but never translated (API data stays as received).
+  const habitatLabel = species.habitat !== null ? capitalize(species.habitat.name) : t('common.unknown');
   const colorLabel = capitalize(species.color.name);
 
   return (
-    <GlassCard title="Habitat" delay={POKEMON_DETAIL_SECTION_DELAY.habitat} theme={theme}>
+    <GlassCard title={t('pokemonDetail.habitat')} delay={POKEMON_DETAIL_SECTION_DELAY.habitat} theme={theme}>
       <View style={styles.row}>
         <Badge label={habitatLabel} backgroundColor={theme.chipColor} textColor={BADGE_TEXT_COLOR} />
         <Badge label={colorLabel} backgroundColor={theme.chipColor} textColor={BADGE_TEXT_COLOR} />

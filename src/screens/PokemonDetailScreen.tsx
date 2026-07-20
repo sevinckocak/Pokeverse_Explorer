@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import type { RouteProp } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import type { RootStackParamList } from "@/navigation";
@@ -18,6 +19,7 @@ import { SPACING } from "@/constants/theme";
 type PokemonDetailRouteProp = RouteProp<RootStackParamList, "PokemonDetail">;
 
 export default function PokemonDetailScreen() {
+  const { t } = useTranslation();
   const route = useRoute<PokemonDetailRouteProp>();
   const { name } = route.params;
 
@@ -77,7 +79,7 @@ export default function PokemonDetailScreen() {
   if (detail === null) {
     return (
       <View style={[styles.center, { backgroundColor: colors.background }]}>
-        <Text style={{ color: colors.textPrimary }}>No Pokémon data available.</Text>
+        <Text style={{ color: colors.textPrimary }}>{t('pokemonDetail.noDataAvailable')}</Text>
       </View>
     );
   }

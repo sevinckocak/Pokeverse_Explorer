@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -25,6 +26,7 @@ import { SPACING } from '@/constants/theme';
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MainTabs'>;
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const tabBarHeight = useBottomTabBarHeight();
@@ -84,13 +86,17 @@ export default function HomeScreen() {
             <ActivityIndicator size="large" color={colors.accent} />
           </View>
         ) : filteredPokemon.length === 0 ? (
-          <EmptyState icon="search-outline" title="No Pokémon found" subtitle="Try another keyword" />
+          <EmptyState
+            icon="search-outline"
+            title={t('search.noResults')}
+            subtitle={t('search.noResultsSubtitle')}
+          />
         ) : (
           <PokemonGrid data={filteredPokemon} onCardPress={handleCardPress} scrollEnabled={false} />
         )
       ) : (
         <PokemonSection
-          title="Pokemon"
+          title={t('home.pokemonSection')}
           data={featuredPokemon}
           loading={loading}
           error={error}

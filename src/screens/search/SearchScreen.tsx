@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -22,6 +23,7 @@ import type { RootStackParamList } from '@/navigation';
 type SearchScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MainTabs'>;
 
 export default function SearchScreen() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigation = useNavigation<SearchScreenNavigationProp>();
   const tabBarHeight = useBottomTabBarHeight();
@@ -76,8 +78,8 @@ export default function SearchScreen() {
           ) : filteredPokemon.length === 0 ? (
             <EmptyState
               icon="search-outline"
-              title="No Pokémon found"
-              subtitle="Try another keyword"
+              title={t('search.noResults')}
+              subtitle={t('search.noResultsSubtitle')}
             />
           ) : (
             <PokemonGrid data={filteredPokemon} onCardPress={handleCardPress} scrollEnabled={false} />

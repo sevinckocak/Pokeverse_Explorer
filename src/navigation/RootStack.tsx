@@ -1,4 +1,5 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabNavigator from '@/navigation/BottomTabNavigator';
 import PokemonDetailScreen from '@/screens/PokemonDetailScreen';
@@ -12,6 +13,7 @@ import type { RootStackParamList } from '@/navigation/types';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootStack() {
+  const { t } = useTranslation();
   const { isChecking, hasCompletedOnboarding } = useOnboardingStatus();
   const { colors } = useThemeTokens();
 
@@ -40,7 +42,7 @@ export default function RootStack() {
         name="AllPokemon"
         component={AllPokemonScreen}
         options={{
-          title: 'All Pokémon',
+          title: t('pokemonDetail.allPokemonTitle'),
           headerStyle: { backgroundColor: colors.background },
           headerTintColor: colors.textPrimary,
         }}

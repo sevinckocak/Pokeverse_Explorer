@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useAppSelector } from "@/hooks/useRedux";
 import {
   selectEvolutionChain,
@@ -15,16 +16,23 @@ interface PokemonEvolutionProps {
 }
 
 export default function PokemonEvolution({ theme }: PokemonEvolutionProps) {
+  const { t } = useTranslation();
   const evolutionChain = useAppSelector(selectEvolutionChain);
   const loading = useAppSelector(selectEvolutionLoading);
   const error = useAppSelector(selectEvolutionError);
 
   if (loading) {
-    return <SectionState title="Evolution Chain" message="Loading evolution chain..." theme={theme} />;
+    return (
+      <SectionState
+        title={t('pokemonDetail.evolutionChain')}
+        message={t('pokemonDetail.loadingEvolutionChain')}
+        theme={theme}
+      />
+    );
   }
 
   if (error) {
-    return <SectionState title="Evolution Chain" message={error} theme={theme} />;
+    return <SectionState title={t('pokemonDetail.evolutionChain')} message={error} theme={theme} />;
   }
 
   if (evolutionChain === null) {
@@ -32,7 +40,7 @@ export default function PokemonEvolution({ theme }: PokemonEvolutionProps) {
   }
 
   return (
-    <GlassCard title="Evolution Chain" delay={POKEMON_DETAIL_SECTION_DELAY.evolution} theme={theme}>
+    <GlassCard title={t('pokemonDetail.evolutionChain')} delay={POKEMON_DETAIL_SECTION_DELAY.evolution} theme={theme}>
       <EvolutionNode node={evolutionChain.chain} accentColor={theme.accent} />
     </GlassCard>
   );

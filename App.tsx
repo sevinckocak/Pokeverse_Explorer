@@ -1,3 +1,4 @@
+import '@/localization';
 import AppProviders from '@/providers/AppProviders';
 import { AppNavigator } from '@/navigation';
 

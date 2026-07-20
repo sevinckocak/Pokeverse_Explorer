@@ -1,0 +1,97 @@
+{
+  "common": {
+    "loading": "Wird geladen...",
+    "retry": "Erneut versuchen",
+    "seeAll": "Alle anzeigen",
+    "unknown": "Unbekannt",
+    "cancel": "Abbrechen"
+  },
+  "home": {
+    "title": "Pokémon entdecken",
+    "subtitle": "Entdecke Pokémon, Fähigkeiten, Entwicklungen und mehr.",
+    "quickActions": "Schnellzugriff",
+    "pokemonSection": "Pokémon",
+    "quickAction": {
+      "favorites": "Favoriten",
+      "random": "Zufällig",
+      "abilities": "Fähigkeiten",
+      "evolutions": "Entwicklungen",
+      "types": "Typen",
+      "regions": "Regionen"
+    }
+  },
+  "search": {
+    "placeholder": "Pokémon suchen...",
+    "recentSearches": "Letzte Suchen",
+    "trending": "Beliebte Pokémon",
+    "browseByType": "Nach Typ durchsuchen",
+    "noResults": "Keine Pokémon gefunden",
+    "noResultsSubtitle": "Versuche ein anderes Suchwort"
+  },
+  "favorites": {
+    "title": "Favoriten",
+    "subtitle": "Deine gespeicherte Pokémon-Sammlung.",
+    "count": "{{count}} Pokémon gespeichert",
+    "emptyTitle": "Noch keine Favoriten",
+    "emptySubtitle": "Tippe auf das Herzsymbol eines Pokémon, um es hier hinzuzufügen."
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "subtitle": "Passe deine App-Erfahrung an.",
+    "appearance": "Erscheinungsbild",
+    "darkMode": "Dunkler Modus",
+    "language": "Sprache",
+    "selectLanguage": "Sprache auswählen",
+    "notifications": "Benachrichtigungen",
+    "general": "Allgemein",
+    "about": "Über",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen",
+    "support": "Support",
+    "rateApp": "App bewerten",
+    "contactSupport": "Support kontaktieren",
+    "comingSoon": "Demnächst verfügbar",
+    "footerName": "PokéVerse Explorer",
+    "version": "Version {{version}}"
+  },
+  "pokemonDetail": {
+    "height": "Größe",
+    "weight": "Gewicht",
+    "types": "Typen",
+    "abilities": "Fähigkeiten",
+    "stats": "Statistiken",
+    "species": "Art",
+    "habitat": "Habitat",
+    "capture": "Fangen",
+    "captureRate": "Fangrate",
+    "baseHappiness": "Basis-Freundschaft",
+    "status": "Status",
+    "legendary": "Legendär",
+    "mythical": "Mysteriös",
+    "evolutionChain": "Entwicklungskette",
+    "loadingSpecies": "Art wird geladen...",
+    "loadingEvolutionChain": "Entwicklungskette wird geladen...",
+    "noDataAvailable": "Keine Pokémon-Daten verfügbar.",
+    "allPokemonTitle": "Alle Pokémon"
+  },
+  "types": {
+    "normal": "Normal",
+    "fire": "Feuer",
+    "water": "Wasser",
+    "electric": "Elektro",
+    "grass": "Pflanze",
+    "ice": "Eis",
+    "fighting": "Kampf",
+    "poison": "Gift",
+    "ground": "Boden",
+    "flying": "Flug",
+    "psychic": "Psycho",
+    "bug": "Käfer",
+    "rock": "Gestein",
+    "ghost": "Geist",
+    "dragon": "Drache",
+    "dark": "Unlicht",
+    "steel": "Stahl",
+    "fairy": "Fee"
+  }
+}

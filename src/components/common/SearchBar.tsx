@@ -1,5 +1,6 @@
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { RADIUS, SPACING } from '@/constants/theme';
 
@@ -19,13 +20,15 @@ const FILTER_BUTTON_SIZE = 36;
 
 export default function SearchBar({
   value = '',
-  placeholder = 'Search Pokémon...',
+  placeholder,
   onChangeText,
   onFilterPress,
   autoFocus = false,
   editable = true,
 }: SearchBarProps) {
+  const { t } = useTranslation();
   const { colors } = useThemeTokens();
+  const resolvedPlaceholder = placeholder ?? t('search.placeholder');
 
   return (
     <View
@@ -43,7 +46,7 @@ export default function SearchBar({
         style={[styles.input, { color: colors.textPrimary }]}
         value={value}
         onChangeText={onChangeText}
-        placeholder={placeholder}
+        placeholder={resolvedPlaceholder}
         placeholderTextColor={colors.textSecondary}
         autoFocus={autoFocus}
         editable={editable}
@@ -51,7 +54,7 @@ export default function SearchBar({
         autoCorrect={false}
         autoCapitalize="none"
         clearButtonMode="while-editing"
-        accessibilityLabel={placeholder}
+        accessibilityLabel={resolvedPlaceholder}
       />
 
       {onFilterPress ? (

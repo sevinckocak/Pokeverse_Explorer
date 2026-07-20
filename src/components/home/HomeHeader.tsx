@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import ScreenHeader from "@/components/common/ScreenHeader";
 
 interface HomeHeaderProps {
@@ -5,10 +6,12 @@ interface HomeHeaderProps {
 }
 
 export default function HomeHeader({ onNotificationPress }: HomeHeaderProps) {
+  const { t } = useTranslation();
+
   return (
     <ScreenHeader
-      title="Discover Pokémon"
-      subtitle="Explore Pokémon, abilities, evolutions and more."
+      title={t('home.title')}
+      subtitle={t('home.subtitle')}
       icon="notifications-outline"
       onIconPress={onNotificationPress}
       showBadge

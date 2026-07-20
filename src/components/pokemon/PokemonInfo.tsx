@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
 import { POKEMON_DETAIL_SECTION_DELAY, SPACING } from "@/constants/theme";
@@ -12,21 +13,22 @@ interface PokemonInfoProps {
 }
 
 function PokemonInfoComponent({ height, weight, theme }: PokemonInfoProps) {
+  const { t } = useTranslation();
   const { colors } = useThemeTokens();
   const displayHeight = `${(height / 10).toFixed(1)} m`;
   const displayWeight = `${(weight / 10).toFixed(1)} kg`;
 
   return (
-    <GlassCard title="Stats" delay={POKEMON_DETAIL_SECTION_DELAY.stats} theme={theme}>
+    <GlassCard title={t('pokemonDetail.stats')} delay={POKEMON_DETAIL_SECTION_DELAY.stats} theme={theme}>
       <View style={styles.row}>
         <View style={styles.column}>
           <Text style={[styles.value, { color: colors.textPrimary }]}>{displayHeight}</Text>
-          <Text style={[styles.label, { color: colors.textSecondary }]}>Height</Text>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>{t('pokemonDetail.height')}</Text>
         </View>
         <View style={[styles.divider, { backgroundColor: colors.divider }]} />
         <View style={styles.column}>
           <Text style={[styles.value, { color: colors.textPrimary }]}>{displayWeight}</Text>
-          <Text style={[styles.label, { color: colors.textSecondary }]}>Weight</Text>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>{t('pokemonDetail.weight')}</Text>
         </View>
       </View>
     </GlassCard>

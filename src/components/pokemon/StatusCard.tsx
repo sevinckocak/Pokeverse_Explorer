@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Badge } from "@/components/ui/Badge";
 import { POKEMON_DETAIL_SECTION_DELAY, SPACING } from "@/constants/theme";
@@ -17,20 +18,21 @@ const ACTIVE_TEXT_COLOR = "#FFFFFF";
 const INACTIVE_STATUS = { backgroundColor: "rgba(120, 120, 130, 0.14)", textColor: "#8A8A99" };
 
 function StatusCardComponent({ species, theme }: StatusCardProps) {
+  const { t } = useTranslation();
   const activeStyle = { backgroundColor: theme.chipColor, textColor: ACTIVE_TEXT_COLOR };
   const legendaryStyle = species.is_legendary ? activeStyle : INACTIVE_STATUS;
   const mythicalStyle = species.is_mythical ? activeStyle : INACTIVE_STATUS;
 
   return (
-    <GlassCard title="Status" delay={POKEMON_DETAIL_SECTION_DELAY.status} theme={theme}>
+    <GlassCard title={t('pokemonDetail.status')} delay={POKEMON_DETAIL_SECTION_DELAY.status} theme={theme}>
       <View style={styles.row}>
         <Badge
-          label="Legendary"
+          label={t('pokemonDetail.legendary')}
           backgroundColor={legendaryStyle.backgroundColor}
           textColor={legendaryStyle.textColor}
         />
         <Badge
-          label="Mythical"
+          label={t('pokemonDetail.mythical')}
           backgroundColor={mythicalStyle.backgroundColor}
           textColor={mythicalStyle.textColor}
         />

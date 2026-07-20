@@ -1,0 +1,97 @@
+{
+  "common": {
+    "loading": "Yükleniyor...",
+    "retry": "Tekrar Dene",
+    "seeAll": "Tümünü Gör",
+    "unknown": "Bilinmiyor",
+    "cancel": "Vazgeç"
+  },
+  "home": {
+    "title": "Pokémon'ları Keşfet",
+    "subtitle": "Pokémon'ları, yetenekleri, evrimleri ve daha fazlasını keşfedin.",
+    "quickActions": "Hızlı İşlemler",
+    "pokemonSection": "Pokémon",
+    "quickAction": {
+      "favorites": "Favoriler",
+      "random": "Rastgele",
+      "abilities": "Yetenekler",
+      "evolutions": "Evrimler",
+      "types": "Türler",
+      "regions": "Bölgeler"
+    }
+  },
+  "search": {
+    "placeholder": "Pokémon ara...",
+    "recentSearches": "Son Aramalar",
+    "trending": "Popüler Pokémon'lar",
+    "browseByType": "Türe Göre Gözat",
+    "noResults": "Pokémon bulunamadı",
+    "noResultsSubtitle": "Başka bir kelime deneyin"
+  },
+  "favorites": {
+    "title": "Favoriler",
+    "subtitle": "Kaydettiğin Pokémon koleksiyonun.",
+    "count": "{{count}} Pokémon kaydedildi",
+    "emptyTitle": "Henüz favori yok",
+    "emptySubtitle": "Buraya eklemek için herhangi bir Pokémon'un kalp simgesine dokun."
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "subtitle": "Uygulama deneyimini özelleştir.",
+    "appearance": "Görünüm",
+    "darkMode": "Karanlık Mod",
+    "language": "Dil",
+    "selectLanguage": "Dil Seç",
+    "notifications": "Bildirimler",
+    "general": "Genel",
+    "about": "Hakkında",
+    "privacyPolicy": "Gizlilik Politikası",
+    "termsOfService": "Kullanım Şartları",
+    "support": "Destek",
+    "rateApp": "Uygulamayı Değerlendir",
+    "contactSupport": "Destekle İletişime Geç",
+    "comingSoon": "Yakında",
+    "footerName": "PokéVerse Explorer",
+    "version": "Sürüm {{version}}"
+  },
+  "pokemonDetail": {
+    "height": "Boy",
+    "weight": "Ağırlık",
+    "types": "Türler",
+    "abilities": "Yetenekler",
+    "stats": "İstatistikler",
+    "species": "Tür Bilgisi",
+    "habitat": "Habitat",
+    "capture": "Yakalama",
+    "captureRate": "Yakalama Oranı",
+    "baseHappiness": "Temel Mutluluk",
+    "status": "Durum",
+    "legendary": "Efsanevi",
+    "mythical": "Mitik",
+    "evolutionChain": "Evrim Zinciri",
+    "loadingSpecies": "Tür bilgisi yükleniyor...",
+    "loadingEvolutionChain": "Evrim zinciri yükleniyor...",
+    "noDataAvailable": "Pokémon verisi bulunamadı.",
+    "allPokemonTitle": "Tüm Pokémon'lar"
+  },
+  "types": {
+    "normal": "Normal",
+    "fire": "Ateş",
+    "water": "Su",
+    "electric": "Elektrik",
+    "grass": "Çim",
+    "ice": "Buz",
+    "fighting": "Dövüş",
+    "poison": "Zehir",
+    "ground": "Toprak",
+    "flying": "Uçan",
+    "psychic": "Psişik",
+    "bug": "Böcek",
+    "rock": "Kaya",
+    "ghost": "Hayalet",
+    "dragon": "Ejderha",
+    "dark": "Karanlık",
+    "steel": "Çelik",
+    "fairy": "Peri"
+  }
+}

@@ -1,33 +1,35 @@
 import { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { POKEMON_TYPE_NAMES, getPokemonTheme } from '@/constants/pokemonTheme';
 import type { PokemonTypeName } from '@/constants/pokemonTheme';
 import { RADIUS, SPACING } from '@/constants/theme';
-import { capitalize } from '@/utils/string';
 
 interface BrowseByTypeProps {
   onTypePress: (type: PokemonTypeName) => void;
 }
 
 function BrowseByTypeComponent({ onTypePress }: BrowseByTypeProps) {
+  const { t } = useTranslation();
   const { colors } = useThemeTokens();
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: colors.textPrimary }]}>Browse by Type</Text>
+      <Text style={[styles.title, { color: colors.textPrimary }]}>{t('search.browseByType')}</Text>
       <View style={styles.grid}>
         {POKEMON_TYPE_NAMES.map((type) => {
           const theme = getPokemonTheme(type);
+          const typeLabel = t(`types.${type}`);
           return (
             <Pressable
               key={type}
               style={[styles.chip, { backgroundColor: theme.chipColor }]}
               onPress={() => onTypePress(type)}
               accessibilityRole="button"
-              accessibilityLabel={`Browse ${type} type Pokémon`}
+              accessibilityLabel={typeLabel}
             >
-              <Text style={styles.chipLabel}>{capitalize(type)}</Text>
+              <Text style={styles.chipLabel}>{typeLabel}</Text>
             </Pressable>
           );
         })}

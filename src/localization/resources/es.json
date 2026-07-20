@@ -1,0 +1,97 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "retry": "Reintentar",
+    "seeAll": "Ver todo",
+    "unknown": "Desconocido",
+    "cancel": "Cancelar"
+  },
+  "home": {
+    "title": "Descubre Pokémon",
+    "subtitle": "Explora Pokémon, habilidades, evoluciones y más.",
+    "quickActions": "Acciones rápidas",
+    "pokemonSection": "Pokémon",
+    "quickAction": {
+      "favorites": "Favoritos",
+      "random": "Aleatorio",
+      "abilities": "Habilidades",
+      "evolutions": "Evoluciones",
+      "types": "Tipos",
+      "regions": "Regiones"
+    }
+  },
+  "search": {
+    "placeholder": "Buscar Pokémon...",
+    "recentSearches": "Búsquedas recientes",
+    "trending": "Pokémon populares",
+    "browseByType": "Explorar por tipo",
+    "noResults": "No se encontraron Pokémon",
+    "noResultsSubtitle": "Prueba otra palabra clave"
+  },
+  "favorites": {
+    "title": "Favoritos",
+    "subtitle": "Tu colección de Pokémon guardados.",
+    "count": "{{count}} Pokémon guardados",
+    "emptyTitle": "Aún no hay favoritos",
+    "emptySubtitle": "Toca el icono del corazón de cualquier Pokémon para añadirlo aquí."
+  },
+  "settings": {
+    "title": "Ajustes",
+    "subtitle": "Personaliza tu experiencia en la app.",
+    "appearance": "Apariencia",
+    "darkMode": "Modo oscuro",
+    "language": "Idioma",
+    "selectLanguage": "Seleccionar idioma",
+    "notifications": "Notificaciones",
+    "general": "General",
+    "about": "Acerca de",
+    "privacyPolicy": "Política de privacidad",
+    "termsOfService": "Términos de servicio",
+    "support": "Soporte",
+    "rateApp": "Valorar la app",
+    "contactSupport": "Contactar con soporte",
+    "comingSoon": "Próximamente",
+    "footerName": "PokéVerse Explorer",
+    "version": "Versión {{version}}"
+  },
+  "pokemonDetail": {
+    "height": "Altura",
+    "weight": "Peso",
+    "types": "Tipos",
+    "abilities": "Habilidades",
+    "stats": "Estadísticas",
+    "species": "Especie",
+    "habitat": "Hábitat",
+    "capture": "Captura",
+    "captureRate": "Tasa de captura",
+    "baseHappiness": "Felicidad base",
+    "status": "Estado",
+    "legendary": "Legendario",
+    "mythical": "Singular",
+    "evolutionChain": "Cadena evolutiva",
+    "loadingSpecies": "Cargando especie...",
+    "loadingEvolutionChain": "Cargando cadena evolutiva...",
+    "noDataAvailable": "No hay datos de Pokémon disponibles.",
+    "allPokemonTitle": "Todos los Pokémon"
+  },
+  "types": {
+    "normal": "Normal",
+    "fire": "Fuego",
+    "water": "Agua",
+    "electric": "Eléctrico",
+    "grass": "Planta",
+    "ice": "Hielo",
+    "fighting": "Lucha",
+    "poison": "Veneno",
+    "ground": "Tierra",
+    "flying": "Volador",
+    "psychic": "Psíquico",
+    "bug": "Bicho",
+    "rock": "Roca",
+    "ghost": "Fantasma",
+    "dragon": "Dragón",
+    "dark": "Siniestro",
+    "steel": "Acero",
+    "fairy": "Hada"
+  }
+}

@@ -6,6 +6,7 @@ import abilityReducer from '@/store/ability/abilitySlice';
 import favoritesReducer from '@/store/favorites/favoritesSlice';
 import { favoritesPersistenceMiddleware } from '@/store/favorites/favoritesPersistenceMiddleware';
 import settingsReducer from '@/store/settings/settingsSlice';
+import { settingsPersistenceMiddleware } from '@/store/settings/settingsPersistenceMiddleware';
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +17,8 @@ export const store = configureStore({
     favorites: favoritesReducer,
     settings: settingsReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(favoritesPersistenceMiddleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(favoritesPersistenceMiddleware, settingsPersistenceMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

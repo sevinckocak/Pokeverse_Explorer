@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Switch, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { RADIUS, SPACING } from '@/constants/theme';
@@ -15,15 +15,17 @@ interface SettingsItemProps {
   onSwitchChange?: (value: boolean) => void;
   showChevron?: boolean;
   disabled?: boolean;
+  onPress?: () => void;
 }
 
 const ICON_BADGE_SIZE = 36;
 const ICON_SIZE = 18;
 const CHEVRON_SIZE = 18;
+const PRESSED_OPACITY = 0.6;
 
-// Pure display row by default — pass onSwitchChange once a setting is
-// actually wired up (see Dark Mode). Rows without it stay non-interactive,
-// same as before.
+// Pure display row by default — pass onSwitchChange/onPress once a setting
+// is actually wired up (see Dark Mode / Language). Rows without either stay
+// non-interactive, same as before.
 function SettingsItemComponent({
   icon,
   title,
@@ -34,11 +36,12 @@ function SettingsItemComponent({
   onSwitchChange,
   showChevron = false,
   disabled = false,
+  onPress,
 }: SettingsItemProps) {
   const { colors } = useThemeTokens();
 
-  return (
-    <View style={[styles.row, disabled && styles.rowDisabled]}>
+  const content = (
+    <>
       <View
         style={[
           styles.iconBadge,
@@ -72,8 +75,23 @@ function SettingsItemComponent({
           <Ionicons name="chevron-forward" size={CHEVRON_SIZE} color={colors.textSecondary} />
         ) : null}
       </View>
-    </View>
+    </>
   );
+
+  if (onPress && !disabled) {
+    return (
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [styles.row, pressed && { opacity: PRESSED_OPACITY }]}
+        accessibilityRole="button"
+        accessibilityLabel={title}
+      >
+        {content}
+      </Pressable>
+    );
+  }
+
+  return <View style={[styles.row, disabled && styles.rowDisabled]}>{content}</View>;
 }
 
 export default memo(SettingsItemComponent);

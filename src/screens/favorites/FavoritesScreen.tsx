@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -15,6 +16,7 @@ import type { RootStackParamList } from '@/navigation';
 type FavoritesScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MainTabs'>;
 
 export default function FavoritesScreen() {
+  const { t } = useTranslation();
   const navigation = useNavigation<FavoritesScreenNavigationProp>();
   const tabBarHeight = useBottomTabBarHeight();
   const { colors } = useThemeTokens();
@@ -26,8 +28,11 @@ export default function FavoritesScreen() {
   const favoritePokemon = useAppSelector(selectFavorites);
 
   const favoritesCountLabel = useMemo(
-    () => (favoritePokemon.length > 0 ? `${favoritePokemon.length} Pokémon saved` : undefined),
-    [favoritePokemon.length]
+    () =>
+      favoritePokemon.length > 0
+        ? t('favorites.count', { count: favoritePokemon.length })
+        : undefined,
+    [favoritePokemon.length, t]
   );
 
   const handleCardPress = useCallback(
@@ -45,8 +50,8 @@ export default function FavoritesScreen() {
   return (
     <View style={[styles.root, { backgroundColor: colors.background }]}>
       <ScreenHeader
-        title="Favorites"
-        subtitle="Your saved Pokémon collection."
+        title={t('favorites.title')}
+        subtitle={t('favorites.subtitle')}
         icon="heart"
         info={favoritesCountLabel}
       />
@@ -55,8 +60,8 @@ export default function FavoritesScreen() {
         <View style={styles.center}>
           <EmptyState
             icon="heart-outline"
-            title="No favorites yet"
-            subtitle="Tap the heart icon on any Pokémon to add it here."
+            title={t('favorites.emptyTitle')}
+            subtitle={t('favorites.emptySubtitle')}
           />
         </View>
       ) : (

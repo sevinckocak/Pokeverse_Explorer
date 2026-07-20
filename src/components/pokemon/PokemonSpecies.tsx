@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { SectionState } from "@/components/ui/SectionState";
 import { HabitatCard } from "@/components/pokemon/HabitatCard";
 import { CaptureCard } from "@/components/pokemon/CaptureCard";
@@ -13,12 +14,20 @@ interface PokemonSpeciesProps {
 }
 
 export default function PokemonSpecies({ species, loading, error, theme }: PokemonSpeciesProps) {
+  const { t } = useTranslation();
+
   if (loading) {
-    return <SectionState title="Species" message="Loading species..." theme={theme} />;
+    return (
+      <SectionState
+        title={t('pokemonDetail.species')}
+        message={t('pokemonDetail.loadingSpecies')}
+        theme={theme}
+      />
+    );
   }
 
   if (error) {
-    return <SectionState title="Species" message={error} theme={theme} />;
+    return <SectionState title={t('pokemonDetail.species')} message={error} theme={theme} />;
   }
 
   if (!species) {

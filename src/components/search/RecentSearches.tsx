@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { useRecentSearches } from '@/hooks/useRecentSearches';
 import { RADIUS, SPACING } from '@/constants/theme';
@@ -9,6 +10,7 @@ interface RecentSearchesProps {
 }
 
 function RecentSearchesComponent({ onQueryPress }: RecentSearchesProps) {
+  const { t } = useTranslation();
   const { colors } = useThemeTokens();
   const { recentSearches } = useRecentSearches();
 
@@ -18,7 +20,9 @@ function RecentSearchesComponent({ onQueryPress }: RecentSearchesProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: colors.textPrimary }]}>Recent Searches</Text>
+      <Text style={[styles.title, { color: colors.textPrimary }]}>
+        {t('search.recentSearches')}
+      </Text>
       <View style={styles.chipRow}>
         {recentSearches.map((query) => (
           <Pressable

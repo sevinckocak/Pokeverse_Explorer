@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { hydrateSettings } from '@/store/settings/settingsThunks';
 
 export type ThemeMode = 'light' | 'dark';
 
@@ -31,6 +32,13 @@ const settingsSlice = createSlice({
     setNotificationsEnabled: (state, action: PayloadAction<boolean>) => {
       state.notifications = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(hydrateSettings.fulfilled, (state, action) => {
+      if (action.payload !== null) {
+        state.language = action.payload;
+      }
+    });
   },
 });
 
