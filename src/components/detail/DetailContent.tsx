@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { getPokemonTheme } from '@/constants/pokemonTheme';
 import OverviewSection from '@/components/detail/OverviewSection';
+import EvolutionSection from '@/components/detail/EvolutionSection';
 import { SPACING } from '@/constants/theme';
 import type { DetailSection } from '@/constants/detailMenu';
 import type { PokemonDetail } from '@/types';
@@ -24,6 +25,10 @@ function DetailContentComponent({ section, detail }: DetailContentProps) {
 
   if (section === 'overview') {
     return <OverviewSection detail={detail} theme={theme} />;
+  }
+
+  if (section === 'evolution') {
+    return <EvolutionSection theme={theme} />;
   }
 
   return (

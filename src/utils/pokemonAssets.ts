@@ -19,6 +19,13 @@ export function getPokemonSpriteUrl(id: number): string {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 }
 
+// Higher-resolution "official artwork" variant of the same CDN, keyed by id
+// the same way — used wherever a bigger image is wanted (e.g. evolution
+// chain cards) without an extra per-item request.
+export function getPokemonArtworkUrl(id: number): string {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+}
+
 // Single source of truth for which image represents a Pokemon on the detail
 // screen — prefers the higher-resolution official artwork, falling back to
 // the default sprite so callers never need to render more than one image

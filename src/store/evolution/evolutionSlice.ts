@@ -1,17 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { EvolutionChain } from '@/types';
-import { fetchEvolutionChain } from '@/store/evolution/evolutionThunks';
+import type { Evolution } from '@/types';
+import { fetchEvolution } from '@/store/evolution/evolutionThunks';
 
-export interface EvolutionState {
-  evolutionChain: EvolutionChain | null;
-  isLoading: boolean;
+export type EvolutionRequestStatus = 'loading' | 'succeeded' | 'failed';
+
+export interface EvolutionCacheEntry {
+  status: EvolutionRequestStatus;
+  data: Evolution | null;
   error: string | null;
 }
 
+export interface EvolutionState {
+  // Cache of evolution chains already fetched this session, keyed by
+  // evolutionChainId — this is what lets reopening the Evolution section
+  // (for the same or a different Pokemon already visited) render instantly
+  // with no new request.
+  byChainId: Record<number, EvolutionCacheEntry>;
+}
+
 const initialState: EvolutionState = {
-  evolutionChain: null,
-  isLoading: false,
-  error: null,
+  byChainId: {},
 };
 
 const evolutionSlice = createSlice({
@@ -20,18 +28,22 @@ const evolutionSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEvolutionChain.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-        state.evolutionChain = null;
+      .addCase(fetchEvolution.pending, (state, action) => {
+        state.byChainId[action.meta.arg] = { status: 'loading', data: null, error: null };
       })
-      .addCase(fetchEvolutionChain.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.evolutionChain = action.payload;
+      .addCase(fetchEvolution.fulfilled, (state, action) => {
+        state.byChainId[action.meta.arg] = {
+          status: 'succeeded',
+          data: action.payload,
+          error: null,
+        };
       })
-      .addCase(fetchEvolutionChain.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message ?? 'Failed to fetch evolution chain';
+      .addCase(fetchEvolution.rejected, (state, action) => {
+        state.byChainId[action.meta.arg] = {
+          status: 'failed',
+          data: null,
+          error: action.error.message ?? 'Failed to fetch evolution chain',
+        };
       });
   },
 });
