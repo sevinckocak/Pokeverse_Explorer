@@ -1,3 +1,5 @@
+import type { PokemonDetail } from '@/types';
+
 const POKEMON_DETAIL_URL_ID_PATTERN = /\/pokemon\/(\d+)\/?$/;
 
 // PokemonListItem.url is the PokeAPI detail endpoint
@@ -15,4 +17,12 @@ export function extractPokemonIdFromUrl(url: string): number | null {
 // to render a card's image.
 export function getPokemonSpriteUrl(id: number): string {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+}
+
+// Single source of truth for which image represents a Pokemon on the detail
+// screen — prefers the higher-resolution official artwork already present
+// on the fetched PokemonDetail, falling back to the default sprite so
+// callers never need to render more than one image for the same Pokemon.
+export function getPokemonHeroArtworkUrl(detail: PokemonDetail): string | null {
+  return detail.sprites.other?.['official-artwork']?.front_default ?? detail.sprites.front_default;
 }

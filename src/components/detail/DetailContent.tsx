@@ -1,24 +1,33 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
+import { getPokemonTheme } from '@/constants/pokemonTheme';
+import OverviewSection from '@/components/detail/OverviewSection';
 import { SPACING } from '@/constants/theme';
 import type { DetailSection } from '@/constants/detailMenu';
+import type { PokemonDetail } from '@/types';
 
 interface DetailContentProps {
   section: DetailSection;
+  detail: PokemonDetail;
 }
 
-// Placeholder body for the redesigned Pokemon Detail screen. Each menu
-// section will eventually render its own content here — for now every
-// section shows the same "coming soon" message keyed off its translated
-// label, so wiring in real content later only means replacing this body.
-function DetailContentComponent({ section }: DetailContentProps) {
+// Overview renders real data already sitting on the PokemonDetail Redux
+// slice (no extra fetch). Every other section is still a placeholder until
+// its own content is built.
+function DetailContentComponent({ section, detail }: DetailContentProps) {
   const { t } = useTranslation();
   const { colors } = useThemeTokens();
+  const primaryType = detail.types[0]?.type.name ?? null;
+  const theme = useMemo(() => getPokemonTheme(primaryType), [primaryType]);
+
+  if (section === 'overview') {
+    return <OverviewSection detail={detail} theme={theme} />;
+  }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.placeholder}>
       <Text style={[styles.message, { color: colors.textSecondary }]}>
         {t('pokemonDetail.comingSoon', { section: t(`pokemonDetail.menu.${section}`) })}
       </Text>
@@ -29,7 +38,7 @@ function DetailContentComponent({ section }: DetailContentProps) {
 export default memo(DetailContentComponent);
 
 const styles = StyleSheet.create({
-  container: {
+  placeholder: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: SPACING.xxl,

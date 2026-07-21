@@ -6,7 +6,7 @@ interface PokemonImageProps {
   glowColor: string;
 }
 
-const IMAGE_WIDTH_RATIO = 0.55;
+const IMAGE_WIDTH_RATIO = 0.62;
 const GLOW_SCALE = 1.15;
 
 function PokemonImageComponent({ imageUrl, glowColor }: PokemonImageProps) {

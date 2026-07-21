@@ -26,14 +26,22 @@ export interface PokemonAbility {
   slot: number;
 }
 
+export interface PokemonSprites {
+  front_default: string | null;
+  other?: {
+    'official-artwork'?: {
+      front_default: string | null;
+    };
+  };
+}
+
 export interface PokemonDetail {
   id: number;
   name: string;
+  base_experience: number | null;
   height: number;
   weight: number;
-  sprites: {
-    front_default: string | null;
-  };
+  sprites: PokemonSprites;
   types: PokemonType[];
   abilities: PokemonAbility[];
 }

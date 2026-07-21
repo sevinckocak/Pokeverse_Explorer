@@ -2,7 +2,6 @@ import { memo, useMemo } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, { FadeIn } from "react-native-reanimated";
-import { RADIUS } from "@/constants/theme";
 import { getPokemonTheme } from "@/constants/pokemonTheme";
 import { PokeballWatermark } from "@/components/pokemon/PokeballWatermark";
 import PokemonImage from "@/components/pokemon/PokemonImage";
@@ -18,6 +17,10 @@ interface PokemonHeroProps {
 const WATERMARK_WIDTH_RATIO = 1.1;
 const WATERMARK_TOP_OFFSET_RATIO = 0.32;
 
+// Full-bleed, immersive banner — the single source of the Pokemon's visual
+// identity on the detail screen (artwork + name + id), colored by its
+// primary type. Deliberately edge-to-edge with no rounding, so it reads as
+// a hero section rather than a floating card.
 function PokemonHeroComponent({ imageUrl, name, id, primaryType }: PokemonHeroProps) {
   const { width } = useWindowDimensions();
   const theme = useMemo(() => getPokemonTheme(primaryType), [primaryType]);
@@ -49,14 +52,12 @@ export default memo(PokemonHeroComponent);
 const styles = StyleSheet.create({
   wrapper: {
     overflow: "hidden",
-    borderBottomLeftRadius: RADIUS.lg,
-    borderBottomRightRadius: RADIUS.lg,
   },
   gradient: {
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 72,
-    paddingBottom: 40,
+    paddingTop: 80,
+    paddingBottom: 48,
   },
   watermarkLayer: {
     position: "absolute",

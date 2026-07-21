@@ -13,6 +13,7 @@ import DetailContent from "@/components/detail/DetailContent";
 import { DEFAULT_DETAIL_SECTION } from "@/constants/detailMenu";
 import type { DetailSection } from "@/constants/detailMenu";
 import { RADIUS, SPACING } from "@/constants/theme";
+import { getPokemonHeroArtworkUrl } from "@/utils/pokemonAssets";
 
 type PokemonDetailRouteProp = RouteProp<RootStackParamList, "PokemonDetail">;
 
@@ -79,14 +80,14 @@ export default function PokemonDetailScreen() {
         contentContainerStyle={styles.content}
       >
         <PokemonHero
-          imageUrl={detail.sprites.front_default}
+          imageUrl={getPokemonHeroArtworkUrl(detail)}
           name={detail.name}
           id={detail.id}
           primaryType={primaryType}
         />
 
         <View style={styles.body}>
-          <DetailContent section={selectedSection} />
+          <DetailContent section={selectedSection} detail={detail} />
         </View>
       </ScrollView>
 
