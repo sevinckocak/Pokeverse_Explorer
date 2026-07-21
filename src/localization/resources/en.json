@@ -54,6 +54,84 @@
     "footerName": "PokéVerse Explorer",
     "version": "Version {{version}}"
   },
+  "about": {
+    "subtitle": "Learn more about the app and the technology behind it.",
+    "appName": "PokéVerse Explorer",
+    "platform": "React Native + Expo",
+    "poweredBy": "Powered by PokéAPI",
+    "descriptionTitle": "About This App",
+    "description": "PokéVerse Explorer is a companion app for Pokémon fans who want a fast, clean way to browse Pokémon, explore their stats, abilities, and evolutions, and keep track of favorites. It was built as a learning project to showcase a modern React Native and Expo stack paired with live data from PokéAPI.",
+    "copyright": "© {{year}} PokéVerse Explorer. All rights reserved."
+  },
+  "privacyPolicy": {
+    "subtitle": "How PokéVerse Explorer handles your data.",
+    "lastUpdated": "Last updated: July 21, 2026",
+    "intro": "PokéVerse Explorer is a demo application built for educational and portfolio purposes. This Privacy Policy explains what little data the app handles and how it is kept on your device.",
+    "sections": {
+      "collection": {
+        "title": "Information Collection",
+        "body": "PokéVerse Explorer does not require you to create an account and does not collect personally identifiable information such as your name, email address, or phone number. The app only stores the preferences you configure locally on your own device."
+      },
+      "localStorage": {
+        "title": "Local Storage",
+        "body": "All app settings and user preferences are stored locally on your device using on-device storage. This data never leaves your device and is not transmitted to any external server operated by us."
+      },
+      "favorites": {
+        "title": "Favorites",
+        "body": "Pokémon you mark as favorites are saved locally on your device so they persist between sessions. This list is private to your device, is never uploaded anywhere, and is removed automatically if you uninstall the app."
+      },
+      "language": {
+        "title": "Language Preference",
+        "body": "Your selected display language is saved locally so the app remembers your choice the next time you open it. This preference only determines which translation strings are shown and is not shared with any third party."
+      },
+      "theme": {
+        "title": "Theme Preference",
+        "body": "Your choice between light and dark mode is stored locally on your device. It is used exclusively to control the app's appearance and has no bearing on any data collection."
+      },
+      "noAccount": {
+        "title": "No Personal Account",
+        "body": "PokéVerse Explorer does not offer, and does not require, a user account or sign-in of any kind. Because there is no account system, we have no login credentials, profile data, or authentication tokens to store or protect."
+      },
+      "noAnalytics": {
+        "title": "No Third-Party Analytics",
+        "body": "This app does not integrate third-party analytics, advertising, or tracking SDKs. We do not monitor your in-app behavior, build advertising profiles, or share usage data with data brokers or marketing partners."
+      },
+      "contact": {
+        "title": "Contact Information",
+        "body": "If you have any questions about this Privacy Policy or how the app handles data, you can reach out at support@pokeverse-explorer.app. As this is a demo application, response times may vary."
+      }
+    }
+  },
+  "termsOfService": {
+    "subtitle": "The rules for using PokéVerse Explorer.",
+    "intro": "By using PokéVerse Explorer, you agree to the following terms. Please read them carefully before continuing to use the app.",
+    "sections": {
+      "educationalUse": {
+        "title": "Educational Use",
+        "body": "PokéVerse Explorer is provided for educational and demonstration purposes only. It was built to showcase mobile app development practices and is not intended for commercial use."
+      },
+      "attribution": {
+        "title": "PokéAPI Attribution",
+        "body": "Pokémon data, artwork, and related information displayed in this app are provided by PokéAPI (pokeapi.co), a free and open community-driven Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo, Game Freak, and Creatures Inc. This app is not affiliated with, endorsed by, or sponsored by these companies."
+      },
+      "noWarranty": {
+        "title": "No Warranty",
+        "body": "This app is provided \"as is\" and \"as available\" without warranties of any kind, express or implied, including but not limited to accuracy, completeness, reliability, or fitness for a particular purpose. Pokémon data is sourced from a third-party API and may occasionally be incomplete or outdated."
+      },
+      "responsibilities": {
+        "title": "User Responsibilities",
+        "body": "You agree to use the app only for lawful purposes and in a way that does not infringe the rights of, or restrict or inhibit the use and enjoyment of, the app by any third party. You are responsible for the device and environment in which you run the app."
+      },
+      "intellectualProperty": {
+        "title": "Intellectual Property",
+        "body": "The app's original source code, design, and user interface are the property of the developer, unless otherwise noted. Pokémon-related trademarks, characters, and imagery remain the property of their respective owners and are used here under fair use for educational, non-commercial purposes."
+      },
+      "liability": {
+        "title": "Limitation of Liability",
+        "body": "To the fullest extent permitted by applicable law, the developer shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with your use of, or inability to use, this app."
+      }
+    }
+  },
   "pokemonDetail": {
     "height": "Height",
     "weight": "Weight",

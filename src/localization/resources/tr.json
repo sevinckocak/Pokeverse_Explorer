@@ -54,6 +54,84 @@
     "footerName": "PokéVerse Explorer",
     "version": "Sürüm {{version}}"
   },
+  "about": {
+    "subtitle": "Uygulama ve arkasındaki teknoloji hakkında daha fazla bilgi edinin.",
+    "appName": "PokéVerse Explorer",
+    "platform": "React Native + Expo",
+    "poweredBy": "PokéAPI ile Çalışır",
+    "descriptionTitle": "Uygulama Hakkında",
+    "description": "PokéVerse Explorer, Pokémon'lara göz atmak, istatistiklerini, yeteneklerini ve evrimlerini keşfetmek ve favorilerini takip etmek isteyen Pokémon hayranları için hızlı ve sade bir deneyim sunan bir yardımcı uygulamadır. PokéAPI'den gelen canlı verilerle birlikte modern bir React Native ve Expo altyapısını sergilemek amacıyla bir öğrenme projesi olarak geliştirilmiştir.",
+    "copyright": "© {{year}} PokéVerse Explorer. Tüm hakları saklıdır."
+  },
+  "privacyPolicy": {
+    "subtitle": "PokéVerse Explorer verilerinizi nasıl işler.",
+    "lastUpdated": "Son güncelleme: 21 Temmuz 2026",
+    "intro": "PokéVerse Explorer, eğitim ve portföy amacıyla geliştirilmiş bir demo uygulamadır. Bu Gizlilik Politikası, uygulamanın işlediği sınırlı verileri ve bu verilerin cihazınızda nasıl saklandığını açıklar.",
+    "sections": {
+      "collection": {
+        "title": "Veri Toplama",
+        "body": "PokéVerse Explorer bir hesap oluşturmanızı gerektirmez ve adınız, e-posta adresiniz veya telefon numaranız gibi kişisel olarak tanımlanabilir bilgileri toplamaz. Uygulama yalnızca kendi cihazınızda yapılandırdığınız tercihleri yerel olarak saklar."
+      },
+      "localStorage": {
+        "title": "Yerel Depolama",
+        "body": "Tüm uygulama ayarları ve kullanıcı tercihleri, cihaz üzerindeki depolama kullanılarak yerel olarak saklanır. Bu veriler cihazınızdan asla çıkmaz ve tarafımızca işletilen herhangi bir dış sunucuya aktarılmaz."
+      },
+      "favorites": {
+        "title": "Favoriler",
+        "body": "Favori olarak işaretlediğiniz Pokémon'lar, oturumlar arasında kalıcı olmaları için cihazınızda yerel olarak kaydedilir. Bu liste yalnızca cihazınıza özeldir, hiçbir yere yüklenmez ve uygulamayı kaldırdığınızda otomatik olarak silinir."
+      },
+      "language": {
+        "title": "Dil Tercihi",
+        "body": "Seçtiğiniz görüntüleme dili yerel olarak kaydedilir, böylece uygulama bir sonraki açılışınızda tercihinizi hatırlar. Bu tercih yalnızca hangi çeviri metinlerinin gösterileceğini belirler ve herhangi bir üçüncü tarafla paylaşılmaz."
+      },
+      "theme": {
+        "title": "Tema Tercihi",
+        "body": "Açık ve koyu mod arasındaki seçiminiz cihazınızda yerel olarak saklanır. Bu tercih yalnızca uygulamanın görünümünü kontrol etmek için kullanılır ve herhangi bir veri toplamayla ilgisi yoktur."
+      },
+      "noAccount": {
+        "title": "Kişisel Hesap Yok",
+        "body": "PokéVerse Explorer herhangi bir kullanıcı hesabı veya oturum açma sistemi sunmaz ve gerektirmez. Hesap sistemi olmadığı için saklamamız veya korumamız gereken oturum açma bilgileri, profil verisi ya da kimlik doğrulama belirteci bulunmaz."
+      },
+      "noAnalytics": {
+        "title": "Üçüncü Taraf Analitik Yok",
+        "body": "Bu uygulama üçüncü taraf analitik, reklam veya takip SDK'ları içermez. Uygulama içi davranışınızı izlemeyiz, reklam profili oluşturmayız veya kullanım verilerini veri komisyoncuları ya da pazarlama ortaklarıyla paylaşmayız."
+      },
+      "contact": {
+        "title": "İletişim Bilgileri",
+        "body": "Bu Gizlilik Politikası veya uygulamanın verileri nasıl işlediği hakkında sorularınız varsa support@pokeverse-explorer.app adresinden bize ulaşabilirsiniz. Bu bir demo uygulama olduğundan yanıt süreleri değişebilir."
+      }
+    }
+  },
+  "termsOfService": {
+    "subtitle": "PokéVerse Explorer'ı kullanma kuralları.",
+    "intro": "PokéVerse Explorer'ı kullanarak aşağıdaki şartları kabul etmiş olursunuz. Uygulamayı kullanmaya devam etmeden önce lütfen dikkatlice okuyun.",
+    "sections": {
+      "educationalUse": {
+        "title": "Eğitim Amaçlı Kullanım",
+        "body": "PokéVerse Explorer yalnızca eğitim ve tanıtım amacıyla sunulmaktadır. Mobil uygulama geliştirme pratiklerini sergilemek için geliştirilmiştir ve ticari kullanım amacı taşımaz."
+      },
+      "attribution": {
+        "title": "PokéAPI Atfı",
+        "body": "Bu uygulamada gösterilen Pokémon verileri, görselleri ve ilgili bilgiler, ücretsiz ve topluluk destekli bir Pokémon API'si olan PokéAPI (pokeapi.co) tarafından sağlanmaktadır. Pokémon ve Pokémon karakter isimleri Nintendo, Game Freak ve Creatures Inc.'in ticari markalarıdır. Bu uygulama söz konusu şirketlerle bağlantılı değildir ve onlar tarafından onaylanmamış veya desteklenmemiştir."
+      },
+      "noWarranty": {
+        "title": "Garanti Yoktur",
+        "body": "Bu uygulama, doğruluk, eksiksizlik, güvenilirlik veya belirli bir amaca uygunluk dahil ancak bunlarla sınırlı olmamak üzere açık veya zımni hiçbir garanti olmaksızın \"olduğu gibi\" ve \"mevcut olduğu şekliyle\" sunulmaktadır. Pokémon verileri üçüncü taraf bir API'den alınmaktadır ve zaman zaman eksik veya güncel olmayabilir."
+      },
+      "responsibilities": {
+        "title": "Kullanıcı Sorumlulukları",
+        "body": "Uygulamayı yalnızca yasal amaçlarla ve üçüncü tarafların haklarını ihlal etmeyecek ya da uygulamayı kullanma ve deneyimleme hakkını kısıtlamayacak şekilde kullanmayı kabul edersiniz. Uygulamayı çalıştırdığınız cihaz ve ortamdan siz sorumlusunuz."
+      },
+      "intellectualProperty": {
+        "title": "Fikri Mülkiyet",
+        "body": "Aksi belirtilmedikçe, uygulamanın özgün kaynak kodu, tasarımı ve kullanıcı arayüzü geliştiricisine aittir. Pokémon ile ilgili ticari markalar, karakterler ve görseller ilgili hak sahiplerine ait olmaya devam eder ve burada eğitim amaçlı, ticari olmayan kullanım kapsamında adil kullanım ilkesiyle yer almaktadır."
+      },
+      "liability": {
+        "title": "Sorumluluğun Sınırlandırılması",
+        "body": "Yürürlükteki mevzuatın izin verdiği azami ölçüde, geliştirici; bu uygulamayı kullanmanızdan veya kullanamamanızdan doğan hiçbir dolaylı, arızi, özel veya sonuç niteliğindeki zarardan sorumlu tutulamaz."
+      }
+    }
+  },
   "pokemonDetail": {
     "height": "Boy",
     "weight": "Ağırlık",

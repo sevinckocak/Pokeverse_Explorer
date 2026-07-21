@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
@@ -13,11 +15,15 @@ import SettingsSection from "@/components/settings/SettingsSection";
 import SettingsItem from "@/components/settings/SettingsItem";
 import LanguagePickerModal from "@/components/settings/LanguagePickerModal";
 import { SPACING } from "@/constants/theme";
+import type { RootStackParamList } from "@/navigation";
+
+type SettingsNavigationProp = NativeStackNavigationProp<RootStackParamList, "MainTabs">;
 
 const APP_VERSION = "1.0.0";
 
 export default function SettingsScreen() {
   const { t } = useTranslation();
+  const navigation = useNavigation<SettingsNavigationProp>();
   const tabBarHeight = useBottomTabBarHeight();
   const dispatch = useAppDispatch();
   const { colors, isDark } = useThemeTokens();
@@ -72,19 +78,19 @@ export default function SettingsScreen() {
             icon="information-circle-outline"
             title={t("settings.about")}
             showChevron
-            disabled
+            onPress={() => navigation.navigate("About")}
           />
           <SettingsItem
             icon="shield-checkmark-outline"
             title={t("settings.privacyPolicy")}
             showChevron
-            disabled
+            onPress={() => navigation.navigate("PrivacyPolicy")}
           />
           <SettingsItem
             icon="document-text-outline"
             title={t("settings.termsOfService")}
             showChevron
-            disabled
+            onPress={() => navigation.navigate("TermsOfService")}
           />
         </SettingsSection>
 

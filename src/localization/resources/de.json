@@ -54,6 +54,84 @@
     "footerName": "PokéVerse Explorer",
     "version": "Version {{version}}"
   },
+  "about": {
+    "subtitle": "Erfahre mehr über die App und die Technologie dahinter.",
+    "appName": "PokéVerse Explorer",
+    "platform": "React Native + Expo",
+    "poweredBy": "Unterstützt von PokéAPI",
+    "descriptionTitle": "Über diese App",
+    "description": "PokéVerse Explorer ist eine Begleit-App für Pokémon-Fans, die schnell und übersichtlich Pokémon durchstöbern, deren Werte, Fähigkeiten und Entwicklungen erkunden und ihre Favoriten verwalten möchten. Sie wurde als Lernprojekt entwickelt, um einen modernen React-Native- und Expo-Stack in Kombination mit Live-Daten von PokéAPI zu präsentieren.",
+    "copyright": "© {{year}} PokéVerse Explorer. Alle Rechte vorbehalten."
+  },
+  "privacyPolicy": {
+    "subtitle": "Wie PokéVerse Explorer mit deinen Daten umgeht.",
+    "lastUpdated": "Zuletzt aktualisiert: 21. Juli 2026",
+    "intro": "PokéVerse Explorer ist eine Demo-Anwendung, die zu Lern- und Portfoliozwecken erstellt wurde. Diese Datenschutzrichtlinie erklärt, welche geringen Daten die App verarbeitet und wie sie auf deinem Gerät gespeichert werden.",
+    "sections": {
+      "collection": {
+        "title": "Datenerhebung",
+        "body": "PokéVerse Explorer erfordert keine Kontoerstellung und erhebt keine personenbezogenen Daten wie Namen, E-Mail-Adressen oder Telefonnummern. Die App speichert lediglich die Einstellungen, die du lokal auf deinem eigenen Gerät konfigurierst."
+      },
+      "localStorage": {
+        "title": "Lokaler Speicher",
+        "body": "Alle App-Einstellungen und Nutzerpräferenzen werden lokal auf deinem Gerät gespeichert. Diese Daten verlassen dein Gerät nie und werden nicht an einen von uns betriebenen externen Server übertragen."
+      },
+      "favorites": {
+        "title": "Favoriten",
+        "body": "Als Favoriten markierte Pokémon werden lokal auf deinem Gerät gespeichert, damit sie über Sitzungen hinweg erhalten bleiben. Diese Liste ist ausschließlich auf deinem Gerät vorhanden, wird niemals hochgeladen und automatisch entfernt, wenn du die App deinstallierst."
+      },
+      "language": {
+        "title": "Spracheinstellung",
+        "body": "Deine gewählte Anzeigesprache wird lokal gespeichert, damit die App sich beim nächsten Öffnen an deine Wahl erinnert. Diese Einstellung bestimmt lediglich, welche Übersetzungstexte angezeigt werden, und wird mit keinem Dritten geteilt."
+      },
+      "theme": {
+        "title": "Design-Einstellung",
+        "body": "Deine Wahl zwischen hellem und dunklem Modus wird lokal auf deinem Gerät gespeichert. Sie dient ausschließlich der Steuerung des App-Erscheinungsbilds und hat keinen Einfluss auf eine Datenerhebung."
+      },
+      "noAccount": {
+        "title": "Kein persönliches Konto",
+        "body": "PokéVerse Explorer bietet kein Benutzerkonto oder Login jeglicher Art an und erfordert auch keines. Da es kein Kontosystem gibt, haben wir keine Zugangsdaten, Profildaten oder Authentifizierungs-Token zu speichern oder zu schützen."
+      },
+      "noAnalytics": {
+        "title": "Keine Analyse-Tools Dritter",
+        "body": "Diese App integriert keine Analyse-, Werbe- oder Tracking-SDKs von Drittanbietern. Wir überwachen dein Verhalten in der App nicht, erstellen keine Werbeprofile und geben keine Nutzungsdaten an Datenhändler oder Marketingpartner weiter."
+      },
+      "contact": {
+        "title": "Kontaktinformationen",
+        "body": "Bei Fragen zu dieser Datenschutzrichtlinie oder zum Umgang der App mit Daten kannst du uns unter support@pokeverse-explorer.app erreichen. Da es sich um eine Demo-Anwendung handelt, können die Antwortzeiten variieren."
+      }
+    }
+  },
+  "termsOfService": {
+    "subtitle": "Die Regeln für die Nutzung von PokéVerse Explorer.",
+    "intro": "Mit der Nutzung von PokéVerse Explorer stimmst du den folgenden Bedingungen zu. Bitte lies sie sorgfältig durch, bevor du die App weiter nutzt.",
+    "sections": {
+      "educationalUse": {
+        "title": "Bildungszweck",
+        "body": "PokéVerse Explorer wird ausschließlich zu Lern- und Demonstrationszwecken bereitgestellt. Die App wurde entwickelt, um Praktiken der mobilen App-Entwicklung zu zeigen, und ist nicht für die kommerzielle Nutzung bestimmt."
+      },
+      "attribution": {
+        "title": "PokéAPI-Quellenangabe",
+        "body": "Die in dieser App angezeigten Pokémon-Daten, Grafiken und zugehörigen Informationen werden von PokéAPI (pokeapi.co), einer kostenlosen, community-getragenen Pokémon-API, bereitgestellt. Pokémon und Pokémon-Charakternamen sind Marken von Nintendo, Game Freak und Creatures Inc. Diese App steht in keiner Verbindung zu diesen Unternehmen und wird von ihnen weder unterstützt noch gesponsert."
+      },
+      "noWarranty": {
+        "title": "Keine Gewährleistung",
+        "body": "Diese App wird \"wie besehen\" und \"wie verfügbar\" ohne jegliche ausdrückliche oder stillschweigende Gewährleistung bereitgestellt, einschließlich, aber nicht beschränkt auf Richtigkeit, Vollständigkeit, Zuverlässigkeit oder Eignung für einen bestimmten Zweck. Die Pokémon-Daten stammen aus einer externen API und können gelegentlich unvollständig oder veraltet sein."
+      },
+      "responsibilities": {
+        "title": "Pflichten der Nutzer",
+        "body": "Du verpflichtest dich, die App nur für rechtmäßige Zwecke und so zu nutzen, dass die Rechte Dritter an der Nutzung und dem Genuss der App nicht verletzt, eingeschränkt oder behindert werden. Du bist selbst für das Gerät und die Umgebung verantwortlich, in der du die App ausführst."
+      },
+      "intellectualProperty": {
+        "title": "Geistiges Eigentum",
+        "body": "Der originale Quellcode, das Design und die Benutzeroberfläche der App sind, sofern nicht anders angegeben, Eigentum des Entwicklers. Pokémon-bezogene Marken, Charaktere und Bildmaterial bleiben Eigentum ihrer jeweiligen Rechteinhaber und werden hier im Rahmen einer fairen, nicht kommerziellen Nutzung zu Bildungszwecken verwendet."
+      },
+      "liability": {
+        "title": "Haftungsbeschränkung",
+        "body": "Im gesetzlich zulässigen Höchstmaß haftet der Entwickler nicht für indirekte, beiläufig entstandene, besondere oder Folgeschäden, die sich aus der Nutzung oder der Unmöglichkeit der Nutzung dieser App ergeben."
+      }
+    }
+  },
   "pokemonDetail": {
     "height": "Größe",
     "weight": "Gewicht",

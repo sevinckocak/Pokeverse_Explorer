@@ -6,6 +6,9 @@ import BottomTabNavigator from '@/navigation/BottomTabNavigator';
 import PokemonDetailScreen from '@/screens/PokemonDetailScreen';
 import AllPokemonScreen from '@/screens/AllPokemonScreen';
 import OnboardingScreen from '@/screens/onboarding/OnboardingScreen';
+import AboutScreen from '@/screens/settings/AboutScreen';
+import PrivacyPolicyScreen from '@/screens/settings/PrivacyPolicyScreen';
+import TermsOfServiceScreen from '@/screens/settings/TermsOfServiceScreen';
 import { useOnboardingStatus } from '@/hooks/useOnboardingStatus';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { createStackScreenOptions } from '@/navigation/screenOptions';
@@ -52,6 +55,17 @@ export default function RootStack() {
         name="AllPokemon"
         component={AllPokemonScreen}
         options={{ title: t('pokemonDetail.allPokemonTitle') }}
+      />
+      <Stack.Screen name="About" component={AboutScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="TermsOfService"
+        component={TermsOfServiceScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
