@@ -41,6 +41,10 @@ function mapToPokemonDetail(raw: RawPokemonResponse): PokemonDetail {
       name: entry.ability.name,
       isHidden: entry.is_hidden,
     })),
+    stats: raw.stats.map((entry) => ({
+      name: entry.stat.name,
+      value: entry.base_stat,
+    })),
   };
 }
 

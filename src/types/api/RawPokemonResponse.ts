@@ -25,6 +25,13 @@ export interface RawPokemonSprites {
   };
 }
 
+export interface RawPokemonStat {
+  base_stat: number;
+  stat: {
+    name: string;
+  };
+}
+
 export interface RawPokemonResponse {
   id: number;
   name: string;
@@ -34,4 +41,5 @@ export interface RawPokemonResponse {
   sprites: RawPokemonSprites;
   types: RawPokemonTypeSlot[];
   abilities: RawPokemonAbilitySlot[];
+  stats: RawPokemonStat[];
 }

@@ -164,6 +164,14 @@
       "abilities": "Capacités",
       "stats": "Statistiques",
       "moves": "Attaques"
+    },
+    "stat": {
+      "hp": "PV",
+      "attack": "Attaque",
+      "defense": "Défense",
+      "special-attack": "Attaque Spéciale",
+      "special-defense": "Défense Spéciale",
+      "speed": "Vitesse"
     }
   },
   "types": {

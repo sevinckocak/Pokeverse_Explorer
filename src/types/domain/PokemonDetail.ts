@@ -3,6 +3,14 @@ export interface PokemonAbility {
   isHidden: boolean;
 }
 
+// `name` is the raw PokeAPI stat slug ("hp", "attack", "special-attack",
+// ...) — used directly as an i18n key suffix (`pokemonDetail.stat.${name}`)
+// rather than invented camelCase names, so no lookup table is needed.
+export interface PokemonStat {
+  name: string;
+  value: number;
+}
+
 // Deliberately flat and camelCase — no `sprites.other["official-artwork"]`,
 // no `type: { name }` / `ability: { name }` wrapper objects, no snake_case.
 // The service layer maps PokeAPI's nested, snake_case response into this
@@ -17,4 +25,5 @@ export interface PokemonDetail {
   artwork: string | null;
   types: string[];
   abilities: PokemonAbility[];
+  stats: PokemonStat[];
 }

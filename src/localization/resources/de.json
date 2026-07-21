@@ -164,6 +164,14 @@
       "abilities": "Fähigkeiten",
       "stats": "Statistiken",
       "moves": "Attacken"
+    },
+    "stat": {
+      "hp": "KP",
+      "attack": "Angriff",
+      "defense": "Verteidigung",
+      "special-attack": "Spezial-Angriff",
+      "special-defense": "Spezial-Verteidigung",
+      "speed": "Initiative"
     }
   },
   "types": {

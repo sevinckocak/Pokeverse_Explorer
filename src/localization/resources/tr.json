@@ -164,6 +164,14 @@
       "abilities": "Yetenekler",
       "stats": "İstatistikler",
       "moves": "Hareketler"
+    },
+    "stat": {
+      "hp": "Can",
+      "attack": "Saldırı",
+      "defense": "Savunma",
+      "special-attack": "Özel Saldırı",
+      "special-defense": "Özel Savunma",
+      "speed": "Hız"
     }
   },
   "types": {
