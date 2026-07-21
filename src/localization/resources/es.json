@@ -160,13 +160,10 @@
     "comingSoon": "Sección {{section}} próximamente",
     "menu": {
       "overview": "Resumen",
-      "stats": "Estadísticas",
-      "species": "Especie",
       "evolution": "Evolución",
       "abilities": "Habilidades",
-      "moves": "Movimientos",
-      "location": "Ubicación",
-      "sprites": "Sprites"
+      "stats": "Estadísticas",
+      "moves": "Movimientos"
     }
   },
   "types": {

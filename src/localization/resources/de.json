@@ -160,13 +160,10 @@
     "comingSoon": "Bereich „{{section}}“ folgt in Kürze",
     "menu": {
       "overview": "Übersicht",
-      "stats": "Statistiken",
-      "species": "Art",
       "evolution": "Entwicklung",
       "abilities": "Fähigkeiten",
-      "moves": "Attacken",
-      "location": "Fundort",
-      "sprites": "Sprites"
+      "stats": "Statistiken",
+      "moves": "Attacken"
     }
   },
   "types": {

@@ -160,13 +160,10 @@
     "comingSoon": "{{section}} bölümü yakında",
     "menu": {
       "overview": "Genel Bakış",
-      "stats": "İstatistikler",
-      "species": "Tür Bilgisi",
       "evolution": "Evrim",
       "abilities": "Yetenekler",
-      "moves": "Hareketler",
-      "location": "Konum",
-      "sprites": "Görseller"
+      "stats": "İstatistikler",
+      "moves": "Hareketler"
     }
   },
   "types": {

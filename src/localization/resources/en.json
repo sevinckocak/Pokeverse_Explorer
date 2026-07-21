@@ -160,13 +160,10 @@
     "comingSoon": "{{section}} section coming soon",
     "menu": {
       "overview": "Overview",
-      "stats": "Stats",
-      "species": "Species",
       "evolution": "Evolution",
       "abilities": "Abilities",
-      "moves": "Moves",
-      "location": "Location",
-      "sprites": "Sprites"
+      "stats": "Stats",
+      "moves": "Moves"
     }
   },
   "types": {

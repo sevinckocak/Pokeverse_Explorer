@@ -160,13 +160,10 @@
     "comingSoon": "Section {{section}} bientôt disponible",
     "menu": {
       "overview": "Aperçu",
-      "stats": "Statistiques",
-      "species": "Espèce",
       "evolution": "Évolution",
       "abilities": "Capacités",
-      "moves": "Attaques",
-      "location": "Localisation",
-      "sprites": "Sprites"
+      "stats": "Statistiques",
+      "moves": "Attaques"
     }
   },
   "types": {
