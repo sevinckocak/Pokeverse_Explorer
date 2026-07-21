@@ -45,6 +45,7 @@ function mapToPokemonDetail(raw: RawPokemonResponse): PokemonDetail {
       name: entry.stat.name,
       value: entry.base_stat,
     })),
+    moves: raw.moves.map((entry) => ({ name: entry.move.name })),
   };
 }
 

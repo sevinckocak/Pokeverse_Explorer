@@ -32,6 +32,12 @@ export interface RawPokemonStat {
   };
 }
 
+export interface RawPokemonMoveSlot {
+  move: {
+    name: string;
+  };
+}
+
 export interface RawPokemonResponse {
   id: number;
   name: string;
@@ -42,4 +48,5 @@ export interface RawPokemonResponse {
   types: RawPokemonTypeSlot[];
   abilities: RawPokemonAbilitySlot[];
   stats: RawPokemonStat[];
+  moves: RawPokemonMoveSlot[];
 }

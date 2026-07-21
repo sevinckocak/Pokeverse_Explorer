@@ -157,7 +157,7 @@
     "openMenu": "Menüyü aç",
     "closeMenu": "Menüyü kapat",
     "menuTitle": "Bölümler",
-    "comingSoon": "{{section}} bölümü yakında",
+    "showMoreMoves": "{{count}} Tane Daha Göster",
     "menu": {
       "overview": "Genel Bakış",
       "evolution": "Evrim",

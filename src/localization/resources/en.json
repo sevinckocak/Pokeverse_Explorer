@@ -157,7 +157,7 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "menuTitle": "Sections",
-    "comingSoon": "{{section}} section coming soon",
+    "showMoreMoves": "Show {{count}} More",
     "menu": {
       "overview": "Overview",
       "evolution": "Evolution",

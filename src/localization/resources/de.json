@@ -157,7 +157,7 @@
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen",
     "menuTitle": "Bereiche",
-    "comingSoon": "Bereich „{{section}}“ folgt in Kürze",
+    "showMoreMoves": "{{count}} weitere anzeigen",
     "menu": {
       "overview": "Übersicht",
       "evolution": "Entwicklung",

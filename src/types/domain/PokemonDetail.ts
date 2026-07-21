@@ -11,6 +11,12 @@ export interface PokemonStat {
   value: number;
 }
 
+// Just the move name — PokeAPI's move slot also carries per-version-group
+// learn method/level details the app doesn't use.
+export interface PokemonMove {
+  name: string;
+}
+
 // Deliberately flat and camelCase — no `sprites.other["official-artwork"]`,
 // no `type: { name }` / `ability: { name }` wrapper objects, no snake_case.
 // The service layer maps PokeAPI's nested, snake_case response into this
@@ -26,4 +32,5 @@ export interface PokemonDetail {
   types: string[];
   abilities: PokemonAbility[];
   stats: PokemonStat[];
+  moves: PokemonMove[];
 }

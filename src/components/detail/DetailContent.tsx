@@ -1,13 +1,10 @@
 import { memo, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { getPokemonTheme } from '@/constants/pokemonTheme';
 import OverviewSection from '@/components/detail/OverviewSection';
 import EvolutionSection from '@/components/detail/EvolutionSection';
 import AbilitiesSection from '@/components/detail/AbilitiesSection';
 import StatsSection from '@/components/detail/stats/StatsSection';
-import { SPACING } from '@/constants/theme';
+import MovesSection from '@/components/detail/moves/MovesSection';
 import type { DetailSection } from '@/constants/detailMenu';
 import type { PokemonDetail } from '@/types';
 
@@ -16,52 +13,26 @@ interface DetailContentProps {
   detail: PokemonDetail;
 }
 
-// Overview renders real data already sitting on the PokemonDetail Redux
-// slice (no extra fetch). Every other section is still a placeholder until
-// its own content is built.
+// Every section reads from the PokemonDetail (and, for Evolution, the
+// species/evolution Redux state) already loaded on screen mount — none of
+// these branches trigger a fetch of their own except lazily, on first open
+// (Evolution, Abilities).
 function DetailContentComponent({ section, detail }: DetailContentProps) {
-  const { t } = useTranslation();
-  const { colors } = useThemeTokens();
   const primaryType = detail.types[0] ?? null;
   const theme = useMemo(() => getPokemonTheme(primaryType), [primaryType]);
 
-  if (section === 'overview') {
-    return <OverviewSection detail={detail} theme={theme} />;
+  switch (section) {
+    case 'overview':
+      return <OverviewSection detail={detail} theme={theme} />;
+    case 'evolution':
+      return <EvolutionSection theme={theme} />;
+    case 'abilities':
+      return <AbilitiesSection detail={detail} theme={theme} />;
+    case 'stats':
+      return <StatsSection detail={detail} theme={theme} />;
+    case 'moves':
+      return <MovesSection detail={detail} />;
   }
-
-  if (section === 'evolution') {
-    return <EvolutionSection theme={theme} />;
-  }
-
-  if (section === 'abilities') {
-    return <AbilitiesSection detail={detail} theme={theme} />;
-  }
-
-  if (section === 'stats') {
-    return <StatsSection detail={detail} theme={theme} />;
-  }
-
-  return (
-    <View style={styles.placeholder}>
-      <Text style={[styles.message, { color: colors.textSecondary }]}>
-        {t('pokemonDetail.comingSoon', { section: t(`pokemonDetail.menu.${section}`) })}
-      </Text>
-    </View>
-  );
 }
 
 export default memo(DetailContentComponent);
-
-const styles = StyleSheet.create({
-  placeholder: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: SPACING.xxl,
-    paddingHorizontal: SPACING.lg,
-  },
-  message: {
-    fontSize: 15,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-});
