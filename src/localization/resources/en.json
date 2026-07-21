@@ -147,6 +147,7 @@
     "legendary": "Legendary",
     "mythical": "Mythical",
     "evolutionLoadError": "Couldn't load evolution data.",
+    "abilityLoadError": "Couldn't load this ability.",
     "loadingSpecies": "Loading species...",
     "noDataAvailable": "No Pokémon data available.",
     "allPokemonTitle": "All Pokémon",

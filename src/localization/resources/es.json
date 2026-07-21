@@ -147,6 +147,7 @@
     "legendary": "Legendario",
     "mythical": "Singular",
     "evolutionLoadError": "No se pudieron cargar los datos de evolución.",
+    "abilityLoadError": "No se pudo cargar esta habilidad.",
     "loadingSpecies": "Cargando especie...",
     "noDataAvailable": "No hay datos de Pokémon disponibles.",
     "allPokemonTitle": "Todos los Pokémon",

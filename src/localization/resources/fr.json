@@ -147,6 +147,7 @@
     "legendary": "Légendaire",
     "mythical": "Fabuleux",
     "evolutionLoadError": "Impossible de charger les données d'évolution.",
+    "abilityLoadError": "Impossible de charger cette capacité.",
     "loadingSpecies": "Chargement de l'espèce...",
     "noDataAvailable": "Aucune donnée de Pokémon disponible.",
     "allPokemonTitle": "Tous les Pokémon",

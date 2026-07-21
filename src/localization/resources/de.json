@@ -147,6 +147,7 @@
     "legendary": "Legendär",
     "mythical": "Mysteriös",
     "evolutionLoadError": "Entwicklungsdaten konnten nicht geladen werden.",
+    "abilityLoadError": "Diese Fähigkeit konnte nicht geladen werden.",
     "loadingSpecies": "Art wird geladen...",
     "noDataAvailable": "Keine Pokémon-Daten verfügbar.",
     "allPokemonTitle": "Alle Pokémon",

@@ -2,63 +2,48 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { Ability } from '@/types';
 import { fetchAbility } from '@/store/ability/abilityThunks';
 
-export interface AbilityState {
-  abilities: Ability[];
-  isLoading: boolean;
+export type AbilityRequestStatus = 'loading' | 'succeeded' | 'failed';
+
+export interface AbilityCacheEntry {
+  status: AbilityRequestStatus;
+  data: Ability | null;
   error: string | null;
-  requestCount: number;
+}
+
+export interface AbilityState {
+  // Cache keyed by ability name rather than by Pokemon — many Pokemon
+  // share the same ability, so this doubles as a cross-Pokemon cache too.
+  byName: Record<string, AbilityCacheEntry>;
 }
 
 const initialState: AbilityState = {
-  abilities: [],
-  isLoading: false,
-  error: null,
-  requestCount: 0,
+  byName: {},
 };
-
-function decrementRequestCount(state: AbilityState): void {
-  state.requestCount = Math.max(0, state.requestCount - 1);
-  state.isLoading = state.requestCount > 0;
-}
 
 const abilitySlice = createSlice({
   name: 'ability',
   initialState,
-  reducers: {
-    clearAbilities: (state) => {
-      state.abilities = [];
-      state.error = null;
-      state.requestCount = 0;
-      state.isLoading = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAbility.pending, (state) => {
-        state.requestCount += 1;
-        state.isLoading = state.requestCount > 0;
-        state.error = null;
+      .addCase(fetchAbility.pending, (state, action) => {
+        state.byName[action.meta.arg] = { status: 'loading', data: null, error: null };
       })
       .addCase(fetchAbility.fulfilled, (state, action) => {
-        decrementRequestCount(state);
-        state.error = null;
-
-        const exists = state.abilities.some(
-          (ability) => ability.name === action.payload.name
-        );
-
-        if (!exists) {
-          state.abilities.push(action.payload);
-        }
+        state.byName[action.meta.arg] = {
+          status: 'succeeded',
+          data: action.payload,
+          error: null,
+        };
       })
       .addCase(fetchAbility.rejected, (state, action) => {
-        decrementRequestCount(state);
-        state.error =
-          action.payload ?? action.error.message ?? 'Failed to fetch ability';
+        state.byName[action.meta.arg] = {
+          status: 'failed',
+          data: null,
+          error: action.error.message ?? 'Failed to fetch ability',
+        };
       });
   },
 });
-
-export const { clearAbilities } = abilitySlice.actions;
 
 export default abilitySlice.reducer;

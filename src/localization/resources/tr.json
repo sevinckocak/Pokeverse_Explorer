@@ -147,6 +147,7 @@
     "legendary": "Efsanevi",
     "mythical": "Mitik",
     "evolutionLoadError": "Evrim verisi yüklenemedi.",
+    "abilityLoadError": "Bu yetenek yüklenemedi.",
     "loadingSpecies": "Tür bilgisi yükleniyor...",
     "noDataAvailable": "Pokémon verisi bulunamadı.",
     "allPokemonTitle": "Tüm Pokémon'lar",
