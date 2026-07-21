@@ -1,1 +1,1 @@
-export type { PokemonSpecies, PokemonSpeciesNamedResource } from '@/types/domain/PokemonSpecies';
+export type { PokemonSpecies } from '@/types/domain/PokemonSpecies';

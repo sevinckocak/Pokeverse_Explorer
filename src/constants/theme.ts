@@ -32,8 +32,8 @@ export const CARD_SHADOW = {
 // from Redux (see store/settings + hooks/useThemeTokens) instead of picking
 // their own hardcoded values. `surfaceBorder`/`divider`/`trackBackground`
 // are older, more specific tokens the Pokemon Detail screen's components
-// (GlassCard, ProgressStat, EvolutionNode, ...) already depend on; kept
-// alongside the newer general-purpose `border` field rather than renamed,
+// (GlassCard, StatRow, ...) already depend on; kept alongside the newer
+// general-purpose `border` field rather than renamed,
 // so nothing there had to change.
 export interface ThemeColors {
   background: string;
