@@ -150,7 +150,21 @@
     "loadingSpecies": "Art wird geladen...",
     "loadingEvolutionChain": "Entwicklungskette wird geladen...",
     "noDataAvailable": "Keine Pokémon-Daten verfügbar.",
-    "allPokemonTitle": "Alle Pokémon"
+    "allPokemonTitle": "Alle Pokémon",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "menuTitle": "Bereiche",
+    "comingSoon": "Bereich „{{section}}“ folgt in Kürze",
+    "menu": {
+      "overview": "Übersicht",
+      "stats": "Statistiken",
+      "species": "Art",
+      "evolution": "Entwicklung",
+      "abilities": "Fähigkeiten",
+      "moves": "Attacken",
+      "location": "Fundort",
+      "sprites": "Sprites"
+    }
   },
   "types": {
     "normal": "Normal",

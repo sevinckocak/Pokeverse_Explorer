@@ -150,7 +150,21 @@
     "loadingSpecies": "Loading species...",
     "loadingEvolutionChain": "Loading evolution chain...",
     "noDataAvailable": "No Pokémon data available.",
-    "allPokemonTitle": "All Pokémon"
+    "allPokemonTitle": "All Pokémon",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuTitle": "Sections",
+    "comingSoon": "{{section}} section coming soon",
+    "menu": {
+      "overview": "Overview",
+      "stats": "Stats",
+      "species": "Species",
+      "evolution": "Evolution",
+      "abilities": "Abilities",
+      "moves": "Moves",
+      "location": "Location",
+      "sprites": "Sprites"
+    }
   },
   "types": {
     "normal": "Normal",

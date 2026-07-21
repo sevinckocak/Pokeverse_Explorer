@@ -150,7 +150,21 @@
     "loadingSpecies": "Tür bilgisi yükleniyor...",
     "loadingEvolutionChain": "Evrim zinciri yükleniyor...",
     "noDataAvailable": "Pokémon verisi bulunamadı.",
-    "allPokemonTitle": "Tüm Pokémon'lar"
+    "allPokemonTitle": "Tüm Pokémon'lar",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "menuTitle": "Bölümler",
+    "comingSoon": "{{section}} bölümü yakında",
+    "menu": {
+      "overview": "Genel Bakış",
+      "stats": "İstatistikler",
+      "species": "Tür Bilgisi",
+      "evolution": "Evrim",
+      "abilities": "Yetenekler",
+      "moves": "Hareketler",
+      "location": "Konum",
+      "sprites": "Görseller"
+    }
   },
   "types": {
     "normal": "Normal",

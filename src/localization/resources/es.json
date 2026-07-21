@@ -150,7 +150,21 @@
     "loadingSpecies": "Cargando especie...",
     "loadingEvolutionChain": "Cargando cadena evolutiva...",
     "noDataAvailable": "No hay datos de Pokémon disponibles.",
-    "allPokemonTitle": "Todos los Pokémon"
+    "allPokemonTitle": "Todos los Pokémon",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "menuTitle": "Secciones",
+    "comingSoon": "Sección {{section}} próximamente",
+    "menu": {
+      "overview": "Resumen",
+      "stats": "Estadísticas",
+      "species": "Especie",
+      "evolution": "Evolución",
+      "abilities": "Habilidades",
+      "moves": "Movimientos",
+      "location": "Ubicación",
+      "sprites": "Sprites"
+    }
   },
   "types": {
     "normal": "Normal",
