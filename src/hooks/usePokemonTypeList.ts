@@ -27,11 +27,11 @@ export function usePokemonTypeList(typeName: string | null): UsePokemonTypeListR
     setLoading(true);
 
     getPokemonType(typeName)
-      .then((typeDetail) => {
+      .then((members) => {
         if (!isMounted) {
           return;
         }
-        setData(typeDetail.pokemon.map((member) => member.pokemon));
+        setData(members);
       })
       .catch(() => {
         if (isMounted) {

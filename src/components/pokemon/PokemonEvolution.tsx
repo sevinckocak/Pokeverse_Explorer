@@ -41,7 +41,7 @@ export default function PokemonEvolution({ theme }: PokemonEvolutionProps) {
 
   return (
     <GlassCard title={t('pokemonDetail.evolutionChain')} delay={POKEMON_DETAIL_SECTION_DELAY.evolution} theme={theme}>
-      <EvolutionNode node={evolutionChain.chain} accentColor={theme.accent} />
+      <EvolutionNode node={evolutionChain.root} accentColor={theme.accent} />
     </GlassCard>
   );
 }

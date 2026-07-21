@@ -19,7 +19,7 @@ interface DetailContentProps {
 function DetailContentComponent({ section, detail }: DetailContentProps) {
   const { t } = useTranslation();
   const { colors } = useThemeTokens();
-  const primaryType = detail.types[0]?.type.name ?? null;
+  const primaryType = detail.types[0] ?? null;
   const theme = useMemo(() => getPokemonTheme(primaryType), [primaryType]);
 
   if (section === 'overview') {

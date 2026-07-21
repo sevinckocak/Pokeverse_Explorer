@@ -28,18 +28,18 @@ function OverviewSectionComponent({ detail, theme }: OverviewSectionProps) {
   const displayHeight = `${(detail.height / 10).toFixed(1)} m`;
   const displayWeight = `${(detail.weight / 10).toFixed(1)} kg`;
   const displayBaseExperience =
-    detail.base_experience !== null ? detail.base_experience.toString() : t("common.unknown");
+    detail.baseExperience !== null ? detail.baseExperience.toString() : t("common.unknown");
 
   return (
     <View>
       <GlassCard title={t("pokemonDetail.types")} theme={theme}>
         <View style={styles.typesRow}>
-          {detail.types.map((entry) => {
-            const typeTheme = getPokemonTheme(entry.type.name);
+          {detail.types.map((typeName) => {
+            const typeTheme = getPokemonTheme(typeName);
             return (
               <Badge
-                key={entry.type.name}
-                label={t(`types.${entry.type.name}`)}
+                key={typeName}
+                label={t(`types.${typeName}`)}
                 backgroundColor={typeTheme.chipColor}
                 textColor={BADGE_TEXT_COLOR}
               />
@@ -77,12 +77,12 @@ function OverviewSectionComponent({ detail, theme }: OverviewSectionProps) {
 
       <GlassCard title={t("pokemonDetail.abilities")} theme={theme}>
         <View style={styles.abilitiesList}>
-          {detail.abilities.map((entry) => (
-            <View key={entry.ability.name} style={styles.abilityRow}>
+          {detail.abilities.map((ability) => (
+            <View key={ability.name} style={styles.abilityRow}>
               <Text style={[styles.abilityName, { color: colors.textPrimary }]}>
-                {capitalize(entry.ability.name.replace(/-/g, " "))}
+                {capitalize(ability.name.replace(/-/g, " "))}
               </Text>
-              {entry.is_hidden ? (
+              {ability.isHidden ? (
                 <Badge
                   label={t("pokemonDetail.hiddenAbility")}
                   backgroundColor={theme.chipColor}

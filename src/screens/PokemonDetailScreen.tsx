@@ -38,7 +38,7 @@ export default function PokemonDetailScreen() {
     setIsDrawerOpen(false);
   }, []);
 
-  const primaryType = detail?.types[0]?.type.name ?? null;
+  const primaryType = detail?.types[0] ?? null;
 
   if (loadingDetail) {
     return (

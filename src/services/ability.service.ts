@@ -1,7 +1,9 @@
 import api from '@/api/axios';
-import type { AbilityDetail } from '@/types';
+import type { RawAbilityResponse } from '@/types/api/RawAbilityResponse';
+import type { Ability } from '@/types/domain/Ability';
+import { mapAbilityDetailToAbility } from '@/mappers';
 
-export async function getAbilityByName(name: string): Promise<AbilityDetail> {
-  const response = await api.get<AbilityDetail>(`/ability/${name}`);
-  return response.data;
+export async function getAbilityByName(name: string, isHidden: boolean): Promise<Ability> {
+  const response = await api.get<RawAbilityResponse>(`/ability/${name}`);
+  return mapAbilityDetailToAbility(response.data, isHidden);
 }

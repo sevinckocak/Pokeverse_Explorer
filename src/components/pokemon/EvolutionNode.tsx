@@ -12,14 +12,14 @@ interface EvolutionNodeProps {
 
 function EvolutionNodeComponent({ node, accentColor }: EvolutionNodeProps) {
   const { colors } = useThemeTokens();
-  const isBranching = node.evolves_to.length > 1;
+  const isBranching = node.evolvesTo.length > 1;
 
   return (
     <View>
       <View style={styles.row}>
         <View style={styles.timelineColumn}>
           <View style={[styles.dot, { backgroundColor: accentColor }]} />
-          {node.evolves_to.length > 0 ? (
+          {node.evolvesTo.length > 0 ? (
             <View style={[styles.line, { backgroundColor: colors.divider }]} />
           ) : null}
         </View>
@@ -30,13 +30,13 @@ function EvolutionNodeComponent({ node, accentColor }: EvolutionNodeProps) {
           ]}
         >
           <Text style={[styles.name, { color: colors.textPrimary }]}>
-            {capitalize(node.species.name)}
+            {capitalize(node.speciesName)}
           </Text>
         </View>
       </View>
       <View style={{ marginLeft: isBranching ? SPACING.lg : 0 }}>
-        {node.evolves_to.map((child) => (
-          <EvolutionNode key={child.species.name} node={child} accentColor={accentColor} />
+        {node.evolvesTo.map((child) => (
+          <EvolutionNode key={child.speciesName} node={child} accentColor={accentColor} />
         ))}
       </View>
     </View>
