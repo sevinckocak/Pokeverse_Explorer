@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { DARK_THEME, RADIUS, SPACING } from '@/constants/theme';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
+import { RADIUS, SPACING } from '@/constants/theme';
 import type { IoniconName } from '@/types/ionicon';
 
 interface DetailMenuItemProps {
@@ -15,45 +16,49 @@ const ICON_BADGE_SIZE = 36;
 const ICON_SIZE = 18;
 const INDICATOR_WIDTH = 3;
 const PRESSED_OPACITY = 0.7;
+const SELECTED_ICON_COLOR = '#FFFFFF';
 
-// Always styled from the fixed DARK_THEME palette rather than
-// useThemeTokens — the drawer keeps the same dark look regardless of the
-// app's light/dark setting, per the drawer's "modern dark design" spec.
+// Styled from useThemeTokens() so the drawer follows the app's active
+// Light/Dark setting, same as every other screen.
 function DetailMenuItemComponent({ icon, label, selected, onPress }: DetailMenuItemProps) {
+  const { colors } = useThemeTokens();
+
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [
         styles.row,
-        selected && styles.rowSelected,
+        selected && { backgroundColor: colors.surfaceSecondary },
         pressed && { opacity: PRESSED_OPACITY },
       ]}
       accessibilityRole="button"
       accessibilityState={{ selected }}
       accessibilityLabel={label}
     >
-      <View style={[styles.indicator, selected && styles.indicatorSelected]} />
+      <View
+        style={[styles.indicator, { backgroundColor: selected ? colors.accent : 'transparent' }]}
+      />
 
       <View
         style={[
           styles.iconBadge,
           {
-            backgroundColor: selected ? DARK_THEME.accent : DARK_THEME.surfaceSecondary,
-            borderColor: selected ? DARK_THEME.accent : DARK_THEME.border,
+            backgroundColor: selected ? colors.accent : colors.surfaceSecondary,
+            borderColor: selected ? colors.accent : colors.border,
           },
         ]}
       >
         <Ionicons
           name={icon}
           size={ICON_SIZE}
-          color={selected ? '#FFFFFF' : DARK_THEME.textSecondary}
+          color={selected ? SELECTED_ICON_COLOR : colors.textSecondary}
         />
       </View>
 
       <Text
         style={[
           styles.label,
-          { color: selected ? DARK_THEME.textPrimary : DARK_THEME.textSecondary },
+          { color: selected ? colors.textPrimary : colors.textSecondary },
           selected && styles.labelSelected,
         ]}
       >
@@ -75,17 +80,10 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.md,
     marginBottom: SPACING.xs,
   },
-  rowSelected: {
-    backgroundColor: DARK_THEME.surfaceSecondary,
-  },
   indicator: {
     width: INDICATOR_WIDTH,
     alignSelf: 'stretch',
     borderRadius: RADIUS.pill,
-    backgroundColor: 'transparent',
-  },
-  indicatorSelected: {
-    backgroundColor: DARK_THEME.accent,
   },
   iconBadge: {
     width: ICON_BADGE_SIZE,

@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import DetailMenuItem from '@/components/detail/DetailMenuItem';
-import { DARK_THEME, RADIUS, SPACING } from '@/constants/theme';
+import { useThemeTokens } from '@/hooks/useThemeTokens';
+import { RADIUS, SPACING } from '@/constants/theme';
 import { DETAIL_MENU_ITEMS } from '@/constants/detailMenu';
 import type { DetailSection } from '@/constants/detailMenu';
 
@@ -34,6 +35,7 @@ function DetailDrawerComponent({
   onClose,
 }: DetailDrawerProps) {
   const { t } = useTranslation();
+  const { colors } = useThemeTokens();
   const { width } = useWindowDimensions();
   const drawerWidth = Math.min(width * DRAWER_WIDTH_RATIO, MAX_DRAWER_WIDTH);
 
@@ -81,17 +83,25 @@ function DetailDrawerComponent({
           <Animated.View style={[styles.backdrop, backdropStyle]} />
         </Pressable>
 
-        <Animated.View style={[styles.panel, { width: drawerWidth }, panelStyle]}>
+        <Animated.View
+          style={[
+            styles.panel,
+            { width: drawerWidth, backgroundColor: colors.background, borderColor: colors.border },
+            panelStyle,
+          ]}
+        >
           <SafeAreaView edges={['top', 'bottom']} style={styles.safeArea}>
             <View style={styles.header}>
-              <Text style={styles.headerTitle}>{t('pokemonDetail.menuTitle')}</Text>
+              <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
+                {t('pokemonDetail.menuTitle')}
+              </Text>
               <Pressable
                 onPress={onClose}
-                style={styles.closeButton}
+                style={[styles.closeButton, { backgroundColor: colors.surfaceSecondary }]}
                 accessibilityRole="button"
                 accessibilityLabel={t('pokemonDetail.closeMenu')}
               >
-                <Ionicons name="close" size={CLOSE_ICON_SIZE} color={DARK_THEME.textSecondary} />
+                <Ionicons name="close" size={CLOSE_ICON_SIZE} color={colors.textSecondary} />
               </Pressable>
             </View>
 
@@ -135,9 +145,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: DARK_THEME.background,
     borderRightWidth: 1,
-    borderColor: DARK_THEME.border,
   },
   safeArea: {
     flex: 1,
@@ -153,7 +161,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: '800',
-    color: DARK_THEME.textPrimary,
   },
   closeButton: {
     width: CLOSE_BUTTON_SIZE,
@@ -161,7 +168,6 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.pill,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: DARK_THEME.surfaceSecondary,
   },
   menuList: {
     paddingHorizontal: SPACING.md,
