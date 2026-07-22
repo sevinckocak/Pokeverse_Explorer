@@ -9,16 +9,7 @@
   "home": {
     "title": "Pokémon'ları Keşfet",
     "subtitle": "Pokémon'ları, yetenekleri, evrimleri ve daha fazlasını keşfedin.",
-    "quickActions": "Hızlı İşlemler",
-    "pokemonSection": "Pokémon",
-    "quickAction": {
-      "favorites": "Favoriler",
-      "random": "Rastgele",
-      "abilities": "Yetenekler",
-      "evolutions": "Evrimler",
-      "types": "Türler",
-      "regions": "Bölgeler"
-    }
+    "pokemonSection": "Pokémon"
   },
   "search": {
     "placeholder": "Pokémon ara...",

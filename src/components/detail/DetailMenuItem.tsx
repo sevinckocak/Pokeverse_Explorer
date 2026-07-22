@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DARK_THEME, RADIUS, SPACING } from '@/constants/theme';
-import type { IoniconName } from '@/components/home/QuickActionCard';
+import type { IoniconName } from '@/types/ionicon';
 
 interface DetailMenuItemProps {
   icon: IoniconName;

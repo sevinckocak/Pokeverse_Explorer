@@ -9,16 +9,7 @@
   "home": {
     "title": "Discover Pokémon",
     "subtitle": "Explore Pokémon, abilities, evolutions and more.",
-    "quickActions": "Quick Actions",
-    "pokemonSection": "Pokemon",
-    "quickAction": {
-      "favorites": "Favorites",
-      "random": "Random",
-      "abilities": "Abilities",
-      "evolutions": "Evolutions",
-      "types": "Types",
-      "regions": "Regions"
-    }
+    "pokemonSection": "Pokemon"
   },
   "search": {
     "placeholder": "Search Pokémon...",

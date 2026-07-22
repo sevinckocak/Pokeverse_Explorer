@@ -1,4 +1,4 @@
-import type { IoniconName } from '@/components/home/QuickActionCard';
+import type { IoniconName } from '@/types/ionicon';
 
 export const DETAIL_SECTIONS = ['overview', 'evolution', 'abilities', 'stats', 'moves'] as const;
 

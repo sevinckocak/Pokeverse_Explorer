@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useThemeTokens } from '@/hooks/useThemeTokens';
 import { RADIUS, SPACING } from '@/constants/theme';
-import type { IoniconName } from '@/components/home/QuickActionCard';
+import type { IoniconName } from '@/types/ionicon';
 
 interface ScreenHeaderProps {
   title: string;

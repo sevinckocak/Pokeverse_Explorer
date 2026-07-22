@@ -18,7 +18,6 @@ import { useThemeTokens } from '@/hooks/useThemeTokens';
 import HomeHeader from '@/components/home/HomeHeader';
 import SearchBar from '@/components/common/SearchBar';
 import EmptyState from '@/components/common/EmptyState';
-import QuickActions from '@/components/home/QuickActions';
 import PokemonSection from '@/components/pokemon/PokemonSection';
 import PokemonGrid from '@/components/pokemon/PokemonGrid';
 import { SPACING } from '@/constants/theme';
@@ -77,8 +76,6 @@ export default function HomeScreen() {
       <View style={styles.searchBarWrapper}>
         <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
       </View>
-
-      <QuickActions />
 
       {isSearching ? (
         loading || isSearchLoading ? (
